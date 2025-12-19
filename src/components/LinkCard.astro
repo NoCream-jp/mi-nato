@@ -12,10 +12,17 @@ const { href, thumbnail, title, description } = Astro.props;
 <a href={href} class="link-card">
 	<img src={thumbnail} alt={title} class="card-image" />
 	<div class="card-overlay">
-		<div class="icon-wrapper">
-			<i class="fa-solid fa-arrow-right"></i>
-		</div>
-		<p class="card-description">{description}</p>
+        
+        <div class="card-content">
+            <h3 class="card-title">{title}</h3>
+            <p class="card-description">{description}</p>
+        </div>
+        <div class="card-footer">
+            <div>show more</div>
+            <div class="icon-wrapper">
+                <i class="fa-solid fa-arrow-right"></i>
+            </div>
+        </div>
 	</div>
 </a>
 
@@ -41,29 +48,69 @@ const { href, thumbnail, title, description } = Astro.props;
 	.card-overlay {
 		position: absolute;
 		inset: 0; /* top, right, bottom, left: 0 と同じ */
-		background: rgba(255, 255, 255, 0.2);
-		backdrop-filter: blur(0px); /* 初期状態はぼかしなし */
+		background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); /* 下部を暗くして文字を見やすく */
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
-		opacity: 0;
+		justify-content: flex-end; /* 通常時は下寄せ */
+		opacity: 1; /* 常時表示 */
 		transition: all 0.3s ease;
 		color: white;
-		font-weight: bold;
 		padding: 20px;
 		text-align: center;
 	}
 
 	/* ホバー時のスタイル */
 	.link-card:hover .card-overlay {
-		opacity: 1;
 		backdrop-filter: blur(5px); /* すりガラス効果 */
 		background: rgba(0, 0, 0, 0.4); /* 文字が見やすいように少し暗く */
+        justify-content: center; /* ホバー時は中央寄せ */
 	}
 
+    .card-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 5px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .card-description {
+        font-size: 0.9rem;
+        opacity: 0; /* 通常時は隠す */
+        height: 0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    .link-card:hover .card-description {
+        opacity: 1;
+        height: auto;
+        margin-bottom: 15px;
+    }
+
+    .card-footer {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        border-bottom: solid 2px white;
+        opacity: 0; /* 通常時は隠す */
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+    }
+
+    .link-card:hover .card-footer {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
 	.icon-wrapper {
-		font-size: 2rem;
-		margin-bottom: 10px;
+		font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotate(-45deg);
 	}
+
 </style>
