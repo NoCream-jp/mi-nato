@@ -1,12 +1,58 @@
 :root {
     /* #4B9C95 */
-    --header-bg: #eee;
-    --section-bg: #4968bd;
-    --button-bg: #97abd7;
     --theme1: #4968bd;
-    --theme2: #9bbdf4;
+    --theme2: #71a2f1;
+    --theme3: #9bbdf4;
+    --header-bg: #eee;
+    --section-bg: var(--theme3);
+    --button-bg: #97abd7;
 }
 
+a {
+    text-decoration: none;
+}
+
+.share-button {
+    width: 70px;
+    height: 70px;
+    border: none;
+    border-radius: 20px;
+    background-color: var(--theme1);
+    color: white;
+    font-size: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.share-button:hover {
+    background-color: var(--theme2);
+    color: white;
+}
+
+.link-button {
+    width: 70px;
+    height: 70px;
+    border: none;
+    border-radius: 20px;
+    background-color: var(--theme1);
+    color: white;
+    font-size: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.link-button:hover {
+    background-color: var(--theme2);
+    color: white;
+}
 
 /* =================== header ==================== */
 
@@ -25,7 +71,7 @@
     padding: 35px;
 
     /* テキスト */
-    font-size: clamp(15px, 3vw, 25px);
+    font-size: clamp(15px, 3vw, 20px);
     color: black;
     /* font-family: 'Gothic A1', sans-serif; */
     font-weight: 500;
@@ -67,26 +113,6 @@
     color: #fff;
 }
 
-.share-button {
-    width: 70px;
-    height: 70px;
-    border: none;
-    border-radius: 20px;
-    background-color: var(--theme1);
-    color: white;
-    font-size: 100%;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    cursor: pointer;
-}
-
-.share-button:hover {
-    background-color: var(--theme2);
-    color: white;
-}
 
 .header a {
     text-decoration: none;
@@ -167,19 +193,84 @@
     right: -20px;
     width: 20px;
     height: 20px;
-    /* 右上角中心の円、中心から半径20pxの範囲transparent、半径20pxより外色指定 */
+    /* 右上角中心の円、中心から半径20pxの範囲
+    transparent、半径20pxより外色指定 */
     background: radial-gradient(circle at top right, transparent 20px, var(--section-bg) 20px);
 }
 
 .section {
     background-color: var(--section-bg);
     height: fit-content;
-    min-height: 200px;
+    min-height: 300px;
     margin: 0px 20px 20px 20px;
     border-radius: 0 20px 20px 20px;
-    padding: 30px;
+    padding: 20px;
+    position: relative;
+}
+
+.section-footer {
     display: flex;
-    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
     gap: 20px;
+    color: white;
+    font-size: clamp(15px, 4vw, 25px);
+}
+
+.news-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.news-scroll-wrapper {
+    width: 100%;
+    overflow: hidden;
+    /* 左右をグラデーションで隠す */
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    padding: 10px 0; /* 影が切れないように上下に余白 */
+}
+
+.news-track {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    /* 自動スクロールアニメーション */
+    animation: scroll-left 30s linear infinite;
+}
+
+.news-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* 2セットあるので半分移動したらループ */
+}
+
+.news-link-button {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--header-bg);
+    border-radius: 10px; /* ヘッダーのリンクと同じ形 */
+    display: flex;
+    align-items: center;
     justify-content: center;
+    color: black;
+    z-index: 10;
+    transition: background-color 0.3s;
+}
+
+.news-link-button:hover {
+    background-color: var(--theme2);
+    color: white;
+}
+
+
+/* wrapperは回転させずに、中身のアイコンのみを45度回転 */
+.fa-arrow-right {
+    transform: rotate(-45deg);
+
 }

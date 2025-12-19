@@ -36,7 +36,7 @@ const { Content } = await entry.render();
             </div>
 		</header>
 
-        <div class="section-title" style="width: auto; display: inline-flex; padding-right: 40px;">Article</div>
+        <div class="section-title">Article</div>
         
 		<main class="section" style="display: block;">
             <article class="article-content">
@@ -57,6 +57,10 @@ const { Content } = await entry.render();
 
 <style>
     /* 記事ページ固有のスタイル */
+
+    .header .fa-arrow-left {
+        font-size: 24px;
+    }
     .article-content {
         background-color: rgba(255, 255, 255, 0.9);
         padding: 40px;
