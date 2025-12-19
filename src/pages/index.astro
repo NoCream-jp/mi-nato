@@ -1,5 +1,8 @@
 ---
+import { getCollection } from 'astro:content';
+import LinkCard from '../components/LinkCard.astro';
 
+const allArticles = await getCollection('article');
 ---
 
 <!DOCTYPE html>
@@ -26,23 +29,30 @@
 			<div class="header-left"><a href="">mi-nato.com</a></div>
 			<button id="menu-toggle" class="menu-toggle" aria-label="Toggle Menu">
 				<span class="icon-hamburger"><i class="fa-solid fa-bars"></i></span>
-				<span class="icon-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+				<span class="icon-caret-up"><i class="fa-solid fa-caret-up"></i></i></span>
 			</button>
 			<div class="header-right">
 				<a href="">News</a>
 				<a href="">About</a>
 				<a href="">Works</a>
 				<a href="">Studies</a>
-				<div>
-					<button class="share-button">
-						<i class="fa-solid fa-arrow-up-right-from-square"></i>
-					</button>
-				</div>
+				<button class="share-button">
+					<i class="fa-solid fa-arrow-up-right-from-square"></i>
+				</button>
 			</div>
 		</header>
 
 		<div class="section-title">News</div>
-		<div class="news-section section"></div>
+		<div class="news-section section">
+			{allArticles.map((article: { slug: any; data: { thumbnail: string; title: string; description: string; }; }) => (
+				<LinkCard
+					href={`/article/${article.slug}`}
+					thumbnail={article.data.thumbnail}
+					title={article.data.title}
+					description={article.data.description}
+				/>
+			))}
+		</div>
 
 		<div class="section-title">About</div>
 		<div class="section"></div>

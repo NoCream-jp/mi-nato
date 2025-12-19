@@ -1,0 +1,84 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+// 1. 記事データのパスを生成する
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('article');
+  return blogEntries.map((entry: { slug: any; }) => ({
+    params: { slug: entry.slug }, props: { entry }
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'article'>;
+}
+
+// 2. 記事データを受け取り、本文をレンダリングする
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<title>{entry.data.title} | mi-nato.com</title>
+		<link rel="stylesheet" href="/styles/index.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap" rel="stylesheet">
+	</head>
+	<body>
+		<header class="header">
+			<div class="header-left">
+                <a href="/"><i class="fa-solid fa-arrow-left"></i></a>
+            </div>
+		</header>
+
+        <div class="section-title" style="width: auto; display: inline-flex; padding-right: 40px;">Article</div>
+        
+		<main class="section" style="display: block;">
+            <article class="article-content">
+                <h1 class="article-title">{entry.data.title}</h1>
+                <img src={entry.data.thumbnail} alt={entry.data.title} class="article-thumbnail" />
+                <div class="article-body">
+                    <Content />
+                </div>
+            </article>
+		</main>
+
+		<footer class="footer">
+            <!-- フッター -->
+		</footer>
+	</body>
+</html>
+
+<style>
+    /* 記事ページ固有のスタイル */
+    .article-content {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 40px;
+        border-radius: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+        color: #333;
+    }
+    .article-title {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #333;
+    }
+    .article-thumbnail {
+        width: 100%;
+        height: auto;
+        max-height: 400px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 30px;
+    }
+    .article-body {
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
+</style>
