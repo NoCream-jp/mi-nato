@@ -4,7 +4,7 @@
     --theme2: #71a2f1;
     --theme3: #9bbdf4;
     --header-bg: #eee;
-    --section-bg: var(--theme3);
+    --section-bg: var(--theme1);
     --button-bg: #97abd7;
 }
 
@@ -17,7 +17,7 @@ a {
     height: 70px;
     border: none;
     border-radius: 20px;
-    background-color: var(--theme1);
+    background-color: var(--theme2);
     color: white;
     font-size: 100%;
 
@@ -29,7 +29,7 @@ a {
 }
 
 .share-button:hover {
-    background-color: var(--theme2);
+    background-color: var(--theme3);
     color: white;
 }
 
@@ -38,7 +38,7 @@ a {
     height: 70px;
     border: none;
     border-radius: 20px;
-    background-color: var(--theme1);
+    background-color: var(--theme2);
     color: white;
     font-size: 100%;
 
@@ -50,7 +50,7 @@ a {
 }
 
 .link-button:hover {
-    background-color: var(--theme2);
+    background-color: var(--theme3);
     color: white;
 }
 
@@ -209,6 +209,7 @@ a {
 }
 
 .section-footer {
+    margin: 20px 0 0 0;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -223,6 +224,9 @@ a {
 }
 
 .news-scroll-wrapper {
+    background-color: #ddd;
+    margin: 20px 0 0 0;
+
     width: 100%;
     overflow: hidden;
     /* 左右をグラデーションで隠す */
