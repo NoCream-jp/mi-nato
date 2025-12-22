@@ -8,6 +8,10 @@
     --button-bg: #97abd7;
 }
 
+body {
+    font-family: "Zalando Sans", sans-serif;
+}
+
 a {
     text-decoration: none;
 }
@@ -73,7 +77,6 @@ a {
     /* テキスト */
     font-size: clamp(15px, 3vw, 20px);
     color: black;
-    /* font-family: 'Gothic A1', sans-serif; */
     font-weight: 500;
 }
 
