@@ -1,10 +1,14 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
+import LinkCard from '../../components/LinkCard.astro';
+
+const allArticles = await getCollection('article');
+const sortedArticles = allArticles.sort((a, b) => b.slug.localeCompare(a.slug)).slice(0, 5);
 
 // 1. 記事データのパスを生成する
 export async function getStaticPaths() {
   const blogEntries = await getCollection('article');
-  return blogEntries.map((entry: { slug: any; }) => ({
+  return blogEntries.map((entry) => ({
     params: { slug: entry.slug }, props: { entry }
   }));
 }
@@ -16,6 +20,12 @@ interface Props {
 // 2. 記事データを受け取り、本文をレンダリングする
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+
+// slugから日付情報を抽出 (形式: YYYYMMDDNN)
+const year = entry.slug.substring(0, 4);
+const month = entry.slug.substring(4, 6);
+const day = entry.slug.substring(6, 8);
+const formattedDate = `${year}年${month}月${day}日`;
 ---
 
 <!DOCTYPE html>
@@ -34,20 +44,48 @@ const { Content } = await entry.render();
 			<div class="header-left">
                 <a href="/"><i class="fa-solid fa-arrow-left"></i></a>
             </div>
+            <div class="">
+                Article Page
+            </div>
 		</header>
 
-        <div class="section-title">Article</div>
-        
-		<main class="section" style="display: block;">
-            <article class="article-content">
-                <h1 class="article-title">{entry.data.title}</h1>
-                <img src={entry.data.thumbnail} alt={entry.data.title} class="article-thumbnail" />
-                <div class="article-body">
-                    <Content />
+        <div class="article-page-container">
+            <div class="article-page-left-container">
+                <div class="section-title">
+                    <!-- <span class="article-number">{entry.slug}</span> -->
+                    Article
                 </div>
-                
-            </article>
-		</main>
+                <div class="section">
+                    <article class="article-content">
+                        <h1 class="article-title">{entry.data.title}</h1>
+                        <div class="article-meta">
+                            <span class="article-date">最新編集日：{formattedDate}</span>
+                        </div>
+                        <img src={entry.data.thumbnail} alt={entry.data.title} class="article-thumbnail" />
+                        <div class="article-body">
+                            <Content />
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <div class="article-page-right-container">
+                <div class="section-title">
+                    記事一覧
+                </div>
+                <div class="section">
+                    <div class="card-content">
+                    {sortedArticles.map((article) => (
+                        <LinkCard
+                            href={`/article/${article.slug}`}
+                            thumbnail={article.data.thumbnail}
+                            title={article.data.title}
+                            description={article.data.description}
+                        />
+                    ))}
+                    </div>
+                </div>
+            </div>
+        </div>
 
 		<footer class="footer">
             <!-- フッター -->
@@ -61,6 +99,20 @@ const { Content } = await entry.render();
     .header .fa-arrow-left {
         font-size: 24px;
     }
+
+    .article-page-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 20px;
+        max-width: 1500px;
+        margin: 0 auto;
+    }
+
+    .section { /* 記事ページ限定のスタイル */
+        display: block;
+    }
+
     .article-content {
         background-color: rgba(255, 255, 255, 0.9);
         padding: 40px;
@@ -74,6 +126,13 @@ const { Content } = await entry.render();
         margin-bottom: 20px;
         color: #333;
     }
+    .article-meta {
+        display: flex;
+        gap: 20px;
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
     .article-thumbnail {
         width: 100%;
         height: auto;
@@ -85,5 +144,41 @@ const { Content } = await entry.render();
     .article-body {
         line-height: 1.8;
         font-size: 1.1rem;
+    }
+
+    .article-page-left-container {
+        flex: 1;
+        min-width: 0;
+    }
+    .article-page-right-container {
+        /* width: 340px; */
+        flex-shrink: 0;
+    }
+    .article-page-right-container .section-title {
+        max-width: 70%;
+    }
+    .article-page-right-container .card-content {
+        width: 90%;
+        background-color: #fff;
+        padding: 40px 20px 20px 20px;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+        .article-page-container {
+            flex-direction: column;
+        }
+        .article-page-right-container {
+            width: 100%;
+        }
+        .article-page-right-container .section {
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
     }
 </style>
