@@ -57,6 +57,7 @@ body {
     text-decoration: none;
 }
 
+
 .link-button:hover {
     background-color: var(--theme3);
     color: white;
@@ -66,6 +67,15 @@ body {
     width: 100%;
     height: 100%;
     /* filter: brightness(0) invert(1); */
+}
+
+/*
+ * 利用規約がbuttonいっぱいだと怪しいので少し縮小。
+ * .link-button-img {} より下にないと優先されないので注意
+*/
+.Qiita {
+    width: 35px;
+    height: 35px;
 }
 
 #news-scroll-wrapper {
