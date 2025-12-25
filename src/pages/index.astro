@@ -35,17 +35,17 @@ const sortedArticles = allArticles.sort((a, b) => b.slug.localeCompare(a.slug)).
 				<span class="icon-caret-up"><i class="fa-solid fa-caret-up"></i></i></span>
 			</button>
 			<div class="header-right">
-				<a href="">News</a>
-				<a href="">About</a>
-				<a href="">Works</a>
-				<a href="">Studies</a>
+				<a href="#news">News</a>
+				<a href="#about">About</a>
+				<a href="#works">Works</a>
+				<a href="#studies">Studies</a>
 				<button class="share-button">
 					<i class="fa-solid fa-arrow-up-right-from-square"></i>
 				</button>
 			</div>
 		</header>
 
-		<div class="section-title">News</div>
+		<div class="section-title" id="news">News</div>
 		<div class="news-section section">
 			<div class="news-scroll-wrapper">
 				<div class="news-track">
@@ -76,7 +76,7 @@ const sortedArticles = allArticles.sort((a, b) => b.slug.localeCompare(a.slug)).
 			</div>
 		</div>
 
-		<div class="section-title">About</div>
+		<div class="section-title" id="about">About</div>
 		<div class="about-section section">
 			<div class=""></div>
 			<div class="section-footer">
@@ -87,7 +87,7 @@ const sortedArticles = allArticles.sort((a, b) => b.slug.localeCompare(a.slug)).
 			</div>
 		</div>
 
-		<div class="section-title">Works</div>
+		<div class="section-title" id="works">Works</div>
 		<div class="section">
 			<div class="section-footer">
 				<div>read more</div>
@@ -97,7 +97,7 @@ const sortedArticles = allArticles.sort((a, b) => b.slug.localeCompare(a.slug)).
 			</div>
 		</div>
 
-		<div class="section-title">Studies</div>
+		<div class="section-title" id="studies">Studies</div>
 		<div class="section">
 			<div class="section-footer">
 				<div>read more</div>
@@ -122,7 +122,7 @@ const sortedArticles = allArticles.sort((a, b) => b.slug.localeCompare(a.slug)).
 						<i class="fa-brands fa-github"></i>
 					</div>
 				</a>
-				<a class="button-container">
+				<a class="button-container" href="https://www.linkedin.com/in/minato-hayashi-1585b03a2/">
 					LinkedIn
 					<div class="link-button">
 						<i class="fa-brands fa-linkedin"></i>
@@ -132,6 +132,12 @@ const sortedArticles = allArticles.sort((a, b) => b.slug.localeCompare(a.slug)).
 					instagram
 					<div class="link-button">
 						<i class="fa-brands fa-instagram"></i>
+					</div>
+				</a>
+				<a class="button-container" href="https://atcoder.jp/users/Caffeineholic">
+					AtCoder
+					<div class="link-button">
+						<img src="/images/AtCoder_logo.png" alt="" class="link-button-img">
 					</div>
 				</a>
 				

@@ -8,6 +8,11 @@
     --button-bg: #97abd7;
 }
 
+html {
+    scroll-padding-top: 130px;
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: "Zalando Sans", sans-serif;
     margin: 8px 0px 0px 0;
@@ -55,6 +60,12 @@ body {
 .link-button:hover {
     background-color: var(--theme3);
     color: white;
+}
+
+.link-button-img {
+    width: 100%;
+    height: 100%;
+    /* filter: brightness(0) invert(1); */
 }
 
 /* =================== header ==================== */
@@ -306,10 +317,10 @@ body {
 }
 
 .links-container {
-    width: clamp(300px, 100%, 700px);
+    width: clamp(300px, 100%, 600px);
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     flex-wrap: wrap;
     gap: 10px;
 }
