@@ -10,10 +10,7 @@
 
 body {
     font-family: "Zalando Sans", sans-serif;
-}
-
-a {
-    text-decoration: none;
+    margin: 8px 0px 0px 0;
 }
 
 .share-button {
@@ -49,8 +46,10 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-shrink: 0;
 
     cursor: pointer;
+    text-decoration: none;
 }
 
 .link-button:hover {
@@ -213,7 +212,6 @@ a {
 }
 
 .section-footer {
-    margin: 20px 0 0 0;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -234,7 +232,7 @@ a {
     width: 100%;
 
     /* border-radius: 20px; */
-    background-color: #fff;
+    /* background-color: #fff; */
     overflow: hidden;
     /* 左右をグラデーションで隠す */
     mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
@@ -242,7 +240,7 @@ a {
 
 .news-track {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     width: max-content;
     /* 自動スクロールアニメーション */
     animation: scroll-left 30s linear infinite;
@@ -283,4 +281,78 @@ a {
 .fa-arrow-right {
     transform: rotate(-45deg);
 
+}
+
+
+/* =================== footer ==================== */
+.footer {
+    padding: 20px;
+    height: 600px;
+    border-radius: 20px 20px 0 0;
+    background-color: var(--theme1);
+    margin-top: 100px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+}
+
+.footer-title {
+    color: #fff;
+    font-size: clamp(30px, 4vw, 50px);
+    font-weight: 600;
+}
+
+.links-container {
+    width: clamp(300px, 100%, 700px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.button-container {
+    font-weight: 500;
+    min-width: 45%;
+    width: 150px;
+    height: fit-content;
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 10px;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: none;
+    box-sizing: border-box;
+
+    text-decoration: none;
+    cursor: pointer;
+    color: #000;
+}
+
+@media (max-width: 500px) {
+    .links-container {
+        width: 100%;
+    }
+    .button-container {
+        font-size: 0.8rem;
+        width: 48%;
+        box-sizing: border-box;
+    }
+}
+
+.button-sentence {
+    min-width: 50%;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+
+.button-container i {
+    font-size: 1.4rem;
+    
 }

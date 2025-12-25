@@ -86,10 +86,6 @@ const formattedDate = `${year}年${month}月${day}日`;
                 </div>
             </div>
         </div>
-
-		<footer class="footer">
-            <!-- フッター -->
-		</footer>
 	</body>
 </html>
 
@@ -98,6 +94,10 @@ const formattedDate = `${year}年${month}月${day}日`;
 
     .header .fa-arrow-left {
         font-size: 24px;
+    }
+
+    .article-body h1 {
+        
     }
 
     .article-page-container {
@@ -143,8 +143,15 @@ const formattedDate = `${year}年${month}月${day}日`;
     }
     .article-body {
         line-height: 1.8;
-        font-size: 1.1rem;
+        font-size: 1.1rem; /* ここで文字の大きさを調整します */
     }
+
+    @media (max-width: 510px) { /* モバイルの時文字を小さくする */
+        .article-body {
+            font-size: 0.8rem;
+        }
+    }
+
 
     .article-page-left-container {
         flex: 1;
@@ -152,6 +159,7 @@ const formattedDate = `${year}年${month}月${day}日`;
     }
     .article-page-right-container {
         /* width: 340px; */
+        width: fit-content;
         flex-shrink: 0;
     }
     .article-page-right-container .section-title {
@@ -171,9 +179,6 @@ const formattedDate = `${year}年${month}月${day}日`;
     @media (max-width: 900px) {
         .article-page-container {
             flex-direction: column;
-        }
-        .article-page-right-container {
-            width: 100%;
         }
         .article-page-right-container .section {
             flex-direction: row;
