@@ -7,10 +7,7 @@
     --theme1: #4968bd;
     --theme2: #71a2f1;
     --theme3: #9bbdf4;
-
-    --header-bg: #eff2fa;
-    --header-sentence: #000;
-
+    --header-bg: #4968bd;
     --section-bg: var(--theme1);
     --button-bg: #97abd7;
 
@@ -120,7 +117,7 @@ a {
 
     /* テキスト */
     font-size: clamp(15px, 3vw, 20px);
-    color: var(--header-sectence);
+    color: #fff;
     font-weight: 400;
 }
 
@@ -130,7 +127,7 @@ a {
     border: none;
     font-size: 24px; /* ボタンwebアイコンのサイズ */
     cursor: pointer;
-    color: var(--header-sectence);
+    color: #fff;
 }
 
 .header-left {
@@ -166,6 +163,7 @@ a {
 
 .header a {
     text-decoration: none;
+    color: #fff;
 }
 
 /* =================== toggle ==================== */
