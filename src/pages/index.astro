@@ -47,28 +47,20 @@ const sortedArticles = allArticles.sort((a, b) => b.slug.localeCompare(a.slug)).
 			</div>
 		</header>
 
-		<div class="section-title" id="news">News</div>
 		<div class="news-section section">
-			<div class="news-scroll-wrapper" id="news-scroll-wrapper" style="overflow-x: auto;">
-				<div class="news-track" style="animation: none;">
-					{/* ループのために2セット表示 */}
-					{sortedArticles.map((article) => (
-						<LinkCard
-							href={`/article/${article.slug}`}
-							thumbnail={article.data.thumbnail}
-							title={article.data.title}
-							description={article.data.description}
-						/>
-					))}
-					{sortedArticles.map((article) => (
-						<LinkCard
-							href={`/article/${article.slug}`}
-							thumbnail={article.data.thumbnail}
-							title={article.data.title}
-							description={article.data.description}
-						/>
-					))}
-				</div>
+			<div class="section-title">
+				News
+			</div>
+			<div class="link-card-container">
+				{sortedArticles.map((article) => (
+					<LinkCard
+						href={`/article/${article.slug}`}
+						thumbnail={article.data.thumbnail}
+						title={article.data.title}
+						description={article.data.description}
+						slug={article.slug}
+					/>
+				))}
 			</div>
 			<div class="section-footer">
 				<div class="button-container">
@@ -80,8 +72,10 @@ const sortedArticles = allArticles.sort((a, b) => b.slug.localeCompare(a.slug)).
 			</div>
 		</div>
 
-		<div class="section-title" id="about">About</div>
 		<div class="about-section section">
+			<div class="section-title">
+				About
+			</div>
 			<div class="introduction-container">
 				
 			</div>
@@ -95,8 +89,10 @@ const sortedArticles = allArticles.sort((a, b) => b.slug.localeCompare(a.slug)).
 			</div>
 		</div>
 
-		<div class="section-title" id="works">Works</div>
 		<div class="section">
+			<div class="section-title">
+				Works
+			</div>
 			<div class="section-footer">
 				<div class="button-container">
 					show more
@@ -107,8 +103,10 @@ const sortedArticles = allArticles.sort((a, b) => b.slug.localeCompare(a.slug)).
 			</div>
 		</div>
 
-		<div class="section-title" id="studies">Studies</div>
 		<div class="section">
+			<div class="section-title">
+				Studies
+			</div>
 			<div class="section-footer">
 				<div class="button-container">
 					show more
@@ -148,9 +146,7 @@ const sortedArticles = allArticles.sort((a, b) => b.slug.localeCompare(a.slug)).
 				</a>
 				<a class="button-container" href="https://atcoder.jp/users/Caffeineholic">
 					AtCoder
-					<div class="link-button">
-						<img src="/images/AtCoder_logo.png" alt="" class="link-button-img">
-					</div>
+					<img src="/images/AtCoder_logo.png" alt="" class="link-button-img AtCoder">
 				</a>
 				
 			</div>
