@@ -2,12 +2,13 @@
 interface Props {
     href: string;
     description?: string;
+    [key: string]: any;
 }
 
-const { href, description } = Astro.props;
+const { href, description, ...attributes } = Astro.props;
 ---
 
-<a href={href} class="button-container">
+<a href={href} class="button-container" {...attributes}>
     <div class="button-title">
         {description}
     </div>

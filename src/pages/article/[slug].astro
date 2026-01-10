@@ -1,5 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
+import CategoryTag from '../../components/CategoryTag.astro';
 import LinkCard from '../../components/LinkCard.astro';
 
 const allArticles = await getCollection('article');
@@ -38,11 +39,14 @@ const { Content } = await entry.render();
 	<body>
 		<header class="header">
 			<div class="header-left">
-                <a href="/"><i class="fa-solid fa-arrow-left"></i></a>
-            </div>
-            <div class="">
-                Article Page
-            </div>
+				<a href="/">mi-nato.com</a>
+			</div>
+			<div class="header-right">
+				<a href="/">Home</a>
+				<a href="/#about">About</a>
+				<a href="/#works">Works</a>
+				<a href="/#studies">Studies</a>
+			</div>
 		</header>
 
         <div class="article-page-container">
@@ -50,6 +54,7 @@ const { Content } = await entry.render();
                 <article class="article-content">
                     <h1 class="article-title">{entry.data.title}</h1>
                     <div class="article-meta">
+                        <CategoryTag category={entry.data.category}></CategoryTag>
                         <span class="article-date">{entry.data.date.toLocaleDateString('ja-JP')}</span>
                     </div>
                     <img src={entry.data.thumbnail} alt={entry.data.title} class="article-thumbnail" />
@@ -59,6 +64,7 @@ const { Content } = await entry.render();
                 </article>
             </div>
         </div>
+        
 	</body>
 </html>
 
@@ -103,10 +109,15 @@ const { Content } = await entry.render();
     }
     .article-meta {
         display: flex;
+        align-items: center;
         gap: 20px;
         color: #666;
         font-size: 0.9rem;
         margin-bottom: 20px;
+    }
+    .article-meta :global(.category-tag) {
+        color: #666;
+        border-color: #666;
     }
     .article-thumbnail {
         width: 100%;

@@ -52,7 +52,7 @@ const categories = [...new Set(sortedArticles.map((article) => article.data.cate
 		</header>
 
 		<h1>Welcome (^ ^) !</h1>
-		<ExternalLinkButton href="" description="wanna share this page?"></ExternalLinkButton>
+		<ExternalLinkButton href="#" id="share-button" description="Share this page"></ExternalLinkButton>
 
 		<div class="articles-section section" id="articles">
 			<div class="section-header">
@@ -82,9 +82,13 @@ const categories = [...new Set(sortedArticles.map((article) => article.data.cate
 						date={article.data.date.toLocaleDateString('ja-JP')}
 					/>
 				))}
+				<div class="more-indicator">
+					<i class="fa-solid fa-ellipsis"></i>
+				</div>
 			</div>
+			
 			<div class="section-footer">
-				<InternalLinkButton href="/allarticles" description="View All">
+				<InternalLinkButton href="/allarticles" description={`View All (${allArticles.length})`}>
 			</div>
 		</div>
 
@@ -145,7 +149,46 @@ const categories = [...new Set(sortedArticles.map((article) => article.data.cate
 		</a>
 
 		<script is:inline src="/scripts/script.js"></script>
+		<script>
+			const shareButton = document.getElementById('share-button');
+			if (shareButton) {
+				shareButton.addEventListener('click', async (e) => {
+					e.preventDefault();
+					const shareData = {
+						title: document.title,
+						text: 'Check out this website!',
+						url: window.location.href,
+					};
+
+					// Web Share API が使える場合（スマホなど）
+					if (navigator.share) {
+						try {
+							await navigator.share(shareData);
+						} catch (err) {
+							console.log('Share canceled');
+						}
+					} else {
+						// 使えない場合はクリップボードにコピー
+						try {
+							await navigator.clipboard.writeText(window.location.href);
+							alert('URL copied to clipboard!');
+						} catch (err) {
+							console.error('Failed to copy:', err);
+						}
+					}
+				});
+			}
+		</script>
 
 		
 	</body>
 </html>
+
+<style>
+	.more-indicator {
+		font-size: 2rem;
+		margin-top: 10px;
+		opacity: 0.6;
+		color: white;
+	}
+</style>
