@@ -51,9 +51,6 @@ const categories = [...new Set(sortedArticles.map((article) => article.data.cate
 			</div>
 		</header>
 
-		<h1>Welcome (^ ^) !</h1>
-		<ExternalLinkButton href="#" id="share-button" description="Share this page"></ExternalLinkButton>
-
 		<div class="articles-section section" id="articles">
 			<div class="section-header">
 				<div class="section-title">
@@ -148,47 +145,6 @@ const categories = [...new Set(sortedArticles.map((article) => article.data.cate
 			<i class="fa-solid fa-angle-up"></i>
 		</a>
 
-		<script is:inline src="/scripts/script.js"></script>
-		<script>
-			const shareButton = document.getElementById('share-button');
-			if (shareButton) {
-				shareButton.addEventListener('click', async (e) => {
-					e.preventDefault();
-					const shareData = {
-						title: document.title,
-						text: 'Check out this website!',
-						url: window.location.href,
-					};
-
-					// Web Share API が使える場合（スマホなど）
-					if (navigator.share) {
-						try {
-							await navigator.share(shareData);
-						} catch (err) {
-							console.log('Share canceled');
-						}
-					} else {
-						// 使えない場合はクリップボードにコピー
-						try {
-							await navigator.clipboard.writeText(window.location.href);
-							alert('URL copied to clipboard!');
-						} catch (err) {
-							console.error('Failed to copy:', err);
-						}
-					}
-				});
-			}
-		</script>
-
-		
+		<script is:inline src="/scripts/script.js"></script>		
 	</body>
 </html>
-
-<style>
-	.more-indicator {
-		font-size: 2rem;
-		margin-top: 10px;
-		opacity: 0.6;
-		color: white;
-	}
-</style>

@@ -106,7 +106,7 @@ a {
         font-size: var(--large);
     }
     .header-right a {
-        font-size: var(--small);
+        font-size: var(--medium);
     }
 }
 
@@ -215,6 +215,13 @@ a {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.more-indicator {
+    font-size: 2rem;
+    margin-top: 10px;
+    opacity: 0.6;
+    color: white;
 }
 
 /* wrapperは回転させずに、中身のアイコンのみを45度回転 */
