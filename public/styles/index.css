@@ -242,7 +242,7 @@ a {
 }
 .introduction-container p {
     border-bottom: 4px solid var(--theme5);
-    font-size: clamp(10px, 3vw, 22px);
+    font-size: clamp(17px, 3vw, 22px);
 }
 
 
@@ -376,7 +376,7 @@ a {
     /* サイズ、形 */
     margin-top: 80px;
     min-height: 400px;
-    padding: 60px 20px;
+    padding: 60px 0px;
     width: 100vw;
 
     /* デザイン */
@@ -411,5 +411,5 @@ a {
     grid-template-columns: repeat(2, 200px);
     justify-content: center;
 
-    gap: 16px;
+    gap: clamp(7px, 2vw, 20px);
 }
