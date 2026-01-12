@@ -181,7 +181,6 @@ a {
     color: var(--white);
     font-size: clamp(30px, 4vw, 50px);
     font-weight: 800;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .section-footer {
@@ -400,16 +399,15 @@ a {
     color: inherit;
     font-size: clamp(30px, 4vw, 50px);
     font-weight: 800;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .links-container {
     width: 100%;
-    max-width: 600px;
+    max-width: 900px;
 
-    display: grid;
-    grid-template-columns: repeat(2, 200px);
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-
-    gap: clamp(7px, 2vw, 20px);
+    align-items: center;
+    gap: 10px;
 }
