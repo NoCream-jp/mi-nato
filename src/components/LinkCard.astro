@@ -1,120 +1,60 @@
 ---
-import CategoryTag from '../components/CategoryTag.astro';
 
 interface Props {
-	href: string;
 	thumbnail: string;
-	title: string;
-    category: string;
-	slug: string;
-    date?: string;
+	href: string;
+    title?: string;
 }
 
-const { href, thumbnail, title, category, slug, date } = Astro.props;
+const { thumbnail, href, title } = Astro.props;
 ---
 
-<a href={href} class="link-card" data-category={category}>
-
-    <div class="card-left-container">
-        <div class="title-container">
-            <div class="card-title">
-                {title}
-            </div>
-            <div class="card-date">
-                {date}
-            </div>
-        </div>
-            <CategoryTag category={category} />
+<a href={href} class="link-card">
+    <img src={thumbnail} alt={title || "Work thumbnail"} class="card-thumbnail" />
+    <div class="icon-container">
+        <i class="fa-solid fa-globe"></i>
     </div>
-
-    <div class="card-right-container">
-        <i class="fa-solid fa-ellipsis-vertical"></i>
-    </div>
-
 </a>
 
 <style>
     .link-card {
-        /* サイズ、形 */
-        width: clamp(320px, 90%, 700px);
-        height: 100px;
-        padding: 20px;
         position: relative;
-
-        /* デザイン */
-        background-color: inherit;
-
-        /* コンテンツ */
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px;
-        color: var(--white);
-    }
-
-    .link-card:hover {
-        background-color: var(--theme4);
-    }
-    
-    .card-left-container {
-        width: 90%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .title-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-        gap: 2px;
-    }
-
-    .card-title{
-        font-size: clamp(var(--small), 3vw, var(--medium));
-    }
-
-    .card-date {
-        font-size: 0.9rem;
-        opacity: 0.8;
-    }
-
-    .card-right-container {
-        width: 3%;
-        font-size: 25px;
-    }
-
-    /* ========== 疑似要素でボーダーを描画し、重なりを防ぐ ========== */
-    .link-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
+        display: block;
         width: 100%;
-        height: 2px;
-        background-color: var(--white);
+        height: 250px; /* カードの高さを指定 */
+        border-radius: 16px;
+        overflow: hidden;
+        text-decoration: none;
+        background-color: #f0f0f0;
     }
 
-    .link-card:last-of-type::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 0;
+    .card-thumbnail {
         width: 100%;
-        height: 2px;
-        background-color: var(--white);
+        height: 100%;
+        object-fit: cover;
+        transition: filter 0.3s ease;
     }
 
-    /* JSで制御するためのクラス: フィルタリング時に最後の要素に適用 */
-    .link-card.last-visible::after {
-        content: "";
+    .icon-container {
         position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background-color: var(--white);
+        top: 50%;
+        right: 30px;
+        transform: translateY(-50%);
+        font-size: 3rem;
+        color: var(--white, #fff);
+        opacity: 0.7;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 2;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+
+    /* Hover Effects */
+    .link-card:hover .card-thumbnail {
+        filter: blur(4px) brightness(0.7); /* すりガラス風フィルター */
+    }
+
+    .link-card:hover .icon-container {
+        opacity: 1;
+        transform: translateY(-50%) scale(1.1);
     }
 </style>

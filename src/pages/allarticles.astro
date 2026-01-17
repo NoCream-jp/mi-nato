@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import LinkCard from '../components/LinkCard.astro';
+import ArticleCard from '../components/ArticleCard.astro';
 import ExternalLinkButton from '../components/ExternalLinkButton.astro';
 import InternalLinkButton from '../components/InternalLinkButton.astro';
 
@@ -69,14 +69,13 @@ const categories = [...new Set(sortedArticles.map((article) => article.data.cate
 					</div>
 				</div>
 			</div>
-			<div class="link-card-container">
+			<div class="article-card-container">
 				{sortedArticles.map((article) => (
-					<LinkCard
+					<ArticleCard
 						href={`/article/${article.slug}`}
 						thumbnail={article.data.thumbnail}
 						title={article.data.title}
 						category={article.data.category}
-						slug={article.slug}
 						date={article.data.date.toLocaleDateString('ja-JP')}
 					/>
 				))}

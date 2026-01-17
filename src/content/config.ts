@@ -10,6 +10,17 @@ const articleCollection = defineCollection({
 	}),
 });
 
+const workCollection = defineCollection({
+	type: 'content',
+	schema: z.object({
+		title: z.string(),
+		description: z.string().optional(),
+		date: z.date(),
+		thumbnail: z.string(),
+	}),
+});
+
 export const collections = {
 	'article': articleCollection,
+	'work': workCollection,
 };

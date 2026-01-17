@@ -88,12 +88,19 @@ const { href, description, ...attributes } = Astro.props;
         width: auto;
         border-radius: 10px;
     }
+    :global(.Zenn) {
+        height: 50%;
+        filter: brightness(0) invert(1);
+    }
+    :global(.note) {
+        height: 80%;
+        filter:brightness(0) invert(1);
+    }
 
     /* スロット内のアイコンサイズを一括調整 */
     .link-button :global(i) {
         font-size: 24px;
     }
-
     .link-button :global(img) {
         /* max-width: 100%; */
         max-height: 100%;

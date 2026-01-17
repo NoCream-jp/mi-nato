@@ -1,11 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
-import LinkCard from '../components/LinkCard.astro';
+import ArticleCard from '../components/ArticleCard.astro';
 import ExternalLinkButton from '../components/ExternalLinkButton.astro';
 import InternalLinkButton from '../components/InternalLinkButton.astro';
+import LinkCard from '../components/LinkCard.astro';
 
 const allArticles = await getCollection('article');
 const sortedArticles = allArticles.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 3);
+
+const allWorks = await getCollection('work');
 
 // 表示されている記事からユニークなカテゴリーを抽出
 const categories = [...new Set(sortedArticles.map((article) => article.data.category))];
@@ -66,14 +69,13 @@ const categories = [...new Set(sortedArticles.map((article) => article.data.cate
 					</div>
 				</div>
 			</div>
-			<div class="link-card-container">
+			<div class="article-card-container">
 				{sortedArticles.map((article) => (
-					<LinkCard
+					<ArticleCard
 						href={`/article/${article.slug}`}
 						thumbnail={article.data.thumbnail}
 						title={article.data.title}
 						category={article.data.category}
-						slug={article.slug}
 						date={article.data.date.toLocaleDateString('ja-JP')}
 					/>
 				))}
@@ -109,6 +111,15 @@ const categories = [...new Set(sortedArticles.map((article) => article.data.cate
 					Works
 				</div>
 			</div>
+			<div class="link-card-container">
+				{allWorks.map((work) => (
+					<LinkCard
+						href={`/${work.slug}`}
+						thumbnail={work.data.thumbnail}
+						title={work.data.title}
+					/>
+				))}
+			</div>
 			<div class="section-footer">
 				<InternalLinkButton href="/" description="View All">
 			</div>
@@ -132,7 +143,8 @@ const categories = [...new Set(sortedArticles.map((article) => article.data.cate
 				<ExternalLinkButton href="https://github.com/NoCream-jp" description="GiHub"><i class="fa-brands fa-github"></i></ExternalLinkButton>
 				<ExternalLinkButton href="https://www.linkedin.com/in/m-hayashi/" description="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></ExternalLinkButton>
 				<ExternalLinkButton href="https://qiita.com/_NoCream" description="Qiita"><img src="/images/qiita-white-icon.png" alt="Qiita" class="Qiita" /></ExternalLinkButton>
-				<ExternalLinkButton href="https://note.com" description="note"></ExternalLinkButton>
+				<ExternalLinkButton href="https://note.com/mi_nat0" description="note"><img src="/images/note-logo.png" alt="" class="note"></ExternalLinkButton>
+				<ExternalLinkButton href="https://zenn.dev/nocream" description="Zenn"><img src="/images/zenn-logo-color-transparent.png" alt="Zenn" class="Zenn"></ExternalLinkButton>
 				<ExternalLinkButton href="https://atcoder.jp/users/Caffeineholic" description="AtCoder" class="AtCoder">
 					<img src="/images/AtCoder_logo.png" alt="" class="AtCoder" />
 				</ExternalLinkButton>
