@@ -1,6 +1,7 @@
 ---
 title: "Waka-topia"
-description: "This is a sample work entry to test the LinkCard component."
+description: "学生企業団体Waka-topiaについての記事です．"
+category: "Startup"
 date: 2026-01-28
 slug: "waka-topia"
 thumbnail: "/images/waka-topia.png"
