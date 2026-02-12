@@ -1,84 +1,85 @@
-*, *::before, *::after {
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 :root {
-    /* #4B9C95 */
-    --theme1: #4968bd;
-    --theme2: #71a2f1;
-    --theme3: #9bbdf4;
-    --header-bg: #4968bd;
-    --section-bg: var(--theme1);
-    --button-bg: #97abd7;
+  /* #4B9C95 */
+  --theme1: #4968bd;
+  --theme2: #71a2f1;
+  --theme3: #9bbdf4;
+  --header-bg: #4968bd;
+  --section-bg: var(--theme1);
+  --button-bg: #97abd7;
 
-    --primary: #4968bd;
-    --radius-md: 16px;
-    --radius-lg: 24px;
+  --primary: #4968bd;
+  --radius-md: 16px;
+  --radius-lg: 24px;
 }
 
 html {
-    scroll-padding-top: 80px;
-    scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  scroll-behavior: smooth;
 }
 
 body {
-    font-family: "Zalando Sans", sans-serif;
-    margin: 8px 0px 0px 0;
+  font-family: "Zalando Sans", sans-serif;
+  margin: 8px 0px 0px 0;
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 .share-button {
-    width: 50px;
-    height: 50px;
-    border: none;
-    border-radius: 15px;
-    background-color: var(--theme2);
-    color: white;
-    font-size: 100%;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 15px;
+  background-color: var(--theme2);
+  color: white;
+  font-size: 100%;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .share-button:hover {
-    background-color: var(--theme3);
-    color: white;
+  background-color: var(--theme3);
+  color: white;
 }
 
 .share-button,
 .link-button {
-    width: 50px;
-    height: 50px;
-    border: none;
-    border-radius: 10px;
+  width: 50px;
+  height: 50px;
+  border: none;
+  border-radius: 10px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    background-color: var(--theme2);
-    color: white;
-    font-size: 100%;
+  background-color: var(--theme2);
+  color: white;
+  font-size: 100%;
 }
-
 
 .share-button:hover,
 .link-button:hover {
-    background-color: var(--theme3);
-    color: white;
+  background-color: var(--theme3);
+  color: white;
 }
 
 .link-button-img {
-    width: 100%;
-    height: 100%;
-    /* filter: brightness(0) invert(1); */
+  width: 100%;
+  height: 100%;
+  /* filter: brightness(0) invert(1); */
 }
 
 /*
@@ -87,330 +88,346 @@ a {
  * 16pxより小さくしないように
 */
 .Qiita {
-    width: 23px;
-    height: 23px;
+  width: 23px;
+  height: 23px;
 }
 
 #news-scroll-wrapper {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 #news-scroll-wrapper::-webkit-scrollbar {
-    display: none;  /* Chrome, Safari, Opera */
+  display: none; /* Chrome, Safari, Opera */
 }
 
 /* =================== header ==================== */
 
 .header {
-    height: 50px;
-    background-color: var(--header-bg);
-    border-radius: 20px;
-    /* border: solid 1px black; */
-    margin: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0px;
-    z-index: 2;
-    padding: 35px;
+  height: 50px;
+  background-color: var(--header-bg);
+  border-radius: 20px;
+  /* border: solid 1px black; */
+  margin: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0px;
+  z-index: 2;
+  padding: 35px;
 
-    /* テキスト */
-    font-size: clamp(15px, 3vw, 20px);
-    color: #fff;
-    font-weight: 400;
+  /* テキスト */
+  font-size: clamp(15px, 3vw, 20px);
+  color: #fff;
+  font-weight: 400;
 }
 
 .menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    font-size: 24px; /* ボタンwebアイコンのサイズ */
-    cursor: pointer;
-    color: #fff;
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px; /* ボタンwebアイコンのサイズ */
+  cursor: pointer;
+  color: #fff;
 }
 
 .header-left {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .header-right {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
 }
 
 .header-right a {
-    height: 50px;
-    padding: 10px;
-    border-radius: 10px;
+  height: 50px;
+  padding: 10px;
+  border-radius: 10px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
 }
 
-.header-right a:hover{
-    color: #fff;
-    background-color: var(--theme2);
+.header-right a:hover {
+  color: #fff;
+  background-color: var(--theme2);
 }
-
 
 .header a {
-    text-decoration: none;
-    color: #fff;
+  text-decoration: none;
+  color: #fff;
 }
 
 /* =================== toggle ==================== */
-@media (max-width: 800px) { /* 狭い場合 */
-    .menu-toggle {
-        display: block;
-    }
-    .header-right {
-        width: clamp(100px, 35vw, 350px); /* section-titleとそろえるときれい */
-        top: 70px;
-        right: 0;
-        padding: 20px;
-        border-radius: 0 0 20px 20px;
+@media (max-width: 800px) {
+  /* 狭い場合 */
+  .menu-toggle {
+    display: block;
+  }
+  .header-right {
+    width: clamp(100px, 35vw, 350px); /* section-titleとそろえるときれい */
+    top: 70px;
+    right: 0;
+    padding: 20px;
+    border-radius: 0 0 20px 20px;
 
-        display: none;
-        position: absolute;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
+    display: none;
+    position: absolute;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 
-        background-color: var(--header-bg);
-    }
+    background-color: var(--header-bg);
+  }
 
-    .header-right a {
-        width: 100%;
-    }
+  .header-right a {
+    width: 100%;
+  }
 
-    .header-right::before {
-        top: 33px;
-        left: -20px;
-        width: 20px;
-        height: 20px;
+  .header-right::before {
+    top: 33px;
+    left: -20px;
+    width: 20px;
+    height: 20px;
 
-        content: "";
+    content: "";
 
-        position: absolute;
-        background: radial-gradient(circle at bottom left, transparent 20px, var(--header-bg) 20px);
-    }
+    position: absolute;
+    background: radial-gradient(
+      circle at bottom left,
+      transparent 20px,
+      var(--header-bg) 20px
+    );
+  }
 
-    .icon-caret-up {
-        display: none;
-    }
+  .icon-caret-up {
+    display: none;
+  }
 
-    /* メニューが開いている時のスタイル */
-    .header.menu-open .header-right {
-        display: flex;
-        top: 37px;
-    }
-    .header.menu-open .icon-hamburger {
-        display: none;
-    }
-    .header.menu-open .icon-caret-up {
-        display: block;
-    }
+  /* メニューが開いている時のスタイル */
+  .header.menu-open .header-right {
+    display: flex;
+    top: 37px;
+  }
+  .header.menu-open .icon-hamburger {
+    display: none;
+  }
+  .header.menu-open .icon-caret-up {
+    display: block;
+  }
 }
 
 /* =================== section ==================== */
 .section-title {
-    margin: 20px 20px 0px 20px;
-    /* padding: 10px; */
-    height: 60px;
-    border-radius: 20px 20px 0 0;
-    width: clamp(100px, 35vw, 350px);
+  margin: 20px 20px 0px 20px;
+  /* padding: 10px; */
+  height: 60px;
+  border-radius: 20px 20px 0 0;
+  width: clamp(100px, 35vw, 350px);
 
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    /* テキスト */
-    color: white;
-    background-color: var(--section-bg);
-    font-size: clamp(15px, 4vw, 25px);
-    font-weight: 600;
+  /* テキスト */
+  color: white;
+  background-color: var(--section-bg);
+  font-size: clamp(15px, 4vw, 25px);
+  font-weight: 600;
 }
 /* 滑らかにつなげたい */
 .section-title::after {
-    width: 20px;
-    height: 20px;
-    right: -20px;
-    bottom: 0;
-    
-    content: "";
-    position: absolute;
-    /* 右上角中心の円、中心から半径20pxの範囲
+  width: 20px;
+  height: 20px;
+  right: -20px;
+  bottom: 0;
+
+  content: "";
+  position: absolute;
+  /* 右上角中心の円、中心から半径20pxの範囲
     transparent、半径20pxより外色指定 */
-    background: radial-gradient(circle at top right, transparent 20px, var(--section-bg) 20px);
+  background: radial-gradient(
+    circle at top right,
+    transparent 20px,
+    var(--section-bg) 20px
+  );
 }
 
 .section {
-    min-height: 300px;
-    height: fit-content;
-    margin: 0px 20px 20px 20px;
-    padding: 20px;
-    border-radius: 0 20px 20px 20px;
+  min-height: 300px;
+  height: fit-content;
+  margin: 0px 20px 20px 20px;
+  padding: 20px;
+  border-radius: 0 20px 20px 20px;
 
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
-    background-color: var(--section-bg);
+  background-color: var(--section-bg);
 }
 
 .section-footer {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 20px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
 
-    color: white;
-    font-size: clamp(15px, 4vw, 25px);
+  color: white;
+  font-size: clamp(15px, 4vw, 25px);
 }
 
 .news-section {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .news-scroll-wrapper {
-    /* background-color: #ddd; */
-    margin: 20px 0 0 0;
-    padding: 40px 0; /* 影が切れないように上下に余白 */
-    width: 100%;
+  /* background-color: #ddd; */
+  margin: 20px 0 0 0;
+  padding: 40px 0; /* 影が切れないように上下に余白 */
+  width: 100%;
 
-    overflow: hidden;
-    /* 左右をグラデーションで隠す */
-    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  overflow: hidden;
+  /* 左右をグラデーションで隠す */
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 5%,
+    black 95%,
+    transparent
+  );
 }
 
 .news-track {
-    display: flex;
-    gap: 10px;
-    width: max-content;
-    /* 自動スクロールアニメーション */
-    animation: scroll-left 30s linear infinite;
+  display: flex;
+  gap: 10px;
+  width: max-content;
+  /* 自動スクロールアニメーション */
+  animation: scroll-left 30s linear infinite;
 }
 
 .news-track:hover {
-    animation-play-state: paused;
+  animation-play-state: paused;
 }
 
 @keyframes scroll-left {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); } /* 2セットあるので半分移動したらループ */
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  } /* 2セットあるので半分移動したらループ */
 }
 
 /* wrapperは回転させずに、中身のアイコンのみを45度回転 */
 .fa-arrow-right {
-    transform: rotate(-45deg);
+  transform: rotate(-45deg);
 
-    transition: transform 0.3s;
+  transition: transform 0.3s;
 }
 .news-link-button:hover .fa-arrow-right {
-    transform: rotate(0deg);
+  transform: rotate(0deg);
 }
 
 .introduction-container {
-    width: 90%;
-    height: 90%;
+  width: 90%;
+  height: 90%;
 
-    display: flex;
+  display: flex;
 
-    background-color: #fff;
+  background-color: #fff;
 }
 
 /* =================== footer ==================== */
 .footer {
-    padding: 60px 20px;
-    min-height: 400px;
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-    background: linear-gradient(135deg, var(--primary) 0%, #344e91 100%);
-    margin-top: 80px;
+  padding: 60px 20px;
+  min-height: 400px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: linear-gradient(135deg, var(--primary) 0%, #344e91 100%);
+  margin-top: 80px;
 
-    color: #fff;
+  color: #fff;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
 }
 
 .footer-title {
-    color: var(--text-inverse);
-    font-size: clamp(30px, 4vw, 50px);
-    font-weight: 800;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  color: var(--text-inverse);
+  font-size: clamp(30px, 4vw, 50px);
+  font-weight: 800;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .links-container {
-    width: 100%;
-    max-width: 600px;
+  width: 100%;
+  max-width: 600px;
 
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 
-    gap: 16px;
+  gap: 16px;
 }
 
 .button-container {
-    max-width: 250px;
-    width: 100%;
-    height: fit-content;
-    
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: var(--radius-md);
-    padding: 16px 24px;
-    
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    
-    color: #fff;
-    font-weight: 500;
-    font-size: 1rem;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  max-width: 250px;
+  width: 100%;
+  height: fit-content;
+
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  padding: 16px 24px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  color: #fff;
+  font-weight: 500;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .button-container:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 500px) {
-
 }
 
 .button-sentence {
+  min-width: 50%;
 
-    min-width: 50%;
+  display: flex;
+  align-items: center;
 
-    display: flex;
-    align-items: center;
-
-    font-size: inherit;
-    font-weight: 600;
+  font-size: inherit;
+  font-weight: 600;
 }
 
 .button-container i {
-    font-size: 1.2rem;
-    opacity: 0.9;
+  font-size: 1.2rem;
+  opacity: 0.9;
 }

@@ -1,446 +1,432 @@
-*, *::before, *::after {
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 :root {
-    /* テーマカラーから濃淡5色 */
-    --theme1: #2c4383;
-    --theme2: #3a549c;
-    --theme3: #4968bd;
-    --theme4: #71a2f1;
-    --theme5: #9bbdf4;
-    --white: #e9e9e9;
+  /* テーマカラーから濃淡5色 */
+  --theme1: #2c4383;
+  --theme2: #3a549c;
+  --theme3: #4968bd;
+  --theme4: #71a2f1;
+  --theme5: #9bbdf4;
+  --white: #e9e9e9;
 
-    /* テキストサイズ */
-    --large: 30px;
-    --medium: 20px;
-    --small: 15px;
-    --header-bg: var(--theme3);
+  /* テキストサイズ */
+  --large: 30px;
+  --medium: 20px;
+  --small: 15px;
+  --header-bg: var(--theme3);
 
-    /* section内のコンポーネントの幅 */
-    --view-width: clamp(320px, 90%, 700px);
+  /* section内のコンポーネントの幅 */
+  --view-width: clamp(320px, 90%, 700px);
 }
 
 html {
-    scroll-padding-top: 80px;
-    scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  scroll-behavior: smooth;
 }
 
 body {
-    /* サイズ、配置 */
-    margin: 0;
+  /* サイズ、配置 */
+  margin: 0;
 
-    /* デザイン */
-    background-color: var(--theme3);
-    
-    /* コンテンツ */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: var(--white);
-    
-    font-family: "Zalando Sans", sans-serif;
+  /* デザイン */
+  background-color: var(--theme3);
+
+  /* コンテンツ */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--white);
+
+  font-family: "Zalando Sans", sans-serif;
 }
 
 @media (min-width: 900px) {
-    body {
-        padding: 0 100px;
-    }
+  body {
+    padding: 0 100px;
+  }
 }
 
 a {
-    text-decoration: none;
-    color: inherit;
-    cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
-
-
 
 /* =================== header ==================== */
 
 .header {
-    /* サイズ、配置 */
-    height: 100px;
-    margin-bottom: 100px;
+  /* サイズ、配置 */
+  height: 100px;
+  margin-bottom: 100px;
 
-    /* 形 */
-    background-color: var(--header-bg);
-    padding: 10px 20px;
-    width: 100%;
+  /* 形 */
+  background-color: var(--header-bg);
+  padding: 10px 20px;
+  width: 100%;
 
-    /* コンテンツ */
-    color: var(--white);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  /* コンテンツ */
+  color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .header-left {
-    /* サイズ、配置 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
+  /* サイズ、配置 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 
-    /* コンテンツ */
-    font-size: var(--large);
-    font-weight: 500;
+  /* コンテンツ */
+  font-size: var(--large);
+  font-weight: 500;
 }
 
 @media (max-width: 800px) {
-    .header {
-        height: auto;
-        flex-direction: column;
-        gap: 10px;
-    }
-    .header-left {
-        font-size: var(--large);
-    }
-    .header-right a {
-        font-size: var(--medium);
-    }
+  .header {
+    height: auto;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .header-left {
+    font-size: var(--large);
+  }
+  .header-right a {
+    font-size: var(--medium);
+  }
 }
 
 .header-right {
-    /* サイズ、配置 */
-    width: fit-content;
-    height: 100%;
-    /* padding: 10px; */
+  /* サイズ、配置 */
+  width: fit-content;
+  height: 100%;
+  /* padding: 10px; */
 
-    /* デザイン */
-    border: 2px solid var(--white);
-    border-radius: 10px;
-    overflow: hidden;
+  /* デザイン */
+  border: 2px solid var(--white);
+  border-radius: 10px;
+  overflow: hidden;
 
-    /* コンテンツ */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* gap: 10px; */
+  /* コンテンツ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* gap: 10px; */
 
-    font-size: var(--medium);
-    font-weight: 500;
+  font-size: var(--medium);
+  font-weight: 500;
 }
 
 .header-right a {
-    /* サイズ、配置 */
-    height: 100%;
-    padding: 10px;
+  /* サイズ、配置 */
+  height: 100%;
+  padding: 10px;
 
-    /* デザイン */
+  /* デザイン */
 
-    /* コンテンツ */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+  /* コンテンツ */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-.header-right a:hover{
-    color: #fff;
-    background: rgba(255, 255, 255, 0.2);
+.header-right a:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
 }
-
 
 .header a {
-    text-decoration: none;
+  text-decoration: none;
 }
-
-
 
 /* =================== section ==================== */
 
 .section {
-    /* サイズ、形 */
-    min-height: 600px;
-    border-radius: 20px;
-    margin: 50px 20px;
-    width: calc(100% - 40px);
-    padding: 50px 20px;
+  /* サイズ、形 */
+  min-height: 600px;
+  border-radius: 20px;
+  margin: 50px 20px;
+  width: calc(100% - 40px);
+  padding: 50px 20px;
 
-    /* デザイン */
-    border: 2px solid var(--white);
+  /* デザイン */
+  border: 2px solid var(--white);
 
-    /* コンテンツ */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: 40px;
+  /* コンテンツ */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
 }
 
 .section-header {
-    /* サイズ、形 */
-    height: 30%;
-    width: 100%;
-    padding: 0 30px;
+  /* サイズ、形 */
+  height: 30%;
+  width: 100%;
+  padding: 0 30px;
 
-    /* デザイン */
-    /* コンテンツ */
-    display: flex;
-    justify-content: space-between;
-    align-items: center
+  /* デザイン */
+  /* コンテンツ */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .section-title {
-    color: var(--white);
-    font-size: clamp(30px, 4vw, 50px);
-    font-weight: 800;
+  color: var(--white);
+  font-size: clamp(30px, 4vw, 50px);
+  font-weight: 800;
 }
 
 .section-footer {
-    /* 100%にしないと要素に応じてちぢむ (!?) */
-    /* width: 100% */
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 20px;
+  /* 100%にしないと要素に応じてちぢむ (!?) */
+  /* width: 100% */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
 
-    color: var(--white);
-    font-size: clamp(15px, 4vw, 25px);
+  color: var(--white);
+  font-size: clamp(15px, 4vw, 25px);
 }
 
 /* 複数配置する想定で */
 .article-card-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .more-indicator {
-    font-size: 2rem;
-    margin-top: 10px;
-    opacity: 0.6;
-    color: white;
+  font-size: 2rem;
+  margin-top: 10px;
+  opacity: 0.6;
+  color: white;
 }
 
 /* wrapperは回転させずに、中身のアイコンのみを45度回転 */
 .fa-arrow-right {
-    transform: rotate(-45deg);
+  transform: rotate(-45deg);
 
-    transition: transform 0.3s;
+  transition: transform 0.3s;
 }
 .news-link-button:hover .fa-arrow-right {
-    transform: rotate(0deg);
+  transform: rotate(0deg);
 }
 
 .introduction-container {
-    /* サイズ、形 */
-    background-color: var(--theme3);
-    width: var(--view-width);
-    height: 90%;
-    margin: 0 auto;
+  /* サイズ、形 */
+  background-color: var(--theme3);
+  width: var(--view-width);
+  height: 90%;
+  margin: 0 auto;
 
-    /* デザイン */
+  /* デザイン */
 
-    
-    /* コンテンツ */
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    align-items: left;
-    
-    font-size: 1.5rem;
+  /* コンテンツ */
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: left;
+
+  font-size: 1.5rem;
 }
 .introduction-container p {
-    border-bottom: 1px solid var(--theme5);
-    font-size: clamp(17px, 3vw, 22px);
+  border-bottom: 1px solid var(--theme5);
+  font-size: clamp(17px, 3vw, 22px);
 }
 
 .link-card-container {
-    /* サイズ，形 */
-    width: var(--view-width);
+  /* サイズ，形 */
+  width: var(--view-width);
 
-    /* デザイン */
-    background-color: none;
+  /* デザイン */
+  background-color: none;
 
-    /* コンテンツ */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-
+  /* コンテンツ */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
-
 
 /* =================== toolbar,top-buttonなど非コンポーネント ==================== */
 
 .toolbar {
-    /* サイズ、形 */
-    width: 100px;
-    height: 50px;
-    border-radius: 10px;
-    position: relative;
-    /* デザイン */
-    border: 2px solid var(--white);
+  /* サイズ、形 */
+  width: 100px;
+  height: 50px;
+  border-radius: 10px;
+  position: relative;
+  /* デザイン */
+  border: 2px solid var(--white);
 
-    /* コンテンツ */
-    font-size: var(--small);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  /* コンテンツ */
+  font-size: var(--small);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .filter-dropdown {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .filter-button {
-    /* サイズ、形 */
-    width: 100%;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    
-    /* デザイン */
-    border: none;
-    background-color: inherit;
-    border-radius: 10px;
-    cursor: pointer;
-    
-    /* コンテンツ */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
+  /* サイズ、形 */
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 
-    color: var(--white);
-    font-family: inherit;
-    font-weight: 600;
-    font-size: var(--small);
+  /* デザイン */
+  border: none;
+  background-color: inherit;
+  border-radius: 10px;
+  cursor: pointer;
+
+  /* コンテンツ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  color: var(--white);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: var(--small);
 }
 .filter-button:hover {
-    background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* :global() を削除して記述します */
 .article-filter-item.last-visible .article-card::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background-color: var(--white);
-  }
-  
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--white);
+}
 
 .dropdown-content {
-    /* サイズ、形 */
-    min-width: 120px;
-    left: 0;
-    position: absolute;
-    top: 110%;
-    
-    /* デザイン */
-    border: 2px solid var(--white);
-    border-radius: 8px;
-    background-color: var(--theme3);
-    /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
+  /* サイズ、形 */
+  min-width: 120px;
+  left: 0;
+  position: absolute;
+  top: 110%;
 
-    /* コンテンツ */
-    display: none;
-    color: var(--white);
-    overflow: hidden;
-    z-index: 3;
+  /* デザイン */
+  border: 2px solid var(--white);
+  border-radius: 8px;
+  background-color: var(--theme3);
+  /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
+
+  /* コンテンツ */
+  display: none;
+  color: var(--white);
+  overflow: hidden;
+  z-index: 3;
 }
 
 .dropdown-content.show {
-    display: block;
+  display: block;
 }
 
 .dropdown-item {
-    width: 100%;
-    padding: 10px 16px;
+  width: 100%;
+  padding: 10px 16px;
 
-    color: var(--white);
-    background: none;
-    border: none;
-    cursor: pointer;
+  color: var(--white);
+  background: none;
+  border: none;
+  cursor: pointer;
 
-    display: block;
-    text-decoration: none;
-    text-align: left;
-    font-family: inherit;
-    font-size: var(--small);
+  display: block;
+  text-decoration: none;
+  text-align: left;
+  font-family: inherit;
+  font-size: var(--small);
 }
 
 .dropdown-item:hover {
-    background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
 }
 .back-to-top-button {
-    /* サイズ，形 */
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 40px;
-    height: 40px;
-    z-index: 3;
+  /* サイズ，形 */
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  z-index: 3;
 
-    /* デザイン */
-    border: 2px solid var(--white);
-    border-radius: 50%;
-    color: var(--white);
+  /* デザイン */
+  border: 2px solid var(--white);
+  border-radius: 50%;
+  color: var(--white);
 
-    /* コンテンツ */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-decoration: none;
+  /* コンテンツ */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
 }
 
 .back-to-top-button:hover {
-    background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.2);
 }
-
-
-
 
 /* =================== footer ==================== */
 
 .footer {
-    /* サイズ、形 */
-    margin-top: 80px;
-    min-height: 400px;
-    padding: 60px 0px;
-    width: 100vw;
+  /* サイズ、形 */
+  margin-top: 80px;
+  min-height: 400px;
+  padding: 60px 0px;
+  width: 100vw;
 
-    /* デザイン */
-    background: var(--footer-bg);
-    border-top: 2px solid var(--white);
+  /* デザイン */
+  background: var(--footer-bg);
+  border-top: 2px solid var(--white);
 
+  /* コンテンツ */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
 
-    /* コンテンツ */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 48px;
-
-    color: var(--white);
-
+  color: var(--white);
 }
 
 .footer-title {
-    /* color: var(--white); */
-    color: inherit;
-    font-size: clamp(30px, 4vw, 50px);
-    font-weight: 800;
+  /* color: var(--white); */
+  color: inherit;
+  font-size: clamp(30px, 4vw, 50px);
+  font-weight: 800;
 }
 
 .links-container {
-    width: 100%;
-    max-width: 900px;
+  width: 100%;
+  max-width: 900px;
 
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
-
-
