@@ -15,3 +15,4 @@ thumbnail: "/images/waka-topia.png"
 <a href="https://waka-topia.jp">
   <img src="/images/waka-topia_logo_long.svg" alt="Waka-topia" width="300" />
 </a>
+

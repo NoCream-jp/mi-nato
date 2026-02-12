@@ -10,7 +10,7 @@ const sortedArticles = allArticles
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 
-const allWorks = await getCollection("work");
+const allActions = await getCollection("action");
 
 // 表示されている記事からユニークなカテゴリーを抽出
 const categories = [
@@ -64,8 +64,7 @@ const categories = [
       <div class="header-right">
         <a href="#articles">Articles</a>
         <a href="#about">About</a>
-        <a href="#works">Works</a>
-        <a href="#studies">Studies</a>
+        <a href="#actions">Actions</a>
       </div>
     </header>
 
@@ -133,17 +132,17 @@ const categories = [
           <InternalLinkButton href="/" description="View All" />
         </div>
 
-        <div class="section" id="works">
+        <div class="actions-section section" id="actions">
           <div class="section-header">
-            <div class="section-title">Works</div>
+            <div class="section-title">Actions</div>
           </div>
           <div class="link-card-container">
             {
-              allWorks.map((work) => (
+              allActions.map((action) => (
                 <LinkCard
-                  href={`/${work.slug}`}
-                  thumbnail={work.data.thumbnail}
-                  title={work.data.title}
+                  href={`/${action.slug}`}
+                  thumbnail={action.data.thumbnail}
+                  title={action.data.title}
                 />
               ))
             }
@@ -151,16 +150,9 @@ const categories = [
           <div class="section-footer">
             <InternalLinkButton href="/" description="View All" />
           </div>
+        </div>
 
-          <div class="section" id="studies">
-            <div class="section-header">
-              <div class="section-title">Studies</div>
-            </div>
-            <div class="section-footer">
-              <InternalLinkButton href="/" description="View All" />
-            </div>
-
-            <footer class="footer">
+        <footer class="footer">
               <div class="footer-title">Links</div>
               <div class="links-container">
                 <ExternalLinkButton
@@ -216,14 +208,11 @@ const categories = [
               <span>Copyright ©2025 mi-nato.com</span>
             </footer>
 
-            <a href="#" class="back-to-top-button">
-              <i class="fa-solid fa-angle-up"></i>
-            </a>
+    <a href="#" class="back-to-top-button">
+      <i class="fa-solid fa-angle-up"></i>
+    </a>
 
-            <script is:inline src="/scripts/script.js"></script>
-          </div>
-        </div>
-      </div>
-    </div></body
+    <script is:inline src="/scripts/script.js"></script>
+  </body
   >
 </html>
