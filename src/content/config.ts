@@ -10,7 +10,7 @@ const articleCollection = defineCollection({
   }),
 });
 
-const workCollection = defineCollection({
+const actionCollection = defineCollection({
   type: "content",
   schema: z.object({
     title: z.string(),
@@ -22,5 +22,5 @@ const workCollection = defineCollection({
 
 export const collections = {
   article: articleCollection,
-  work: workCollection,
+  action: actionCollection,
 };
