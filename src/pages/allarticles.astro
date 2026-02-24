@@ -1,8 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import ArticleCard from "../components/ArticleCard.astro";
-import ExternalLinkButton from "../components/ExternalLinkButton.astro";
-import InternalLinkButton from "../components/InternalLinkButton.astro";
 
 const allArticles = await getCollection("article");
 // slice(0, 5) を削除して全件取得
@@ -56,9 +54,6 @@ const categories = [
   </head>
   <body>
     <header class="header">
-      <div class="header-left">
-        <a href="/">mi-nato.com</a>
-      </div>
       <div class="header-right">
         <a href="/">Home</a>
       </div>
