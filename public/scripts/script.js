@@ -2,14 +2,16 @@
 document.addEventListener("DOMContentLoaded", () => {
   const header = document.querySelector(".header");
 
-  window.addEventListener("scroll", () => {
-    // スクロール量が0より大きい（最上部でない）場合にクラスを付与
-    if (window.scrollY > 0) {
-      header.classList.add("scrolled");
-    } else {
-      header.classList.remove("scrolled");
-    }
-  });
+  if (header) {
+    window.addEventListener("scroll", () => {
+      // スクロール量が0より大きい（最上部でない）場合にクラスを付与
+      if (window.scrollY > 0) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
+    });
+  }
 });
 
 const shareButton = document.querySelector(".share-button");

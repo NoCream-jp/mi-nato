@@ -5,7 +5,6 @@ import ExternalLinkButton from "../components/ExternalLinkButton.astro";
 import InternalLinkButton from "../components/InternalLinkButton.astro";
 
 const allArticles = await getCollection("article");
-// slice(0, 5) を削除して全件取得
 const sortedArticles = allArticles.sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
@@ -81,7 +80,6 @@ const categories = [
               }
             </div>
           </div>
-
         </div>
       </div>
       <div class="article-card-container">

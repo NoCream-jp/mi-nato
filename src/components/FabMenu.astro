@@ -120,6 +120,7 @@ const { options = defaultOptions } = Astro.props;
     align-items: flex-end; /* すべて右揃えにする魔法のプロパティ */
     gap: 16px; /* オプションとメインFABの隙間 */
     z-index: 99; /* 他のコンテンツより上に */
+
   }
 
   /* スマホ表示の時は少し画面端に寄せる */
@@ -165,20 +166,22 @@ const { options = defaultOptions } = Astro.props;
     align-items: center;
     justify-content: flex-end; /* 中身を右に寄せる */
     height: 48px; /* ★ タテの大きさを統一 */
-    background-color: var(--theme7); /* 極薄い背景 */
+    background-color: var(--white);
     color: var(--theme1);
     border-radius: 9999px; /* ★ カプセル型 */
     padding: 0 16px 0 20px;
     text-decoration: none;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
     transition:
       background-color 0.2s ease,
+      box-shadow 0.2s ease,
       transform 0.2s ease;
   }
 
   .fab-option-btn:hover {
-    background-color: var(--theme7); /* ホバーで1段濃く */
+    background-color: var(--theme9);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transform: scale(1.02);
   }
 
@@ -195,7 +198,7 @@ const { options = defaultOptions } = Astro.props;
     justify-content: center;
     width: 32px;
     height: 32px;
-    background-color: var(--white);
+    background-color: var(--theme7);
     border-radius: 50%;
     font-size: 14px;
     color: var(--theme1);
@@ -215,7 +218,7 @@ const { options = defaultOptions } = Astro.props;
     border: none;
     border-radius: 50%; /* 完全な円形 */
     cursor: pointer;
-    /* box-shadow: 0 6px 12px rgba(44, 67, 131, 0.2); */
+    box-shadow: 0 6px 12px rgba(44, 67, 131, 0.4);
 
     transition:
       background-color 0.2s ease,

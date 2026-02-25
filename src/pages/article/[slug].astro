@@ -36,6 +36,11 @@ const sortedArticles = allArticles.sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 
+// 表示されている記事からユニークなカテゴリーを抽出
+const categories = [
+  ...new Set(sortedArticles.map((article) => article.data.category)),
+];
+
 const fabOptions = [
   {
     label: "Top",
@@ -123,11 +128,32 @@ const fabOptions = [
 
       <aside class="article-sidebar">
         <h2 class="sidebar-title">Recent Articles</h2>
+        <div class="toolbar">
+          <div class="filter-dropdown">
+            <button id="tag-filter-button" class="filter-button"
+              >Tag <i class="fa-solid fa-caret-down"></i></button
+            >
+            <div id="tag-dropdown-content" class="dropdown-content">
+              <button class="dropdown-item" data-category="all">All</button>
+              {
+                categories.map((cat) => (
+                  <button class="dropdown-item" data-category={cat}>
+                    {cat}
+                  </button>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+
         <div class="sidebar-list">
           {
-            sortedArticles
-              .slice(0)
-              .map((article) => (
+            sortedArticles.slice(0).map((article) => (
+              <div
+                class="article-filter-item"
+                data-category={article.data.category}
+                style="display: contents;"
+              >
                 <ArticleCard
                   href={`/article/${article.slug}`}
                   thumbnail={article.data.thumbnail}
@@ -135,7 +161,8 @@ const fabOptions = [
                   category={article.data.category}
                   date={article.data.date.toLocaleDateString("ja-JP")}
                 />
-              ))
+              </div>
+            ))
           }
         </div>
       </aside>
@@ -143,16 +170,8 @@ const fabOptions = [
 
     <FabMenu options={fabOptions} />
 
-    <script>
-      const header = document.querySelector(".js-header");
-      window.addEventListener("scroll", () => {
-        if (window.scrollY > 10) {
-          header?.classList.add("scrolled");
-        } else {
-          header?.classList.remove("scrolled");
-        }
-      });
-    </script>
+    <script is:inline src="/scripts/script.js"></script>
+    <footer class="footer">Copyright ©2026 mi-nato.com</footer>
   </body>
 </html>
 
@@ -169,14 +188,13 @@ const fabOptions = [
     align-items: flex-start;
     gap: 40px;
     width: 100%;
-    max-width: 1100px;
     margin: 0 auto;
     padding: 40px 80px; /* index.cssのbody背景(theme8)に直置き */
   }
 
   .article-page-left-container {
-    flex: 1; /* 左側を可能な限り広げる */
     min-width: 0; /* Flexboxのはみ出し防止 */
+    flex: 1;
   }
 
   .article-sidebar {
@@ -241,6 +259,7 @@ const fabOptions = [
     line-height: 1.9;
     font-size: 1.05rem;
     color: var(--darkgray); /* 真っ黒を避けて目に優しく */
+    overflow-wrap: break-word; /* 長い単語やURLを折り返す */
   }
 
   /* 本文内の見出しや段落の余白調整（必要に応じて） */
@@ -251,6 +270,17 @@ const fabOptions = [
   }
   .article-body :global(p) {
     margin-bottom: 1.5em;
+  }
+  /* 画像がはみ出さないようにする */
+  .article-body :global(img) {
+    max-width: 100%;
+    height: auto;
+  }
+  /* コードブロックなどがはみ出す場合は横スクロールさせる */
+  .article-body :global(pre),
+  .article-body :global(table) {
+    max-width: 100%;
+    overflow-x: auto;
   }
 
   .article-navigation-wrapper {
@@ -284,6 +314,10 @@ const fabOptions = [
     .article-page-container {
       flex-direction: column;
       gap: 64px;
+      padding: 40px 20px;
+    }
+    .article-page-left-container {
+      width: 100%;
     }
     .article-sidebar {
       width: 100%;
