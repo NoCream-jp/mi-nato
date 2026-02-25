@@ -1,8 +1,6 @@
 ---
 import { getCollection } from "astro:content";
 import ArticleCard from "../components/ArticleCard.astro";
-import ExternalLinkButton from "../components/ExternalLinkButton.astro";
-import InternalLinkButton from "../components/InternalLinkButton.astro";
 
 const allArticles = await getCollection("article");
 const sortedArticles = allArticles.sort(
