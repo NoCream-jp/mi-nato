@@ -55,18 +55,16 @@ const categories = [
     />
   </head>
   <body>
-    <header class="header">
-      <div class="header-left">
-        <a href="/">mi-nato.com</a>
-      </div>
+    <header class="header js-header">
       <div class="header-right">
-        <a href="/">Home</a>
+        <a class="header-most-right" href="/">Home</a>
       </div>
     </header>
 
     <div class="articles-section section" id="articles">
       <div class="section-header">
         <div class="section-title">All Articles</div>
+
         <div class="toolbar">
           <div class="filter-dropdown">
             <button id="tag-filter-button" class="filter-button"
@@ -83,6 +81,7 @@ const categories = [
               }
             </div>
           </div>
+
         </div>
       </div>
       <div class="article-card-container">

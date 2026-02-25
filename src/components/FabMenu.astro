@@ -1,0 +1,240 @@
+---
+// オプションの型定義。外部からリンク先やラベルを渡せるようにします。
+interface FabOption {
+  label: string;
+  iconClass: string; // 例: "fa-solid fa-share-nodes"
+  href: string;
+}
+
+interface Props {
+  options?: FabOption[];
+}
+
+// デフォルトのオプション（ShareとContactの例）
+const defaultOptions: FabOption[] = [
+  {
+    label: "Share on X",
+    iconClass: "fa-brands fa-x-twitter",
+    href: "#",
+  },
+  {
+    label: "Copy Link",
+    iconClass: "fa-solid fa-link",
+    href: "#",
+  },
+  {
+    label: "Contact",
+    iconClass: "fa-regular fa-envelope",
+    href: "/contact",
+  },
+];
+
+const { options = defaultOptions } = Astro.props;
+---
+
+<div class="fab-wrapper" id="js-fab-wrapper">
+  <div class="fab-options" id="js-fab-options" aria-hidden="true">
+    {
+      options.map((option) => (
+        <a href={option.href} class="fab-option-btn">
+          <span class="fab-option-label">{option.label}</span>
+          <div class="fab-option-icon">
+            <i class={option.iconClass} />
+          </div>
+        </a>
+      ))
+    }
+  </div>
+
+  <button
+    class="fab-main-btn"
+    id="js-fab-toggle"
+    aria-label="メニューを開く"
+    aria-expanded="false"
+  >
+    <i class="fa-solid fa-plus fab-icon-plus"></i>
+  </button>
+</div>
+
+<script>
+  // Astroのクライアントサイドスクリプト
+  const setupFab = () => {
+    const wrapper = document.getElementById("js-fab-wrapper");
+    const toggleBtn = document.getElementById("js-fab-toggle");
+    const optionsContainer = document.getElementById("js-fab-options");
+
+    if (!wrapper || !toggleBtn || !optionsContainer) return;
+
+    // 二重初期化を防ぐためのフラグチェック
+    if (wrapper.dataset.initialized) return;
+    wrapper.dataset.initialized = "true";
+
+    // クリックで開閉をトグル
+    toggleBtn.addEventListener("click", (e) => {
+      e.stopPropagation(); // 外側クリック検知のための伝播ストップ
+      const isExpanded = toggleBtn.getAttribute("aria-expanded") === "true";
+
+      if (isExpanded) {
+        closeFab();
+      } else {
+        openFab();
+      }
+    });
+
+    // メニュー外をクリックしたら閉じる
+    document.addEventListener("click", (e) => {
+      if (!wrapper.contains(e.target as Node)) {
+        closeFab();
+      }
+    });
+
+    function openFab() {
+      wrapper?.classList.add("is-open");
+      toggleBtn?.setAttribute("aria-expanded", "true");
+      optionsContainer?.setAttribute("aria-hidden", "false");
+    }
+
+    function closeFab() {
+      wrapper?.classList.remove("is-open");
+      toggleBtn?.setAttribute("aria-expanded", "false");
+      optionsContainer?.setAttribute("aria-hidden", "true");
+    }
+  };
+
+  // Astroのページ遷移（View Transitions）対応
+  document.addEventListener("astro:page-load", setupFab);
+  // 初回ロード時にも実行（MPAやView Transitions無効時用）
+  setupFab();
+</script>
+
+<style>
+  /* =========================================
+     全体コンテナ（右下に固定）
+     ========================================= */
+  .fab-wrapper {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* すべて右揃えにする魔法のプロパティ */
+    gap: 16px; /* オプションとメインFABの隙間 */
+    z-index: 99; /* 他のコンテンツより上に */
+  }
+
+  /* スマホ表示の時は少し画面端に寄せる */
+  @media (max-width: 600px) {
+    .fab-wrapper {
+      bottom: 24px;
+      right: 20px;
+    }
+  }
+
+  /* =========================================
+     展開されるオプション部分
+     ========================================= */
+  .fab-options {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* オプション同士も右揃え */
+    gap: 12px; /* オプション間の縦の隙間 */
+
+    /* 初期状態は非表示（透明＆少し下に下がっている） */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px) scale(0.95);
+    transform-origin: bottom right;
+
+    /* M3の心地よいイージング */
+    transition:
+      opacity 0.2s cubic-bezier(0.2, 0, 0, 1),
+      transform 0.2s cubic-bezier(0.2, 0, 0, 1),
+      visibility 0.2s;
+  }
+
+  /* 開いた時の状態（js-fab-wrapperにis-openが付与されたら表示） */
+  .fab-wrapper.is-open .fab-options {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  /* 個別のオプションボタン（カプセル型） */
+  .fab-option-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end; /* 中身を右に寄せる */
+    height: 48px; /* ★ タテの大きさを統一 */
+    background-color: var(--theme7); /* 極薄い背景 */
+    color: var(--theme1);
+    border-radius: 9999px; /* ★ カプセル型 */
+    padding: 0 16px 0 20px;
+    text-decoration: none;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .fab-option-btn:hover {
+    background-color: var(--theme7); /* ホバーで1段濃く */
+    transform: scale(1.02);
+  }
+
+  .fab-option-label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 12px;
+  }
+
+  /* オプション内のアイコンも丸く囲う（M3のトレンド） */
+  .fab-option-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: var(--white);
+    border-radius: 50%;
+    font-size: 14px;
+    color: var(--theme1);
+  }
+
+  /* =========================================
+     メインFAB（＋ボタン）
+     ========================================= */
+  .fab-main-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px; /* 大きめの円 */
+    height: 64px;
+    background-color: var(--theme1);
+    color: var(--white);
+    border: none;
+    border-radius: 50%; /* 完全な円形 */
+    cursor: pointer;
+    /* box-shadow: 0 6px 12px rgba(44, 67, 131, 0.2); */
+
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .fab-main-btn:hover {
+    background-color: var(--theme2);
+    transform: scale(1.05); /* ホバーで少し大きく */
+  }
+
+  /* 十字アイコン */
+  .fab-icon-plus {
+    font-size: 24px;
+    transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  /* ★ 開いた時のアニメーション（十字を45度回転させて「×」にする） */
+  .fab-wrapper.is-open .fab-icon-plus {
+    transform: rotate(135deg); /* 45度か135度で綺麗な×になります */
+  }
+</style>

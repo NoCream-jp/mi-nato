@@ -21,8 +21,8 @@ const { href, description } = Astro.props;
     height: fit-content;
 
     /* デザイン */
-    border: 2px solid var(--white);
-    border-radius: 10px;
+    border: 2px solid var(--theme3);
+    border-radius: 50px;
     padding: 16px 20px;
 
     /* コンテンツ */
@@ -31,17 +31,19 @@ const { href, description } = Astro.props;
     align-items: center;
     gap: 10px;
 
-    color: #fff;
+    color: var(--theme3);
     font-weight: 500;
     font-size: 1rem;
     text-decoration: none;
     cursor: pointer;
-    /* transition: all 0.3s ease;  */
-    /* 入れないほうが動作パッキリする */
+
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
   }
 
   .button-container:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background-color: var(--theme7);
   }
 
   .button-container i {
