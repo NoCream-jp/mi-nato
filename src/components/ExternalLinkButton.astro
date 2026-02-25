@@ -25,10 +25,10 @@ const { href, description, ...attributes } = Astro.props;
     height: fit-content;
 
     /* デザイン */
-    background: var(--theme3);
-    border: 2px solid var(--white);
+    background: transparent;
     border-radius: 16px;
-    padding: 16px 20px;
+    border: solid 1px var(--theme5);
+    padding: 10px 25px;
 
     /* コンテンツ */
     display: flex;
@@ -36,15 +36,20 @@ const { href, description, ...attributes } = Astro.props;
     align-items: center;
     gap: 20px;
 
-    color: #fff;
+    color: var(--theme3);
     font-weight: 500;
     font-size: 1rem;
     text-decoration: none;
     cursor: pointer;
+
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
   }
 
   .button-container:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--theme5);
+    color: var(--white);
   }
 
   .button-container i {

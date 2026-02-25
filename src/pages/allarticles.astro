@@ -3,7 +3,6 @@ import { getCollection } from "astro:content";
 import ArticleCard from "../components/ArticleCard.astro";
 
 const allArticles = await getCollection("article");
-// slice(0, 5) を削除して全件取得
 const sortedArticles = allArticles.sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
@@ -53,15 +52,16 @@ const categories = [
     />
   </head>
   <body>
-    <header class="header">
+    <header class="header js-header">
       <div class="header-right">
-        <a href="/">Home</a>
+        <a class="header-most-right" href="/">Home</a>
       </div>
     </header>
 
     <div class="articles-section section" id="articles">
       <div class="section-header">
         <div class="section-title">All Articles</div>
+
         <div class="toolbar">
           <div class="filter-dropdown">
             <button id="tag-filter-button" class="filter-button"

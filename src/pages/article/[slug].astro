@@ -1,29 +1,63 @@
 ---
 import { getCollection, type CollectionEntry } from "astro:content";
 import CategoryTag from "../../components/CategoryTag.astro";
-import LinkCard from "../../components/LinkCard.astro";
+import ContentNavigation from "../../components/ContentNavigation.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+import FabMenu from "../../components/FabMenu.astro";
 
-const allArticles = await getCollection("article");
-const sortedArticles = allArticles
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 5);
-
-// 1. 記事データのパスを生成する
 export async function getStaticPaths() {
   const blogEntries = await getCollection("article");
-  return blogEntries.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+  const sortedEntries = blogEntries.sort(
+    (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+  );
+
+  return sortedEntries.map((entry, index) => {
+    const prevEntry =
+      index < sortedEntries.length - 1 ? sortedEntries[index + 1] : undefined;
+    const nextEntry = index > 0 ? sortedEntries[index - 1] : undefined;
+    return {
+      params: { slug: entry.slug },
+      props: { entry, prevEntry, nextEntry },
+    };
+  });
 }
 
 interface Props {
   entry: CollectionEntry<"article">;
+  prevEntry?: CollectionEntry<"article">;
+  nextEntry?: CollectionEntry<"article">;
 }
 
-// 2. 記事データを受け取り、本文をレンダリングする
-const { entry } = Astro.props;
+const { entry, prevEntry, nextEntry } = Astro.props;
 const { Content } = await entry.render();
+
+const allArticles = await getCollection("article");
+const sortedArticles = allArticles.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+// 表示されている記事からユニークなカテゴリーを抽出
+const categories = [
+  ...new Set(sortedArticles.map((article) => article.data.category)),
+];
+
+const fabOptions = [
+  {
+    label: "Top",
+    iconClass: "fa-solid fa-angle-up",
+    href: "#",
+  },
+  {
+    label: "Home",
+    iconClass: "fa-solid fa-house",
+    href: "/",
+  },
+  {
+    label: "Share on X",
+    iconClass: "fa-brands fa-x-twitter",
+    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(entry.data.title)}&url=${encodeURIComponent(String(Astro.url))}`,
+  },
+];
 ---
 
 <!doctype html>
@@ -48,113 +82,253 @@ const { Content } = await entry.render();
     />
   </head>
   <body>
-    <header class="header">
-      <div class="header-left">
-        <a href="/">mi-nato.com</a>
-      </div>
+    <header class="header js-header">
       <div class="header-right">
-        <a href="/">Home</a>
-        <a href="/#about">About</a>
-        <a href="/#actions">Actions</a>
+        <a class="header-most-right" href="/">Home</a>
       </div>
     </header>
 
-    <div class="article-page-container">
+    <main class="article-page-container">
       <div class="article-page-left-container">
         <article class="article-content">
-          <h1 class="article-title">{entry.data.title}</h1>
-          <div class="article-meta">
+          <div class="article-eyebrow">
             <CategoryTag category={entry.data.category} />
-            <span class="article-date"
-              >{entry.data.date.toLocaleDateString("ja-JP")}</span
-            >
           </div>
-          <img
-            src={entry.data.thumbnail}
-            alt={entry.data.title}
-            class="article-thumbnail"
-          />
+
+          <h1 class="article-title">{entry.data.title}</h1>
+
+          <time class="article-date">
+            {entry.data.date.toLocaleDateString("ja-JP")}
+          </time>
+
+          <!-- {entry.data.thumbnail && (
+            <div class="article-thumbnail-wrapper">
+              <img
+                src={entry.data.thumbnail}
+                alt={entry.data.title}
+                class="article-thumbnail"
+              />
+            </div>
+          )} -->
+
           <div class="article-body">
             <Content />
           </div>
+
+          <div class="article-navigation-wrapper">
+            <ContentNavigation
+              prevUrl={prevEntry ? `/article/${prevEntry.slug}` : undefined}
+              prevText={prevEntry ? prevEntry.data.title : undefined}
+              nextUrl={nextEntry ? `/article/${nextEntry.slug}` : undefined}
+              nextText={nextEntry ? nextEntry.data.title : undefined}
+            />
+          </div>
         </article>
       </div>
-    </div>
-    <a href="#" class="back-to-top-button">
-      <i class="fa-solid fa-angle-up"></i>
-    </a>
+
+      <aside class="article-sidebar">
+        <h2 class="sidebar-title">Recent Articles</h2>
+        <div class="toolbar">
+          <div class="filter-dropdown">
+            <button id="tag-filter-button" class="filter-button"
+              >Tag <i class="fa-solid fa-caret-down"></i></button
+            >
+            <div id="tag-dropdown-content" class="dropdown-content">
+              <button class="dropdown-item" data-category="all">All</button>
+              {
+                categories.map((cat) => (
+                  <button class="dropdown-item" data-category={cat}>
+                    {cat}
+                  </button>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-list">
+          {
+            sortedArticles.slice(0).map((article) => (
+              <div
+                class="article-filter-item"
+                data-category={article.data.category}
+                style="display: contents;"
+              >
+                <ArticleCard
+                  href={`/article/${article.slug}`}
+                  thumbnail={article.data.thumbnail}
+                  title={article.data.title}
+                  category={article.data.category}
+                  date={article.data.date.toLocaleDateString("ja-JP")}
+                />
+              </div>
+            ))
+          }
+        </div>
+      </aside>
+    </main>
+
+    <FabMenu options={fabOptions} />
+
+    <script is:inline src="/scripts/script.js"></script>
+    <footer class="footer">Copyright ©2026 mi-nato.com</footer>
   </body>
 </html>
 
 <style>
-  /* 記事ページ固有のスタイル */
   .header {
-    margin-bottom: 0;
-  }
-
-  .header .fa-arrow-left {
-    font-size: 24px;
-    font-weight: 600;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .article-page-container {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
     align-items: flex-start;
-    gap: auto;
-    max-width: 1500px;
-    margin: 10px;
-  }
-
-  .section {
-    /* 記事ページ限定のスタイル */
-    display: block;
-    margin: 0 20px 0 20px;
-  }
-
-  .article-content {
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 40px;
-    border-radius: 20px;
-    max-width: 800px;
+    gap: 40px;
+    width: 100%;
     margin: 0 auto;
-    color: #333;
+    padding: 40px 80px; /* index.cssのbody背景(theme8)に直置き */
   }
-  .article-title {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
+
+  .article-page-left-container {
+    min-width: 0; /* Flexboxのはみ出し防止 */
+    flex: 1;
   }
-  .article-meta {
+
+  .article-sidebar {
+    width: 320px;
     display: flex;
-    align-items: center;
-    gap: 20px;
-    color: #666;
-    font-size: 0.9rem;
-    margin-bottom: 20px;
+    flex-direction: column;
+    gap: 24px;
+    position: sticky; /* スクロールに追従させる */
+    top: 120px; /* ヘッダーの高さ + 余白 */
   }
-  .article-meta :global(.category-tag) {
-    color: #666;
-    border-color: #666;
+
+  /* =========================================
+     記事メインコンテンツ (Surface)
+     ========================================= */
+  .article-content {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white); /* M3のSurfaceとして機能 */
+    padding: 64px 56px; /* 読ませるページなので余白は贅沢に */
+    border-radius: 32px;
+    color: var(--black);
+  }
+
+  /* アイブロウレイアウトの余白管理 */
+  .article-eyebrow {
+    margin-bottom: 16px;
+  }
+
+  .article-title {
+    color: var(--theme1);
+    font-size: clamp(28px, 4vw, 36px);
+    font-weight: 800;
+    line-height: 1.4;
+    margin: 0 0 16px 0; /* marginとgapの併用を避けるためmarginで管理 */
+  }
+
+  .article-date {
+    color: var(--theme3);
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 32px;
+  }
+
+  /* サムネイル画像 */
+  .article-thumbnail-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 48px;
+    background-color: var(--theme8);
   }
   .article-thumbnail {
     width: 100%;
-    height: auto;
-    max-height: 400px;
+    height: 100%;
     object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 30px;
-  }
-  .article-body {
-    line-height: 1.8;
-    font-size: 1.1rem; /* ここで文字の大きさを調整します */
+    object-position: left top; /* どんな画像でも左上を死守 */
   }
 
-  @media (max-width: 510px) {
-    /* モバイルの時文字を小さくする */
-    .article-body {
-      font-size: 0.8rem;
+  /* 記事本文 */
+  .article-body {
+    line-height: 1.9;
+    font-size: 1.05rem;
+    color: var(--darkgray); /* 真っ黒を避けて目に優しく */
+    overflow-wrap: break-word; /* 長い単語やURLを折り返す */
+  }
+
+  /* 本文内の見出しや段落の余白調整（必要に応じて） */
+  .article-body :global(h2) {
+    color: var(--theme1);
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+  }
+  .article-body :global(p) {
+    margin-bottom: 1.5em;
+  }
+  /* 画像がはみ出さないようにする */
+  .article-body :global(img) {
+    max-width: 100%;
+    height: auto;
+  }
+  /* コードブロックなどがはみ出す場合は横スクロールさせる */
+  .article-body :global(pre),
+  .article-body :global(table) {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .article-navigation-wrapper {
+    margin-top: 80px;
+    border-top: 1px solid var(--theme7); /* 記事の終わりを示す線 */
+    padding-top: 16px;
+  }
+
+  /* =========================================
+     サイドバー
+     ========================================= */
+  .sidebar-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--theme1);
+    margin: 0;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--theme7);
+  }
+
+  .sidebar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* =========================================
+     レスポンシブ (スマホ・タブレット)
+     ========================================= */
+  @media (max-width: 900px) {
+    .article-page-container {
+      flex-direction: column;
+      gap: 64px;
+      padding: 40px 20px;
+    }
+    .article-page-left-container {
+      width: 100%;
+    }
+    .article-sidebar {
+      width: 100%;
+      position: static; /* スマホでは追従を解除 */
+    }
+    .article-content {
+      padding: 32px 20px; /* スマホではPaddingを狭く */
+      border-radius: 24px;
+    }
+    .article-thumbnail-wrapper {
+      margin-bottom: 32px;
     }
   }
 </style>

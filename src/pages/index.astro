@@ -4,17 +4,37 @@ import ArticleCard from "../components/ArticleCard.astro";
 import ExternalLinkButton from "../components/ExternalLinkButton.astro";
 import InternalLinkButton from "../components/InternalLinkButton.astro";
 import LinkCard from "../components/LinkCard.astro";
+import FabMenu from "../components/FabMenu.astro";
 
 const allArticles = await getCollection("article");
 const sortedArticles = allArticles
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
+  .slice(0, 4);
 
 const allActions = await getCollection("action");
 
 // 表示されている記事からユニークなカテゴリーを抽出
 const categories = [
   ...new Set(sortedArticles.map((article) => article.data.category)),
+];
+
+// Fabのオプション用意
+const fabOptions = [
+  {
+    label: "Top",
+    iconClass: "fa-solid fa-angle-up",
+    href: "#",
+  },
+  {
+    label: "Home",
+    iconClass: "fa-solid fa-house",
+    href: "/",
+  },
+  {
+    label: "Share on X",
+    iconClass: "fa-brands fa-x-twitter",
+    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent("mi-nato.com")}&url=${encodeURIComponent(String(Astro.url))}`,
+  },
 ];
 ---
 
@@ -55,6 +75,10 @@ const categories = [
       href="https://fonts.googleapis.com/css2?family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <header class="header">
@@ -62,16 +86,16 @@ const categories = [
         <a href="/">mi-nato.com</a>
       </div>
       <div class="header-right">
-        <a href="/allarticles">Articles</a>
+        <a href="/allarticles">Article</a>
         <a href="#about">About</a>
-        <a href="#actions">Actions</a>
+        <a class="header-most-right" href="#actions">Action</a>
       </div>
     </header>
 
     <div class="articles-section section" id="articles">
       <div class="section-header">
-        <div class="section-title">Articles</div>
-        <div class="toolbar">
+        <div class="section-title">Article</div>
+        <!-- <div class="toolbar">
           <button class="filter-button" id="tag-filter-button"
             >Tag <i class="fa-solid fa-caret-down"></i></button
           >
@@ -85,7 +109,7 @@ const categories = [
               ))
             }
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="article-card-container">
         {
@@ -108,18 +132,12 @@ const categories = [
             </div>
           ))
         }
-        <div class="more-indicator">
-          <i class="fa-solid fa-ellipsis"></i>
-        </div>
       </div>
-
       <div class="section-footer">
-        <InternalLinkButton
-          href="/allarticles"
-          description={`View All (${allArticles.length})`}
-        />
+        <InternalLinkButton href="/allarticles" description={`View More`} />
       </div>
     </div>
+
     <div class="about-section section" id="about">
       <div class="section-header">
         <div class="section-title">About</div>
@@ -212,9 +230,7 @@ const categories = [
       <span>Copyright ©2026 mi-nato.com</span>
     </footer>
 
-    <a href="#" class="back-to-top-button">
-      <i class="fa-solid fa-angle-up"></i>
-    </a>
+    <FabMenu options={fabOptions} />
 
     <script is:inline src="/scripts/script.js"></script>
   </body>
