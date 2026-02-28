@@ -1,8 +1,5 @@
 ---
-import ExternalLinkButton from "../components/ExternalLinkButton.astro";
-import InternalLinkButton from "../components/InternalLinkButton.astro";
-import LinkCard from "../components/LinkCard.astro";
-import FabMenu from "../components/FabMenu.astro";
+import PopupCard from "../components/PopupCard.astro";
 
 // Fabのオプション
 const fabOptions = [
@@ -86,6 +83,25 @@ const fabOptions = [
       </div>
 
       <div class="section-footer"></div>
+    </div>
+
+    <div class="about-achievement-container">
+      <PopupCard
+        title="応用情報技術者試験"
+        data="2024/10/27"
+        iconClass="fa-solid fa-award"
+        image="/images/AtCoder_logo.png"
+        url="https://github.com/NoCream-jp/my-website"
+      >
+        IPA（情報処理推進機構）が認定する，IT国家試験です．<br />
+      </PopupCard>
+      <PopupCard
+        title="基本情報技術者試験"
+        data="2025/04/26"
+        iconClass="fa-solid fa-award"
+        >
+        IPA（情報処理推進機構）が認定する，IT国家試験です．
+        </PopupCard>
     </div>
   </body>
 </html>

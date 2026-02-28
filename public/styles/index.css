@@ -179,11 +179,10 @@ a {
 
 .section {
   /* サイズ、形 */
-  min-height: 600px;
   border-radius: 20px;
   width: calc(100% - 40px);
   max-width: 800px;
-  padding: 40px clamp(10px, 2vw, 80px);
+  padding: 60px clamp(10px, 2vw, 80px);
 
   /* デザイン */
   /* border: 2px solid var(--white); */
