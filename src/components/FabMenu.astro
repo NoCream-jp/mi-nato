@@ -69,6 +69,19 @@ const { options = defaultOptions } = Astro.props;
     if (wrapper.dataset.initialized) return;
     wrapper.dataset.initialized = "true";
 
+    // TwitterシェアボタンのURLを現在のURLに書き換える
+    // (Astro.urlはビルド環境のURLになることがあるため、クライアント側で補正)
+    const shareBtns = optionsContainer.querySelectorAll(".fab-option-btn");
+    shareBtns.forEach((btn) => {
+      if (btn instanceof HTMLAnchorElement && btn.href.includes("twitter.com/intent/tweet")) {
+        try {
+          const urlObj = new URL(btn.href);
+          urlObj.searchParams.set("url", window.location.href);
+          btn.href = urlObj.toString();
+        } catch (e) {}
+      }
+    });
+
     // クリックで開閉をトグル
     toggleBtn.addEventListener("click", (e) => {
       e.stopPropagation(); // 外側クリック検知のための伝播ストップ
