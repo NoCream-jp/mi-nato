@@ -1,0 +1,70 @@
+---
+import ExternalLinkButton from "../components/ExternalLinkButton.astro";
+import InternalLinkButton from "../components/InternalLinkButton.astro";
+import LinkCard from "../components/LinkCard.astro";
+import FabMenu from "../components/FabMenu.astro";
+
+// Fabのオプション
+const fabOptions = [
+  {
+    label: "Top",
+    iconClass: "fa-solid fa-angle-up",
+    href: "#",
+  },
+  {
+    label: "Home",
+    iconClass: "fa-solid fa-house",
+    href: "/",
+  },
+  {
+    label: "Share on X",
+    iconClass: "fa-brands fa-x-twitter",
+    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent("mi-nato.com")}&url=${encodeURIComponent(String(Astro.url))}`,
+  },
+];
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="My personal website." />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#4968bd" />
+    <title>mi-nato.com</title>
+
+    <link rel="stylesheet" href="/styles/index.css" />
+
+    <!-- favicon設置, theme-color -->
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="theme-color" content="#3a549c" />
+
+    <!-- Font Awesome の読み込み -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- Google Fonts の読み込み -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body> </body>
+</html>
