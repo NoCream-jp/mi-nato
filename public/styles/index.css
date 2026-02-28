@@ -58,6 +58,8 @@ a {
   cursor: pointer;
 }
 
+
+
 /* =================== header ==================== */
 
 .header {
@@ -175,6 +177,8 @@ a {
   background-color: var(--theme8);
 }
 
+
+
 /* =================== section ==================== */
 
 .section {
@@ -283,6 +287,8 @@ a {
   align-items: center;
   gap: 20px;
 }
+
+
 
 /* =================== toolbar,top-buttonなど非コンポーネント ==================== */
 
@@ -410,6 +416,8 @@ a {
   background: rgba(255, 255, 255, 0.2);
 }
 
+
+
 /* =================== footer ==================== */
 
 .footer {
@@ -448,4 +456,18 @@ a {
   justify-content: center;
   align-items: center;
   gap: 10px;
+}
+
+
+
+/* =================== aboutページ ==================== */
+
+.about-achievement-container {
+  /* コンテンツ */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
 }

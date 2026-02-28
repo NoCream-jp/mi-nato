@@ -16,7 +16,7 @@ const popupId = `popup-${Math.random().toString(36).substring(2, 9)}`;
 
 <!-- iconClass, image, urlはnullでも動作させたい-->
 <button
-  class="m3-base-card js-popup-trigger"
+  class="base-card js-popup-trigger"
   aria-controls={popupId}
   aria-expanded="false"
 >
@@ -41,8 +41,8 @@ const popupId = `popup-${Math.random().toString(36).substring(2, 9)}`;
   </div>
 </button>
 
-<div class="m3-popup-backdrop js-popup-modal" id={popupId} aria-hidden="true">
-  <div class="m3-popup-dialog" role="dialog" aria-modal="true">
+<div class="popup-backdrop js-popup-modal" id={popupId} aria-hidden="true">
+  <div class="popup-dialog" role="dialog" aria-modal="true">
     <button class="dialog-close-btn js-popup-close" aria-label="閉じる">
       <i class="fa-solid fa-xmark"></i>
     </button>
@@ -156,11 +156,11 @@ const popupId = `popup-${Math.random().toString(36).substring(2, 9)}`;
   /* =========================================
      1. 通常時のカード（横並び）
      ========================================= */
-  .m3-base-card {
+  .base-card {
     display: flex;
     align-items: center;
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
     padding: 12px;
     background-color: var(--theme8); /* 極薄い背景 */
     border: 1px solid var(--theme7); /* さりげない枠線 */
@@ -171,7 +171,7 @@ const popupId = `popup-${Math.random().toString(36).substring(2, 9)}`;
       background-color 0.2s ease,
       transform 0.2s ease;
   }
-  .m3-base-card:hover {
+  .base-card:hover {
     background-color: var(--theme7);
     transform: translateY(-2px);
   }
@@ -238,7 +238,7 @@ const popupId = `popup-${Math.random().toString(36).substring(2, 9)}`;
   /* =========================================
      2. ポップアップ（モーダル）
      ========================================= */
-  .m3-popup-backdrop {
+  .popup-backdrop {
     position: fixed;
     inset: 0;
     z-index: 1000;
@@ -260,12 +260,12 @@ const popupId = `popup-${Math.random().toString(36).substring(2, 9)}`;
       visibility 0.3s ease;
   }
 
-  .m3-popup-backdrop.is-open {
+  .popup-backdrop.is-open {
     opacity: 1;
     visibility: visible;
   }
 
-  .m3-popup-dialog {
+  .popup-dialog {
     position: relative;
     width: 100%;
     max-width: 600px;
@@ -279,7 +279,7 @@ const popupId = `popup-${Math.random().toString(36).substring(2, 9)}`;
     transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
   }
 
-  .m3-popup-backdrop.is-open .m3-popup-dialog {
+  .popup-backdrop.is-open .popup-dialog {
     transform: translateY(0) scale(1);
   }
 

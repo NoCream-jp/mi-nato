@@ -1,5 +1,6 @@
 ---
 import PopupCard from "../components/PopupCard.astro";
+import FabMenu from "../components/FabMenu.astro";
 
 // Fabのオプション
 const fabOptions = [
@@ -85,23 +86,42 @@ const fabOptions = [
       <div class="section-footer"></div>
     </div>
 
-    <div class="about-achievement-container">
+    <div class="about-achievement-container section">
+      <div class="section-header">
+        <div class="section-title">Achivements</div>
+      </div>
       <PopupCard
         title="応用情報技術者試験"
         data="2024/10/27"
         iconClass="fa-solid fa-award"
-        image="/images/AtCoder_logo.png"
-        url="https://github.com/NoCream-jp/my-website"
+        url="https://www.ipa.go.jp/shiken/kubun/list.html"
       >
         IPA（情報処理推進機構）が認定する，IT国家試験です．<br />
+        合格率は20%前後であり，記述式試験では実際の開発現場における課題解決能力が問われます．
+        要件定義からセキュリティ設計，プロジェクトマネジメントまでシステム全体を俯瞰し，ビジネス上の課題を自立してITで解決できることを証明できるとされています．
       </PopupCard>
       <PopupCard
         title="基本情報技術者試験"
+        data="2025/10/26"
+        iconClass="fa-solid fa-award"
+        url="https://www.ipa.go.jp/shiken/kubun/list.html"
+      >
+        IPA（情報処理推進機構）が認定する，IT国家試験です．<br />
+        合格率は40%前後で，アルゴリズムや論理的思考力に加え，CPUやネットワークなどコンピュータ科学の幅広い基礎知識が問われます．
+      </PopupCard>
+      <PopupCard
+        title="ITパスポート試験"
         data="2025/04/26"
         iconClass="fa-solid fa-award"
-        >
-        IPA（情報処理推進機構）が認定する，IT国家試験です．
-        </PopupCard>
+        url="https://www.ipa.go.jp/shiken/kubun/list.html"
+      >
+        IPA（情報処理推進機構）が認定する，IT国家試験です．<br />
+        分野を問わず社会人を対象としたIT入門資格で，合格率は50%前後と比較的取得しやすいものの，セキュリティやコンプライアンス，経営戦略の基礎知識など，現代のビジネスに不可欠なITリテラシーを広く網羅しているとされています．
+      </PopupCard>
     </div>
+
+    <FabMenu options={fabOptions} />
+
+    <footer class="footer">Copyright ©2026 mi-nato.com</footer>
   </body>
 </html>
