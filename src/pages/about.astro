@@ -1,0 +1,127 @@
+---
+import PopupCard from "../components/PopupCard.astro";
+import FabMenu from "../components/FabMenu.astro";
+
+// Fabのオプション
+const fabOptions = [
+  {
+    label: "Top",
+    iconClass: "fa-solid fa-angle-up",
+    href: "#",
+  },
+  {
+    label: "Home",
+    iconClass: "fa-solid fa-house",
+    href: "/",
+  },
+  {
+    label: "Share on X",
+    iconClass: "fa-brands fa-x-twitter",
+    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent("mi-nato.com")}&url=${encodeURIComponent(String(Astro.url))}`,
+  },
+];
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="My personal website." />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#4968bd" />
+    <title>mi-nato.com</title>
+
+    <link rel="stylesheet" href="/styles/index.css" />
+
+    <!-- favicon設置, theme-color -->
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="theme-color" content="#3a549c" />
+
+    <!-- Font Awesome の読み込み -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <!-- Google Fonts の読み込み -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="header js-header">
+      <div class="header-right">
+        <a class="header-most-right" href="/">Home</a>
+      </div>
+    </header>
+
+    <div class="about-section section" id="about">
+      <div class="section-header">
+        <div class="section-title">About</div>
+      </div>
+      <div class="introduction-container">
+        <p>こんにちは，みなと といいます</p>
+        <p>
+          プログラミング，機械学習，webアプリ開発などを勉強中の大学生です．また経営，プロジェクトマネジメントにも興味があります
+        </p>
+        <p>当サイト，是非隅々までご覧になっていって下さい</p>
+      </div>
+
+      <div class="section-footer"></div>
+    </div>
+
+    <div class="about-achievement-container section">
+      <div class="section-header">
+        <div class="section-title">Achivements</div>
+      </div>
+      <PopupCard
+        title="応用情報技術者試験"
+        data="2024/10/27"
+        iconClass="fa-solid fa-award"
+        url="https://www.ipa.go.jp/shiken/kubun/list.html"
+      >
+        IPA（情報処理推進機構）が認定する，IT国家試験です．<br />
+        合格率は20%前後であり，記述式試験では実際の開発現場における課題解決能力が問われます．
+        要件定義からセキュリティ設計，プロジェクトマネジメントまでシステム全体を俯瞰し，ビジネス上の課題を自立してITで解決できることを証明できるとされています．
+      </PopupCard>
+      <PopupCard
+        title="基本情報技術者試験"
+        data="2025/10/26"
+        iconClass="fa-solid fa-award"
+        url="https://www.ipa.go.jp/shiken/kubun/list.html"
+      >
+        IPA（情報処理推進機構）が認定する，IT国家試験です．<br />
+        合格率は40%前後で，アルゴリズムや論理的思考力に加え，CPUやネットワークなどコンピュータ科学の幅広い基礎知識が問われます．
+      </PopupCard>
+      <PopupCard
+        title="ITパスポート試験"
+        data="2025/04/26"
+        iconClass="fa-solid fa-award"
+        url="https://www.ipa.go.jp/shiken/kubun/list.html"
+      >
+        IPA（情報処理推進機構）が認定する，IT国家試験です．<br />
+        分野を問わず社会人を対象としたIT入門資格で，合格率は50%前後と比較的取得しやすいものの，セキュリティやコンプライアンス，経営戦略の基礎知識など，現代のビジネスに不可欠なITリテラシーを広く網羅しているとされています．
+      </PopupCard>
+    </div>
+
+    <FabMenu options={fabOptions} />
+
+    <footer class="footer">Copyright ©2026 mi-nato.com</footer>
+  </body>
+</html>

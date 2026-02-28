@@ -1,0 +1,389 @@
+---
+// PopupCard.astro
+interface Props {
+  title: string;
+  data: string;
+  iconClass?: string; // 例: "fa-solid fa-globe"
+  image?: string; // 画像がない場合はundefined
+  url?: string; // ポップアップ内に表示するリンク
+}
+
+const { title, data, iconClass = "fa-solid fa-link", image, url } = Astro.props;
+
+// ページ内に複数配置してもIDが被らないようにランダムな文字列を生成
+const popupId = `popup-${Math.random().toString(36).substring(2, 9)}`;
+---
+
+<!-- iconClass, image, urlはnullでも動作させたい-->
+<button
+  class="base-card js-popup-trigger"
+  aria-controls={popupId}
+  aria-expanded="false"
+>
+  <div class="card-image-wrapper">
+    {
+      image ? (
+        <img src={image} alt={title} class="card-image" />
+      ) : (
+        <div class="card-no-image">
+          <i class="fa-regular fa-image" />
+          <span>No Image</span>
+        </div>
+      )
+    }
+  </div>
+  <div class="card-content">
+    <div class="card-text-area">
+      <span class="card-date">{data}</span>
+      <h3 class="card-title">{title}</h3>
+    </div>
+    <i class={`${iconClass} card-icon`}></i>
+  </div>
+</button>
+
+<div class="popup-backdrop js-popup-modal" id={popupId} aria-hidden="true">
+  <div class="popup-dialog" role="dialog" aria-modal="true">
+    <button class="dialog-close-btn js-popup-close" aria-label="閉じる">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <div class="dialog-header">
+      <div class="dialog-image-wrapper">
+        {
+          image ? (
+            <img src={image} alt={title} class="dialog-image" />
+          ) : (
+            <div class="dialog-no-image">
+              <i class="fa-regular fa-image" />
+            </div>
+          )
+        }
+      </div>
+      <div class="dialog-title-area">
+        <span class="dialog-date">{data}</span>
+        <h2 class="dialog-title">
+          <i class={`${iconClass} dialog-icon`}></i>
+          {title}
+        </h2>
+        {
+          url && (
+            <a
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="dialog-url"
+            >
+              {url} <i class="fa-solid fa-arrow-up-right-from-square" />
+            </a>
+          )
+        }
+      </div>
+    </div>
+
+    <div class="dialog-description">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<script>
+  const setupPopups = () => {
+    // :not(.is-ready) をつけることで、すでにイベントを登録した要素を二重に登録するのを防ぎます
+    const triggers = document.querySelectorAll(
+      ".js-popup-trigger:not(.is-ready)",
+    );
+    const closeBtns = document.querySelectorAll(
+      ".js-popup-close:not(.is-ready)",
+    );
+    const backdrops = document.querySelectorAll(
+      ".js-popup-modal:not(.is-ready)",
+    );
+
+    // モーダルを閉じる共通関数
+    function closeModal(modal: Element | null) {
+      if (modal) {
+        modal.setAttribute("aria-hidden", "true");
+        modal.classList.remove("is-open");
+        document.body.style.overflow = ""; // 背景のスクロールを再開
+      }
+    }
+
+    // 開く処理
+    triggers.forEach((trigger) => {
+      trigger.classList.add("is-ready"); // 登録済みの目印をつける
+      trigger.addEventListener("click", () => {
+        const popupId = trigger.getAttribute("aria-controls");
+        if (!popupId) return;
+
+        const modal = document.getElementById(popupId);
+        if (modal) {
+          modal.setAttribute("aria-hidden", "false");
+          modal.classList.add("is-open");
+          document.body.style.overflow = "hidden"; // 背景のスクロールを止める
+        }
+      });
+    });
+
+    // 閉じる処理（バツボタン）
+    closeBtns.forEach((btn) => {
+      btn.classList.add("is-ready");
+      btn.addEventListener("click", (e) => {
+        const modal = (e.target as HTMLElement).closest(".js-popup-modal");
+        closeModal(modal);
+      });
+    });
+
+    // 閉じる処理（すりガラス部分のクリック）
+    backdrops.forEach((backdrop) => {
+      backdrop.classList.add("is-ready");
+      backdrop.addEventListener("click", (e) => {
+        // クリックしたのが「モーダルの中身」ではなく「すりガラス（背景）」の時だけ閉じる
+        if (e.target === backdrop) {
+          closeModal(backdrop);
+        }
+      });
+    });
+  };
+
+  // 1. 通常のページ読み込み時（Astroでは自動的にDOM構築後に発火します）
+  setupPopups();
+
+  // 2. AstroのView Transitions（SPA風の画面遷移）を使っている場合への備え
+  document.addEventListener("astro:page-load", setupPopups);
+</script>
+
+<style>
+  /* =========================================
+     1. 通常時のカード（横並び）
+     ========================================= */
+  .base-card {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 12px;
+    background-color: var(--theme8); /* 極薄い背景 */
+    border: 1px solid var(--theme7); /* さりげない枠線 */
+    border-radius: 16px;
+    cursor: pointer;
+    text-align: left;
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
+  }
+  .base-card:hover {
+    background-color: var(--theme7);
+    transform: translateY(-2px);
+  }
+
+  .card-image-wrapper {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-right: 16px;
+  }
+  .card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .card-no-image {
+    width: 100%;
+    height: 100%;
+    background-color: var(--theme6);
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    gap: 4px;
+  }
+  .card-no-image i {
+    font-size: 20px;
+  }
+
+  .card-content {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .card-text-area {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--theme1);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .card-date {
+    font-size: 12px;
+    color: var(--theme3);
+    font-weight: 500;
+  }
+  .card-icon {
+    font-size: 20px;
+    color: var(--theme3);
+  }
+
+  /* =========================================
+     2. ポップアップ（モーダル）
+     ========================================= */
+  .popup-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+
+    /* すりガラス効果 */
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    /* 初期状態は非表示 */
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease;
+  }
+
+  .popup-backdrop.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .popup-dialog {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    background-color: var(--white);
+    border-radius: 28px; /* M3の大きなダイアログ用角丸 */
+    padding: 32px;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.1);
+
+    /* 下からフワッと浮かび上がるアニメーション */
+    transform: translateY(20px) scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .popup-backdrop.is-open .popup-dialog {
+    transform: translateY(0) scale(1);
+  }
+
+  .dialog-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--darkgray);
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+  }
+  .dialog-close-btn:hover {
+    background-color: var(--theme8);
+  }
+
+  .dialog-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-bottom: 24px;
+    padding-right: 48px; /* 閉じるボタンとの被り防止 */
+  }
+
+  .dialog-image-wrapper {
+    width: 120px;
+    height: 120px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .dialog-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .dialog-no-image {
+    width: 100%;
+    height: 100%;
+    background-color: var(--theme6);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+  }
+
+  .dialog-title-area {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .dialog-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--theme1);
+    margin: 0;
+    line-height: 1.3;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .dialog-date {
+    font-size: 14px;
+    color: var(--theme3);
+    font-weight: 600;
+  }
+  .dialog-icon {
+    color: var(--theme3);
+  }
+  .dialog-url {
+    font-size: 14px;
+    color: var(--theme3);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+  }
+  .dialog-url:hover {
+    text-decoration: underline;
+  }
+
+  .dialog-description {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--darkgray);
+  }
+
+  @media (max-width: 600px) {
+    .dialog-header {
+      flex-direction: column;
+    }
+    .dialog-image-wrapper {
+      width: 100%;
+      height: 160px;
+    }
+  }
+</style>
