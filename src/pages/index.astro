@@ -141,13 +141,13 @@ const fabOptions = [
 
     <div class="actions-section section" id="actions">
       <div class="section-header">
-        <div class="section-title">Actions</div>
+        <div class="section-title">Action</div>
       </div>
       <div class="link-card-container">
         {
           allActions.map((action) => (
             <LinkCard
-              href={`/${action.slug}`}
+              href={`/action/${action.slug}`}
               thumbnail={action.data.thumbnail}
               title={action.data.title}
             />

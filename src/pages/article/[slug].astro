@@ -4,6 +4,7 @@ import CategoryTag from "../../components/CategoryTag.astro";
 import ContentNavigation from "../../components/ContentNavigation.astro";
 import ArticleCard from "../../components/ArticleCard.astro";
 import FabMenu from "../../components/FabMenu.astro";
+import InternalLinkButton from "../../components/InternalLinkButton.astro";
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection("article");
@@ -320,6 +321,7 @@ const fabOptions = [
       width: 100%;
     }
     .article-sidebar {
+      margin-top: 60px;
       width: 100%;
       position: static; /* スマホでは追従を解除 */
     }
