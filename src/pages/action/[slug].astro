@@ -1,10 +1,9 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
-import InternalLinkButton from '../../components/InternalLinkButton.astro';
-import FabMenu from '../../components/FabMenu.astro';
+import { getCollection, type CollectionEntry } from "astro:content";
+import FabMenu from "../../components/FabMenu.astro";
 
 export async function getStaticPaths() {
-  const actions = await getCollection('action');
+  const actions = await getCollection("action");
   return actions.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry },
@@ -12,7 +11,7 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  entry: CollectionEntry<'action'>;
+  entry: CollectionEntry<"action">;
 }
 
 const { entry } = Astro.props;
@@ -20,18 +19,18 @@ const { Content } = await entry.render();
 
 const fabOptions = [
   {
-    label: 'Top',
-    iconClass: 'fa-solid fa-angle-up',
-    href: '#',
+    label: "Top",
+    iconClass: "fa-solid fa-angle-up",
+    href: "#",
   },
   {
-    label: 'Home',
-    iconClass: 'fa-solid fa-house',
-    href: '/',
+    label: "Home",
+    iconClass: "fa-solid fa-house",
+    href: "/",
   },
   {
-    label: 'Share on X',
-    iconClass: 'fa-brands fa-x-twitter',
+    label: "Share on X",
+    iconClass: "fa-brands fa-x-twitter",
     href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(entry.data.title)}&url=${encodeURIComponent(String(Astro.url))}`,
   },
 ];
@@ -60,41 +59,42 @@ const fabOptions = [
   </head>
   <body>
     <header class="header js-header">
+      <div class="header-left">
+        <a href="/">mi-nato.com</a>
+      </div>
       <div class="header-right">
         <a class="header-most-right" href="/">Home</a>
       </div>
     </header>
 
-    <div class="article-page-container">
+    <main class="article-page-container">
       <div class="article-page-left-container">
         <article class="article-content">
           <h1 class="article-title">{entry.data.title}</h1>
-          <div class="article-meta">
-            <span class="article-date"
-              >{entry.data.date.toLocaleDateString('ja-JP')}</span
-            >
-          </div>
-          <img
-            src={entry.data.thumbnail}
-            alt={entry.data.title}
-            class="article-thumbnail"
-          />
+
+          <time class="article-date">
+            {entry.data.date.toLocaleDateString("ja-JP")}
+          </time>
+
+          {
+            entry.data.thumbnail && (
+              <div class="article-thumbnail-wrapper">
+                <img
+                  src={entry.data.thumbnail}
+                  alt={entry.data.title}
+                  class="article-thumbnail"
+                />
+              </div>
+            )
+          }
+
           <div class="article-body">
             <Content />
           </div>
         </article>
       </div>
-    </div>
+    </main>
 
-    <div
-      class="section-footer"
-      style="margin-top: 50px; display: flex; justify-content: center;"
-    >
-    </div>
-
-    <a href="#" class="back-to-top-button">
-      <i class="fa-solid fa-angle-up"></i>
-    </a>
     <script is:inline src="/scripts/script.js"></script>
 
     <FabMenu options={fabOptions} />
@@ -105,57 +105,91 @@ const fabOptions = [
 
 <style>
   .header {
-    margin-bottom: 0;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
   }
+
   .article-page-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column; /* サイドバーがないためカラムレイアウトに */
     align-items: flex-start;
     gap: 40px;
     width: 100%;
     margin: 0 auto;
     padding: 40px 80px; /* index.cssのbody背景(theme8)に直置き */
   }
+
   .article-page-left-container {
     min-width: 0; /* Flexboxのはみ出し防止 */
     flex: 1;
+    width: 100%; /* カラムレイアウトのため幅を100%に */
   }
+
   .article-content {
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: 40px;
-    border-radius: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-    color: #333;
-  }
-  .article-title {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  .article-meta {
     display: flex;
-    gap: 20px;
-    color: #666;
-    margin-bottom: 20px;
+    flex-direction: column;
+    background-color: var(--white); /* M3のSurfaceとして機能 */
+    padding: 64px 56px; /* 読ませるページなので余白は贅沢に */
+    border-radius: 32px;
+    color: var(--black);
+  }
+
+  .article-title {
+    color: var(--theme1);
+    font-size: clamp(28px, 4vw, 36px);
+    font-weight: 800;
+    line-height: 1.4;
+    margin: 0 0 16px 0; /* marginとgapの併用を避けるためmarginで管理 */
+  }
+
+  .article-date {
+    color: var(--theme3);
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 32px;
+  }
+
+  .article-thumbnail-wrapper {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 48px;
+    background-color: var(--theme8);
   }
   .article-thumbnail {
     width: 100%;
-    height: auto;
-    max-height: 400px;
+    height: 100%;
     object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 30px;
+    object-position: left top; /* どんな画像でも左上を死守 */
   }
+
   .article-body {
-    line-height: 1.8;
-    font-size: 1.1rem;
+    line-height: 1.9;
+    font-size: 1.05rem;
+    color: var(--darkgray); /* 真っ黒を避けて目に優しく */
+    overflow-wrap: break-word; /* 長い単語やURLを折り返す */
   }
-  @media (max-width: 510px) {
-    .article-body {
-      font-size: 0.8rem;
-    }
+
+  .article-body :global(h2) {
+    color: var(--theme1);
+    margin-top: 2.5em;
+    margin-bottom: 1em;
   }
+  .article-body :global(p) {
+    margin-bottom: 1.5em;
+  }
+  .article-body :global(img) {
+    max-width: 100%;
+    height: auto;
+  }
+  .article-body :global(pre),
+  .article-body :global(table) {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
   .article-body :global(a.image-link-bg) {
     display: inline-block;
     padding: 1rem;
@@ -167,5 +201,20 @@ const fabOptions = [
   }
   .article-body :global(a.image-link-bg img) {
     display: block;
+  }
+
+  @media (max-width: 900px) {
+    .article-page-container {
+      flex-direction: column;
+      gap: 64px;
+      padding: 40px 20px;
+    }
+    .article-page-left-container {
+      width: 100%;
+    }
+    .article-content {
+      padding: 32px 20px; /* スマホではPaddingを狭く */
+      border-radius: 24px;
+    }
   }
 </style>
