@@ -11,7 +11,7 @@ const { thumbnail, href, title } = Astro.props;
 <a href={href} class="link-card">
   <img
     src={thumbnail}
-    alt={title || "Action thumbnail"}
+    alt={title || 'Action thumbnail'}
     class="card-thumbnail"
   />
   <div class="icon-container">
@@ -55,7 +55,7 @@ const { thumbnail, href, title } = Astro.props;
   }
 
   .link-card::after {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;

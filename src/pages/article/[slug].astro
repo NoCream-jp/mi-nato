@@ -1,13 +1,12 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
-import CategoryTag from "../../components/CategoryTag.astro";
-import ContentNavigation from "../../components/ContentNavigation.astro";
-import ArticleCard from "../../components/ArticleCard.astro";
-import FabMenu from "../../components/FabMenu.astro";
-import InternalLinkButton from "../../components/InternalLinkButton.astro";
+import { getCollection, type CollectionEntry } from 'astro:content';
+import CategoryTag from '../../components/CategoryTag.astro';
+import ContentNavigation from '../../components/ContentNavigation.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import FabMenu from '../../components/FabMenu.astro';
 
 export async function getStaticPaths() {
-  const blogEntries = await getCollection("article");
+  const blogEntries = await getCollection('article');
   const sortedEntries = blogEntries.sort(
     (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
   );
@@ -24,15 +23,15 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  entry: CollectionEntry<"article">;
-  prevEntry?: CollectionEntry<"article">;
-  nextEntry?: CollectionEntry<"article">;
+  entry: CollectionEntry<'article'>;
+  prevEntry?: CollectionEntry<'article'>;
+  nextEntry?: CollectionEntry<'article'>;
 }
 
 const { entry, prevEntry, nextEntry } = Astro.props;
 const { Content } = await entry.render();
 
-const allArticles = await getCollection("article");
+const allArticles = await getCollection('article');
 const sortedArticles = allArticles.sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
@@ -44,18 +43,18 @@ const categories = [
 
 const fabOptions = [
   {
-    label: "Top",
-    iconClass: "fa-solid fa-angle-up",
-    href: "#",
+    label: 'Top',
+    iconClass: 'fa-solid fa-angle-up',
+    href: '#',
   },
   {
-    label: "Home",
-    iconClass: "fa-solid fa-house",
-    href: "/",
+    label: 'Home',
+    iconClass: 'fa-solid fa-house',
+    href: '/',
   },
   {
-    label: "Share on X",
-    iconClass: "fa-brands fa-x-twitter",
+    label: 'Share on X',
+    iconClass: 'fa-brands fa-x-twitter',
     href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(entry.data.title)}&url=${encodeURIComponent(String(Astro.url))}`,
   },
 ];
@@ -99,7 +98,7 @@ const fabOptions = [
           <h1 class="article-title">{entry.data.title}</h1>
 
           <time class="article-date">
-            {entry.data.date.toLocaleDateString("ja-JP")}
+            {entry.data.date.toLocaleDateString('ja-JP')}
           </time>
 
           <!-- {entry.data.thumbnail && (
@@ -160,7 +159,7 @@ const fabOptions = [
                   thumbnail={article.data.thumbnail}
                   title={article.data.title}
                   category={article.data.category}
-                  date={article.data.date.toLocaleDateString("ja-JP")}
+                  date={article.data.date.toLocaleDateString('ja-JP')}
                 />
               </div>
             ))

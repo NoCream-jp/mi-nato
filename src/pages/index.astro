@@ -1,17 +1,17 @@
 ---
-import { getCollection } from "astro:content";
-import ArticleCard from "../components/ArticleCard.astro";
-import ExternalLinkButton from "../components/ExternalLinkButton.astro";
-import InternalLinkButton from "../components/InternalLinkButton.astro";
-import LinkCard from "../components/LinkCard.astro";
-import FabMenu from "../components/FabMenu.astro";
+import { getCollection } from 'astro:content';
+import ArticleCard from '../components/ArticleCard.astro';
+import ExternalLinkButton from '../components/ExternalLinkButton.astro';
+import InternalLinkButton from '../components/InternalLinkButton.astro';
+import LinkCard from '../components/LinkCard.astro';
+import FabMenu from '../components/FabMenu.astro';
 
-const allArticles = await getCollection("article");
+const allArticles = await getCollection('article');
 const sortedArticles = allArticles
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 4);
 
-const allActions = await getCollection("action");
+const allActions = await getCollection('action');
 
 // 表示されている記事からユニークなカテゴリーを抽出
 const categories = [
@@ -21,19 +21,19 @@ const categories = [
 // Fabのオプション用意
 const fabOptions = [
   {
-    label: "Top",
-    iconClass: "fa-solid fa-angle-up",
-    href: "#",
+    label: 'Top',
+    iconClass: 'fa-solid fa-angle-up',
+    href: '#',
   },
   {
-    label: "Home",
-    iconClass: "fa-solid fa-house",
-    href: "/",
+    label: 'Home',
+    iconClass: 'fa-solid fa-house',
+    href: '/',
   },
   {
-    label: "Share on X",
-    iconClass: "fa-brands fa-x-twitter",
-    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent("mi-nato.com")}&url=${encodeURIComponent(String(Astro.url))}`,
+    label: 'Share on X',
+    iconClass: 'fa-brands fa-x-twitter',
+    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent('mi-nato.com')}&url=${encodeURIComponent(String(Astro.url))}`,
   },
 ];
 ---
@@ -101,8 +101,8 @@ const fabOptions = [
           sortedArticles.map((article, index) => (
             <div
               class:list={[
-                "article-filter-item",
-                { "last-visible": index === sortedArticles.length - 1 },
+                'article-filter-item',
+                { 'last-visible': index === sortedArticles.length - 1 },
               ]}
               data-category={article.data.category}
               style="display: contents;"
@@ -112,7 +112,7 @@ const fabOptions = [
                 thumbnail={article.data.thumbnail}
                 title={article.data.title}
                 category={article.data.category}
-                date={article.data.date.toLocaleDateString("ja-JP")}
+                date={article.data.date.toLocaleDateString('ja-JP')}
               />
             </div>
           ))

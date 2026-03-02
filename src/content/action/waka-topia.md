@@ -1,10 +1,10 @@
 ---
-title: "Waka-topia"
-description: "学生企業団体Waka-topiaについての記事です．"
-category: "Startup"
+title: 'Waka-topia'
+description: '学生企業団体Waka-topiaについての記事です．'
+category: 'Startup'
 date: 2026-01-28
-slug: "waka-topia"
-thumbnail: "/images/waka-topia.png"
+slug: 'waka-topia'
+thumbnail: '/images/waka-topia.png'
 ---
 
 ## 学生企業団体Waka-topiaについて

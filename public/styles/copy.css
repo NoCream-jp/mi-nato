@@ -24,7 +24,7 @@ html {
 }
 
 body {
-  font-family: "Zalando Sans", sans-serif;
+  font-family: 'Zalando Sans', sans-serif;
   margin: 8px 0px 0px 0;
 }
 
@@ -198,7 +198,7 @@ a {
     width: 20px;
     height: 20px;
 
-    content: "";
+    content: '';
 
     position: absolute;
     background: radial-gradient(
@@ -251,7 +251,7 @@ a {
   right: -20px;
   bottom: 0;
 
-  content: "";
+  content: '';
   position: absolute;
   /* 右上角中心の円、中心から半径20pxの範囲
     transparent、半径20pxより外色指定 */

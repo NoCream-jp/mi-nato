@@ -1,9 +1,9 @@
 ---
-import { getCollection } from "astro:content";
-import ArticleCard from "../components/ArticleCard.astro";
-import FabMenu from "../components/FabMenu.astro";
+import { getCollection } from 'astro:content';
+import ArticleCard from '../components/ArticleCard.astro';
+import FabMenu from '../components/FabMenu.astro';
 
-const allArticles = await getCollection("article");
+const allArticles = await getCollection('article');
 const sortedArticles = allArticles.sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
@@ -16,19 +16,19 @@ const categories = [
 // Fabのオプション
 const fabOptions = [
   {
-    label: "Top",
-    iconClass: "fa-solid fa-angle-up",
-    href: "#",
+    label: 'Top',
+    iconClass: 'fa-solid fa-angle-up',
+    href: '#',
   },
   {
-    label: "Home",
-    iconClass: "fa-solid fa-house",
-    href: "/",
+    label: 'Home',
+    iconClass: 'fa-solid fa-house',
+    href: '/',
   },
   {
-    label: "Share on X",
-    iconClass: "fa-brands fa-x-twitter",
-    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent("mi-nato.com")}&url=${encodeURIComponent(String(Astro.url))}`,
+    label: 'Share on X',
+    iconClass: 'fa-brands fa-x-twitter',
+    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent('mi-nato.com')}&url=${encodeURIComponent(String(Astro.url))}`,
   },
 ];
 ---
@@ -105,8 +105,8 @@ const fabOptions = [
           sortedArticles.map((article, index) => (
             <div
               class:list={[
-                "article-filter-item",
-                { "last-visible": index === sortedArticles.length - 1 },
+                'article-filter-item',
+                { 'last-visible': index === sortedArticles.length - 1 },
               ]}
               data-category={article.data.category}
               style="display: contents;"
@@ -116,7 +116,7 @@ const fabOptions = [
                 thumbnail={article.data.thumbnail}
                 title={article.data.title}
                 category={article.data.category}
-                date={article.data.date.toLocaleDateString("ja-JP")}
+                date={article.data.date.toLocaleDateString('ja-JP')}
               />
             </div>
           ))
@@ -132,31 +132,31 @@ const fabOptions = [
     <script is:inline src="/scripts/script.js"></script>
     <script>
       // フィルタリング操作を監視して、表示されている最後の要素にクラスを付与し直す
-      const container = document.querySelector(".article-card-container");
+      const container = document.querySelector('.article-card-container');
 
       const updateLastVisible = () => {
         const items = document.querySelectorAll(
-          ".article-filter-item",
+          '.article-filter-item',
         ) as NodeListOf<HTMLElement>;
         let lastVisible: HTMLElement | null = null;
 
         for (const item of items) {
-          item.classList.remove("last-visible");
+          item.classList.remove('last-visible');
           // display: none でない要素を追跡
-          if (item.style.display !== "none") {
+          if (item.style.display !== 'none') {
             lastVisible = item;
           }
         }
 
         if (lastVisible) {
-          lastVisible.classList.add("last-visible");
+          lastVisible.classList.add('last-visible');
         }
       };
 
       if (container) {
         const observer = new MutationObserver((mutations) => {
           const isStyleChanged = mutations.some(
-            (m) => m.type === "attributes" && m.attributeName === "style",
+            (m) => m.type === 'attributes' && m.attributeName === 'style',
           );
           if (isStyleChanged) {
             updateLastVisible();
@@ -166,7 +166,7 @@ const fabOptions = [
         observer.observe(container, {
           attributes: true,
           subtree: true,
-          attributeFilter: ["style"],
+          attributeFilter: ['style'],
         });
       }
     </script>

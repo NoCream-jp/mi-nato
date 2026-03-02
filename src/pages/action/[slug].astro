@@ -1,9 +1,10 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
-import InternalLinkButton from "../../components/InternalLinkButton.astro";
+import { getCollection, type CollectionEntry } from 'astro:content';
+import InternalLinkButton from '../../components/InternalLinkButton.astro';
+import FabMenu from '../../components/FabMenu.astro';
 
 export async function getStaticPaths() {
-  const actions = await getCollection("action");
+  const actions = await getCollection('action');
   return actions.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry },
@@ -11,11 +12,29 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  entry: CollectionEntry<"action">;
+  entry: CollectionEntry<'action'>;
 }
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+
+const fabOptions = [
+  {
+    label: 'Top',
+    iconClass: 'fa-solid fa-angle-up',
+    href: '#',
+  },
+  {
+    label: 'Home',
+    iconClass: 'fa-solid fa-house',
+    href: '/',
+  },
+  {
+    label: 'Share on X',
+    iconClass: 'fa-brands fa-x-twitter',
+    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(entry.data.title)}&url=${encodeURIComponent(String(Astro.url))}`,
+  },
+];
 ---
 
 <!doctype html>
@@ -40,14 +59,9 @@ const { Content } = await entry.render();
     />
   </head>
   <body>
-    <header class="header">
-      <div class="header-left">
-        <a href="/">mi-nato.com</a>
-      </div>
+    <header class="header js-header">
       <div class="header-right">
-        <a href="/">Home</a>
-        <a href="/#about">About</a>
-        <a href="/#actions">Actions</a>
+        <a class="header-most-right" href="/">Home</a>
       </div>
     </header>
 
@@ -57,7 +71,7 @@ const { Content } = await entry.render();
           <h1 class="article-title">{entry.data.title}</h1>
           <div class="article-meta">
             <span class="article-date"
-              >{entry.data.date.toLocaleDateString("ja-JP")}</span
+              >{entry.data.date.toLocaleDateString('ja-JP')}</span
             >
           </div>
           <img
@@ -76,12 +90,16 @@ const { Content } = await entry.render();
       class="section-footer"
       style="margin-top: 50px; display: flex; justify-content: center;"
     >
-      <InternalLinkButton href="/#actions" description="Back to Actions" />
     </div>
 
     <a href="#" class="back-to-top-button">
       <i class="fa-solid fa-angle-up"></i>
     </a>
+    <script is:inline src="/scripts/script.js"></script>
+
+    <FabMenu options={fabOptions} />
+
+    <footer class="footer">Copyright ©2026 mi-nato.com</footer>
   </body>
 </html>
 
@@ -91,12 +109,16 @@ const { Content } = await entry.render();
   }
   .article-page-container {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
     align-items: flex-start;
-    gap: auto;
-    max-width: 1500px;
-    margin: 10px auto;
+    gap: 40px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 80px; /* index.cssのbody背景(theme8)に直置き */
+  }
+  .article-page-left-container {
+    min-width: 0; /* Flexboxのはみ出し防止 */
+    flex: 1;
   }
   .article-content {
     background-color: rgba(255, 255, 255, 0.9);

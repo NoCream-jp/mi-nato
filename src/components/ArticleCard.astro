@@ -1,5 +1,5 @@
 ---
-import CategoryTag from "../components/CategoryTag.astro";
+import CategoryTag from '../components/CategoryTag.astro';
 
 interface Props {
   href: string;
@@ -15,7 +15,7 @@ const { href, title, category, date, class: className } = Astro.props;
 
 <a
   href={href}
-  class:list={["article-card", className]}
+  class:list={['article-card', className]}
   data-category={category}
 >
   <div class="card-eyebrow">

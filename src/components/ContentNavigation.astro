@@ -9,37 +9,59 @@ interface Props {
 
 const {
   prevUrl,
-  prevText = "前の記事",
+  prevText = '前の記事',
   nextUrl,
-  nextText = "次の記事"
+  nextText = '次の記事',
 } = Astro.props;
 ---
 
 <nav class="post-navigation" aria-label="ページナビゲーション">
-  
-  {prevUrl ? (
-    <a href={prevUrl} class="nav-button nav-button--prev">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m15 18-6-6 6-6"/>
-      </svg>
-      <span class="nav-button__text">{prevText}</span>
-    </a>
-  ) : (
-    /* 左側のボタンがない場合の空のスペーサー（右側を右端に維持するため） */
-    <div class="nav-spacer"></div>
-  )}
+  {
+    prevUrl ? (
+      <a href={prevUrl} class="nav-button nav-button--prev">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m15 18-6-6 6-6" />
+        </svg>
+        <span class="nav-button__text">{prevText}</span>
+      </a>
+    ) : (
+      /* 左側のボタンがない場合の空のスペーサー（右側を右端に維持するため） */
+      <div class="nav-spacer" />
+    )
+  }
 
-  {nextUrl ? (
-    <a href={nextUrl} class="nav-button nav-button--next">
-      <span class="nav-button__text">{nextText}</span>
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="m9 18 6-6-6-6"/>
-      </svg>
-    </a>
-  ) : (
-    <div class="nav-spacer"></div>
-  )}
-
+  {
+    nextUrl ? (
+      <a href={nextUrl} class="nav-button nav-button--next">
+        <span class="nav-button__text">{nextText}</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m9 18 6-6-6-6" />
+        </svg>
+      </a>
+    ) : (
+      <div class="nav-spacer" />
+    )
+  }
 </nav>
 
 <style>
@@ -50,23 +72,25 @@ const {
     align-items: center;
     width: 100%;
     margin-top: 64px; /* 上のコンテンツ（記事本文など）との十分な余白 */
-    gap: 16px;        /* スマホで縦並びになった時の隙間 */
+    gap: 16px; /* スマホで縦並びになった時の隙間 */
   }
 
   /* --- M3 カプセル型ボタン --- */
   .nav-button {
     display: inline-flex;
     align-items: center;
-    gap: 8px;                   /* アイコンとテキストの隙間 */
-    padding: 12px 24px;         /* クリックしやすい十分な余白 */
-    border-radius: 9999px;      /* 完全なカプセル型 */
+    gap: 8px; /* アイコンとテキストの隙間 */
+    padding: 12px 24px; /* クリックしやすい十分な余白 */
+    border-radius: 9999px; /* 完全なカプセル型 */
     text-decoration: none;
-    
+
     /* 配色はtheme変数で統一感を持たせる */
-    background-color: var(--theme7); 
+    background-color: var(--theme7);
     color: var(--theme1);
-    
-    transition: background-color 0.2s ease, transform 0.2s ease;
+
+    transition:
+      background-color 0.2s ease,
+      transform 0.2s ease;
   }
 
   .nav-button:hover {
@@ -75,14 +99,14 @@ const {
 
   /* 押した瞬間の心地よいフィードバック（任意） */
   .nav-button:active {
-    transform: scale(0.98); 
+    transform: scale(0.98);
   }
 
   /* --- テキストの省略設定 --- */
   .nav-button__text {
     font-size: 14px;
     font-weight: 600;
-    
+
     /* タイトルが長すぎる場合は「...」で省略し、ボタンが画面外にはみ出すのを防ぐ */
     max-width: 200px;
     white-space: nowrap;
@@ -93,7 +117,7 @@ const {
   /* --- 存在しないボタンのプレースホルダー --- */
   .nav-spacer {
     /* これがあることで、片方のボタンしかない時もFlexboxの配置が崩れない */
-    width: auto; 
+    width: auto;
   }
 
   /* --- スマホ表示の調整 --- */
@@ -103,17 +127,17 @@ const {
       flex-direction: column;
       align-items: stretch;
     }
-    
+
     .nav-button {
       /* スマホではボタンを全幅にして押しやすくする */
       justify-content: center;
       width: 100%;
     }
-    
+
     .nav-button__text {
       max-width: 100%; /* 省略幅を広げる */
     }
-    
+
     /* スマホでは「次へ」を上に、「戻る」を下に配置し直す（視線の流れを自然にするため） */
     .nav-button--next {
       order: 1;

@@ -1,14 +1,10 @@
-import * as astroPlugin from "prettier-plugin-astro";
-
 /** @type {import("prettier").Config} */
 export default {
-  plugins: [astroPlugin], // 文字列ではなくオブジェクトとして渡す
-  overrides: [
-    {
-      files: "*.astro",
-      options: {
-        parser: "astro",
-      },
-    },
-  ],
+  // ここにPrettierのルールを記述
+  singleQuote: true, // シングルクォートを使用する
+  // semi: false,       // 文末のセミコロンを省略する
+  tabWidth: 2, // インデントをスペース2つにする
+
+  // Astroファイルをフォーマットするためのプラグイン
+  plugins: ['prettier-plugin-astro'],
 };

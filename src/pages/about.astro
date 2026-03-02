@@ -1,23 +1,23 @@
 ---
-import PopupCard from "../components/PopupCard.astro";
-import FabMenu from "../components/FabMenu.astro";
+import PopupCard from '../components/PopupCard.astro';
+import FabMenu from '../components/FabMenu.astro';
 
 // Fabのオプション
 const fabOptions = [
   {
-    label: "Top",
-    iconClass: "fa-solid fa-angle-up",
-    href: "#",
+    label: 'Top',
+    iconClass: 'fa-solid fa-angle-up',
+    href: '#',
   },
   {
-    label: "Home",
-    iconClass: "fa-solid fa-house",
-    href: "/",
+    label: 'Home',
+    iconClass: 'fa-solid fa-house',
+    href: '/',
   },
   {
-    label: "Share on X",
-    iconClass: "fa-brands fa-x-twitter",
-    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent("mi-nato.com")}&url=${encodeURIComponent(String(Astro.url))}`,
+    label: 'Share on X',
+    iconClass: 'fa-brands fa-x-twitter',
+    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent('mi-nato.com')}&url=${encodeURIComponent(String(Astro.url))}`,
   },
 ];
 ---

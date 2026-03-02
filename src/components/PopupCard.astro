@@ -8,7 +8,7 @@ interface Props {
   url?: string; // ポップアップ内に表示するリンク
 }
 
-const { title, data, iconClass = "fa-solid fa-link", image, url } = Astro.props;
+const { title, data, iconClass = 'fa-solid fa-link', image, url } = Astro.props;
 
 // ページ内に複数配置してもIDが被らないようにランダムな文字列を生成
 const popupId = `popup-${Math.random().toString(36).substring(2, 9)}`;
@@ -90,53 +90,53 @@ const popupId = `popup-${Math.random().toString(36).substring(2, 9)}`;
   const setupPopups = () => {
     // :not(.is-ready) をつけることで、すでにイベントを登録した要素を二重に登録するのを防ぎます
     const triggers = document.querySelectorAll(
-      ".js-popup-trigger:not(.is-ready)",
+      '.js-popup-trigger:not(.is-ready)',
     );
     const closeBtns = document.querySelectorAll(
-      ".js-popup-close:not(.is-ready)",
+      '.js-popup-close:not(.is-ready)',
     );
     const backdrops = document.querySelectorAll(
-      ".js-popup-modal:not(.is-ready)",
+      '.js-popup-modal:not(.is-ready)',
     );
 
     // モーダルを閉じる共通関数
     function closeModal(modal: Element | null) {
       if (modal) {
-        modal.setAttribute("aria-hidden", "true");
-        modal.classList.remove("is-open");
-        document.body.style.overflow = ""; // 背景のスクロールを再開
+        modal.setAttribute('aria-hidden', 'true');
+        modal.classList.remove('is-open');
+        document.body.style.overflow = ''; // 背景のスクロールを再開
       }
     }
 
     // 開く処理
     triggers.forEach((trigger) => {
-      trigger.classList.add("is-ready"); // 登録済みの目印をつける
-      trigger.addEventListener("click", () => {
-        const popupId = trigger.getAttribute("aria-controls");
+      trigger.classList.add('is-ready'); // 登録済みの目印をつける
+      trigger.addEventListener('click', () => {
+        const popupId = trigger.getAttribute('aria-controls');
         if (!popupId) return;
 
         const modal = document.getElementById(popupId);
         if (modal) {
-          modal.setAttribute("aria-hidden", "false");
-          modal.classList.add("is-open");
-          document.body.style.overflow = "hidden"; // 背景のスクロールを止める
+          modal.setAttribute('aria-hidden', 'false');
+          modal.classList.add('is-open');
+          document.body.style.overflow = 'hidden'; // 背景のスクロールを止める
         }
       });
     });
 
     // 閉じる処理（バツボタン）
     closeBtns.forEach((btn) => {
-      btn.classList.add("is-ready");
-      btn.addEventListener("click", (e) => {
-        const modal = (e.target as HTMLElement).closest(".js-popup-modal");
+      btn.classList.add('is-ready');
+      btn.addEventListener('click', (e) => {
+        const modal = (e.target as HTMLElement).closest('.js-popup-modal');
         closeModal(modal);
       });
     });
 
     // 閉じる処理（すりガラス部分のクリック）
     backdrops.forEach((backdrop) => {
-      backdrop.classList.add("is-ready");
-      backdrop.addEventListener("click", (e) => {
+      backdrop.classList.add('is-ready');
+      backdrop.addEventListener('click', (e) => {
         // クリックしたのが「モーダルの中身」ではなく「すりガラス（背景）」の時だけ閉じる
         if (e.target === backdrop) {
           closeModal(backdrop);
@@ -149,7 +149,7 @@ const popupId = `popup-${Math.random().toString(36).substring(2, 9)}`;
   setupPopups();
 
   // 2. AstroのView Transitions（SPA風の画面遷移）を使っている場合への備え
-  document.addEventListener("astro:page-load", setupPopups);
+  document.addEventListener('astro:page-load', setupPopups);
 </script>
 
 <style>
