@@ -358,17 +358,19 @@ a {
   padding: 20px 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   gap: 5px;
 }
 
 .dropdown-item {
-  width: 100%;
+  width: 90%;
   padding: 10px 16px;
+  margin: 0 auto;
 
   color: var(--theme4);
   background: none;
   border: none;
+  border-radius: 10px;
   cursor: pointer;
 
   display: block;

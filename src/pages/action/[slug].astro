@@ -1,9 +1,9 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
-import FabMenu from "../../components/FabMenu.astro";
+import { getCollection, type CollectionEntry } from 'astro:content';
+import FabMenu from '../../components/FabMenu.astro';
 
 export async function getStaticPaths() {
-  const actions = await getCollection("action");
+  const actions = await getCollection('action');
   return actions.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry },
@@ -11,7 +11,7 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  entry: CollectionEntry<"action">;
+  entry: CollectionEntry<'action'>;
 }
 
 const { entry } = Astro.props;
@@ -19,18 +19,18 @@ const { Content } = await entry.render();
 
 const fabOptions = [
   {
-    label: "Top",
-    iconClass: "fa-solid fa-angle-up",
-    href: "#",
+    label: 'Top',
+    iconClass: 'fa-solid fa-angle-up',
+    href: '#',
   },
   {
-    label: "Home",
-    iconClass: "fa-solid fa-house",
-    href: "/",
+    label: 'Home',
+    iconClass: 'fa-solid fa-house',
+    href: '/',
   },
   {
-    label: "Share on X",
-    iconClass: "fa-brands fa-x-twitter",
+    label: 'Share on X',
+    iconClass: 'fa-brands fa-x-twitter',
     href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(entry.data.title)}&url=${encodeURIComponent(String(Astro.url))}`,
   },
 ];
@@ -70,7 +70,7 @@ const fabOptions = [
           <h1 class="article-title">{entry.data.title}</h1>
 
           <time class="article-date">
-            {entry.data.date.toLocaleDateString("ja-JP")}
+            {entry.data.date.toLocaleDateString('ja-JP')}
           </time>
 
           {
