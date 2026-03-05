@@ -1,0 +1,279 @@
+<!-- モーダル本体 -->
+<div id="terminal-modal" class="popup-backdrop" aria-hidden="true">
+  <div class="terminal-container" role="dialog" aria-modal="true">
+    <!-- 閉じるボタン -->
+    <button id="terminal-close" class="close-btn" aria-label="Close terminal">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <div class="terminal-header">Input data -&gt; Daily log</div>
+
+    <div class="terminal-body">
+      <div id="output-area"></div>
+      <div class="input-line">
+        <span class="prompt">&gt;</span>
+        <input
+          type="text"
+          id="date-input"
+          placeholder="YYYY-MM-DD"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* モーダルの背景（すりガラス） */
+  .popup-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease;
+  }
+
+  .popup-backdrop.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* ターミナルコンテナ（モーダルの中身） */
+  .terminal-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 60vh;
+    background-color: var(--black);
+    border-radius: 40px; /* セミコロン修正済み */
+    padding: 40px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-family: 'Courier New', Courier, monospace; /* ターミナル風のフォント */
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+
+    transform: translateY(20px) scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  .popup-backdrop.is-open .terminal-container {
+    transform: translateY(0) scale(1);
+  }
+
+  /* 閉じるボタン */
+  .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: transparent;
+    border: none;
+    color: var(--white);
+    font-size: 24px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+    z-index: 10;
+  }
+  .close-btn:hover {
+    opacity: 1;
+  }
+
+  .terminal-header {
+    font-size: var(--large);
+    font-weight: 600;
+    color: var(--white, #ffffff);
+    margin-bottom: 20px;
+    width: 100%;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+  }
+
+  .terminal-body {
+    width: 100%;
+    color: var(--white, #ffffff);
+    font-size: 16px;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+
+  .input-line {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  .prompt {
+    color: var(--theme4);
+    margin-right: 10px;
+    font-weight: bold;
+  }
+
+  #date-input {
+    background: transparent;
+    border: none;
+    color: var(--white, #ffffff);
+    font-family: inherit;
+    font-size: inherit;
+    outline: none;
+    width: 100%;
+  }
+
+  /* スクロールバー */
+  /* Chrome, Edge, Safari向けのスクロールバー設定 */
+  .terminal-body::-webkit-scrollbar {
+    width: 8px; /* スクロールバーの幅（細めに設定） */
+  }
+
+  .terminal-body::-webkit-scrollbar-track {
+    background: transparent; /* スクロールバーの背景（軌道）を透明に */
+    border-radius: 4px;
+  }
+
+  .terminal-body::-webkit-scrollbar-thumb {
+    background: var(
+      --theme5
+    ); /* スクロールバーのつまみの色（プロンプトと同じ緑色） */
+    border-radius: 4px; /* つまみの角を丸くする */
+  }
+
+  .terminal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--theme3); /* マウスオーバー時に少し色を濃くする */
+  }
+
+  /* Firefox向けのスクロールバー設定（標準仕様） */
+  .terminal-body {
+    scrollbar-width: thin; /* 細いスクロールバー */
+    scrollbar-color: var(--theme5) transparent; /* つまみの色 軌道の色 */
+  }
+
+  /* 出力時の文字色 */
+  .error-text {
+    color: #ff5555;
+  }
+  .success-text {
+    color: var(--theme5);
+  }
+</style>
+
+<script>
+  const setupTerminal = () => {
+    const modal = document.getElementById('terminal-modal');
+    const closeBtn = document.getElementById('terminal-close');
+    const inputField = document.getElementById(
+      'date-input',
+    ) as HTMLInputElement | null;
+    const outputArea = document.getElementById('output-area');
+
+    // データ定義
+    const dailyData: { [key: string]: string } = {
+      '2026-03-06': 'It was rainy.',
+      '2026-03-07': 'It was sunny and warm.',
+      '2026-03-08': 'Cloudy with a chance of meatballs.',
+    };
+
+    // --- ポップアップ制御 ---
+
+    const openModal = () => {
+      if (modal) {
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden'; // 背景スクロール固定
+        // モーダルが開いた後にフォーカスを当てる
+        setTimeout(() => inputField?.focus(), 100);
+      }
+    };
+
+    const closeModal = () => {
+      if (modal) {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = ''; // 背景スクロール再開
+      }
+    };
+
+    // トリガー設定 (href="#terminal" を持つすべての要素を対象にする)
+    const triggers = document.querySelectorAll('a[href="#terminal"]');
+    triggers.forEach((trigger) => {
+      if (!trigger.classList.contains('is-ready')) {
+        trigger.classList.add('is-ready');
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault(); // リンク遷移をキャンセルしてモーダルを開く
+          openModal();
+        });
+      }
+    });
+
+    // 閉じるボタン設定
+    if (closeBtn && !closeBtn.classList.contains('is-ready')) {
+      closeBtn.classList.add('is-ready');
+      closeBtn.addEventListener('click', closeModal);
+    }
+
+    // 背景クリックで閉じる
+    if (modal && !modal.classList.contains('is-ready')) {
+      modal.classList.add('is-ready');
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeModal();
+        }
+      });
+    }
+
+    // --- ターミナルロジック ---
+
+    const processInput = (input: string) => {
+      if (!outputArea) return;
+
+      let newOutput = `<div><span class="prompt">&gt;</span> ${input}</div>`;
+      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+
+      if (!dateRegex.test(input)) {
+        newOutput += `<div class="error-text" style="color: orange;">Error: Please use YYYY-MM-DD.</div><br>`;
+      } else if (dailyData.hasOwnProperty(input)) {
+        newOutput += `<div class="success-text">${dailyData[input]}</div><br>`;
+      } else {
+        newOutput += `<div class="error-text">No data !</div><br>`;
+      }
+
+      outputArea.innerHTML += newOutput;
+
+      // 自動スクロール
+      const terminalBody = document.querySelector('.terminal-body');
+      if (terminalBody) {
+        terminalBody.scrollTop = terminalBody.scrollHeight;
+      }
+    };
+
+    if (inputField && !inputField.classList.contains('is-ready')) {
+      inputField.classList.add('is-ready');
+      inputField.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          const inputValue = inputField.value.trim();
+          if (inputValue !== '') {
+            processInput(inputValue);
+          }
+          inputField.value = '';
+        }
+      });
+    }
+  };
+
+  // 初期化実行
+  setupTerminal();
+  document.addEventListener('astro:page-load', setupTerminal);
+</script>

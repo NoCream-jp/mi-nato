@@ -4,17 +4,43 @@ import ArticleCard from '../components/ArticleCard.astro';
 import ExternalLinkButton from '../components/ExternalLinkButton.astro';
 import InternalLinkButton from '../components/InternalLinkButton.astro';
 import LinkCard from '../components/LinkCard.astro';
+import FabMenu from '../components/FabMenu.astro';
+import PopupTerminal from '../components/PopupTerminal.astro';
 
 const allArticles = await getCollection('article');
 const sortedArticles = allArticles
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
+  .slice(0, 4);
 
 const allActions = await getCollection('action');
 
 // 表示されている記事からユニークなカテゴリーを抽出
 const categories = [
   ...new Set(sortedArticles.map((article) => article.data.category)),
+];
+
+// Fabのオプション用意
+const fabOptions = [
+  {
+    label: 'Top',
+    iconClass: 'fa-solid fa-angle-up',
+    href: '#',
+  },
+  {
+    label: 'Home',
+    iconClass: 'fa-solid fa-house',
+    href: '/',
+  },
+  {
+    label: 'Share on X',
+    iconClass: 'fa-brands fa-x-twitter',
+    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent('mi-nato.com')}&url=${encodeURIComponent(String(Astro.url))}`,
+  },
+  {
+    label: '?',
+    iconClass: 'fa-solid fa-code',
+    href: '#terminal',
+  },
 ];
 ---
 
@@ -55,6 +81,10 @@ const categories = [
       href="https://fonts.googleapis.com/css2?family=Zalando+Sans:ital,wght@0,200..900;1,200..900&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <header class="header">
@@ -62,36 +92,26 @@ const categories = [
         <a href="/">mi-nato.com</a>
       </div>
       <div class="header-right">
-        <a href="#articles">Articles</a>
+        <a href="#article">Article</a>
         <a href="#about">About</a>
-        <a href="#actions">Actions</a>
+        <a class="header-most-right" href="#action">Action</a>
       </div>
     </header>
 
-    <div class="articles-section section" id="articles">
+    <PopupTerminal />
+
+    <div class="articles-section section" id="article">
       <div class="section-header">
-        <div class="section-title">Articles</div>
-        <div class="toolbar">
-          <button class="filter-button" id="tag-filter-button"
-            >Tag <i class="fa-solid fa-caret-down"></i></button
-          >
-          <div id="tag-dropdown-content" class="dropdown-content">
-            <button class="dropdown-item" data-category="all">All</button>
-            {
-              categories.map((cat) => (
-                <button class="dropdown-item" data-category={cat}>
-                  {cat}
-                </button>
-              ))
-            }
-          </div>
-        </div>
+        <div class="section-title">Article</div>
       </div>
       <div class="article-card-container">
         {
-          sortedArticles.map((article) => (
+          sortedArticles.map((article, index) => (
             <div
-              class="article-filter-item"
+              class:list={[
+                'article-filter-item',
+                { 'last-visible': index === sortedArticles.length - 1 },
+              ]}
               data-category={article.data.category}
               style="display: contents;"
             >
@@ -105,115 +125,105 @@ const categories = [
             </div>
           ))
         }
-        <div class="more-indicator">
-          <i class="fa-solid fa-ellipsis"></i>
-        </div>
       </div>
-
       <div class="section-footer">
-        <InternalLinkButton
-          href="/allarticles"
-          description={`View All (${allArticles.length})`}
-        />
-      </div>
-
-      <div class="about-section section" id="about">
-        <div class="section-header">
-          <div class="section-title">About</div>
-        </div>
-        <div class="introduction-container">
-          <p>こんにちは，みなと といいます</p>
-          <p>
-            プログラミング，機械学習，webアプリ開発などを勉強中の大学生です．また経営，プロジェクトマネジメントにも興味があります
-          </p>
-          <p>当サイト，是非隅々までご覧になっていって下さい</p>
-        </div>
-        <div class="section-footer">
-          <InternalLinkButton href="/" description="View All" />
-        </div>
-
-        <div class="actions-section section" id="actions">
-          <div class="section-header">
-            <div class="section-title">Actions</div>
-          </div>
-          <div class="link-card-container">
-            {
-              allActions.map((action) => (
-                <LinkCard
-                  href={`/${action.slug}`}
-                  thumbnail={action.data.thumbnail}
-                  title={action.data.title}
-                />
-              ))
-            }
-          </div>
-          <div class="section-footer">
-            <InternalLinkButton href="/" description="View All" />
-          </div>
-        </div>
-
-        <footer class="footer">
-          <div class="footer-title">Links</div>
-          <div class="links-container">
-            <ExternalLinkButton
-              href="https://x.com/sXMN1au45a68174"
-              description="X"
-              ><i class="fa-brands fa-x-twitter"></i></ExternalLinkButton
-            >
-            <ExternalLinkButton
-              href="https://github.com/NoCream-jp"
-              description="GiHub"
-              ><i class="fa-brands fa-github"></i></ExternalLinkButton
-            >
-            <ExternalLinkButton
-              href="https://www.linkedin.com/in/m-hayashi/"
-              description="LinkedIn"
-              ><i class="fa-brands fa-linkedin-in"></i></ExternalLinkButton
-            >
-            <ExternalLinkButton
-              href="https://qiita.com/_NoCream"
-              description="Qiita"
-              ><img
-                src="/images/qiita-white-icon.png"
-                alt="Qiita"
-                class="Qiita"
-              /></ExternalLinkButton
-            >
-            <ExternalLinkButton
-              href="https://note.com/mi_nat0"
-              description="note"
-              ><img
-                src="/images/note-logo.png"
-                alt=""
-                class="note"
-              /></ExternalLinkButton
-            >
-            <ExternalLinkButton
-              href="https://zenn.dev/nocream"
-              description="Zenn"
-              ><img
-                src="/images/zenn-logo-color-transparent.png"
-                alt="Zenn"
-                class="Zenn"
-              /></ExternalLinkButton
-            >
-            <ExternalLinkButton
-              href="https://atcoder.jp/users/Caffeineholic"
-              description="AtCoder"
-              class="AtCoder"
-            >
-              <img src="/images/AtCoder_logo.png" alt="" class="AtCoder" />
-            </ExternalLinkButton>
-          </div>
-          <span>Copyright ©2025 mi-nato.com</span>
-        </footer>
-
-        <a href="#" class="back-to-top-button">
-          <i class="fa-solid fa-angle-up"></i>
-        </a>
-
-        <script is:inline src="/scripts/script.js"></script>
+        <InternalLinkButton href="/allarticles" description={`View More`} />
       </div>
     </div>
+
+    <div class="about-section section" id="about">
+      <div class="section-header">
+        <div class="section-title">About</div>
+      </div>
+      <div class="introduction-container">
+        <p>こんにちは，みなと といいます</p>
+        <p>
+          プログラミング，機械学習，webアプリ開発などを勉強中の大学生です．また経営，プロジェクトマネジメントにも興味があります
+        </p>
+        <p>当サイト，是非隅々までご覧になっていって下さい</p>
+      </div>
+      <div class="section-footer">
+        <InternalLinkButton href="/about" description="View More" />
+      </div>
+    </div>
+
+    <div class="actions-section section" id="action">
+      <div class="section-header">
+        <div class="section-title">Action</div>
+      </div>
+      <div class="link-card-container">
+        {
+          allActions.map((action) => (
+            <LinkCard
+              href={`/action/${action.slug}`}
+              thumbnail={action.data.thumbnail}
+              title={action.data.title}
+            />
+          ))
+        }
+      </div>
+      <div class="section-footer">
+        <InternalLinkButton href="/" description="View More" />
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-title">Links</div>
+      <div class="links-container">
+        <ExternalLinkButton href="https://x.com/sXMN1au45a68174" description="X"
+          ><i class="fa-brands fa-x-twitter"></i></ExternalLinkButton
+        >
+        <ExternalLinkButton
+          href="https://www.instagram.com/koshi2055/"
+          description="Instagram"
+          ><i class="fa-brands fa-instagram"></i></ExternalLinkButton
+        >
+        <ExternalLinkButton
+          href="https://github.com/NoCream-jp"
+          description="GiHub"
+          ><i class="fa-brands fa-github"></i></ExternalLinkButton
+        >
+        <ExternalLinkButton
+          href="https://www.linkedin.com/in/m-hayashi/"
+          description="LinkedIn"
+          ><i class="fa-brands fa-linkedin-in"></i></ExternalLinkButton
+        >
+        <ExternalLinkButton
+          href="https://qiita.com/_NoCream"
+          description="Qiita"
+          ><img
+            src="/images/qiita-white-icon.png"
+            alt="Qiita"
+            class="Qiita"
+          /></ExternalLinkButton
+        >
+        <ExternalLinkButton href="https://note.com/mi_nat0" description="note"
+          ><img src="/images/note-logo.png" class="note" /></ExternalLinkButton
+        >
+        <ExternalLinkButton href="https://zenn.dev/nocream" description="Zenn"
+          ><img
+            src="/images/zenn-logo-color-transparent.png"
+            alt="Zenn"
+            class="Zenn"
+          /></ExternalLinkButton
+        >
+        <ExternalLinkButton
+          href="https://atcoder.jp/users/Caffeineholic"
+          description="AtCoder"
+          class="AtCoder"
+        >
+          <img src="/images/AtCoder_logo.png" alt="" class="AtCoder" />
+        </ExternalLinkButton>
+        <ExternalLinkButton
+          href="https://web.wakayama-u.ac.jp/~kuze/lab/jp/"
+          description="大学の研究室ページ"
+        />
+      </div>
+      <span>Copyright ©2026 mi-nato.com</span>
+    </footer>
+
+    <FabMenu options={fabOptions} />
+
+    <script is:inline src="/scripts/script.js"></script>
   </body>
 </html>
