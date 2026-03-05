@@ -5,6 +5,7 @@ import ExternalLinkButton from '../components/ExternalLinkButton.astro';
 import InternalLinkButton from '../components/InternalLinkButton.astro';
 import LinkCard from '../components/LinkCard.astro';
 import FabMenu from '../components/FabMenu.astro';
+import PopupTerminal from '../components/PopupTerminal.astro';
 
 const allArticles = await getCollection('article');
 const sortedArticles = allArticles
@@ -34,6 +35,11 @@ const fabOptions = [
     label: 'Share on X',
     iconClass: 'fa-brands fa-x-twitter',
     href: `https://twitter.com/intent/tweet?text=${encodeURIComponent('mi-nato.com')}&url=${encodeURIComponent(String(Astro.url))}`,
+  },
+  {
+    label: '?',
+    iconClass: 'fa-solid fa-code',
+    href: '#terminal',
   },
 ];
 ---
@@ -91,6 +97,8 @@ const fabOptions = [
         <a class="header-most-right" href="#action">Action</a>
       </div>
     </header>
+
+    <PopupTerminal />
 
     <div class="articles-section section" id="article">
       <div class="section-header">

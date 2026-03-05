@@ -1,9 +1,16 @@
 ---
-// オプションの型定義。外部からリンク先やラベルを渡せるようにします。
+// オプションの型定義
 interface FabOption {
   label: string;
   iconClass: string; // 例: "fa-solid fa-share-nodes"
   href: string;
+  /*  
+  {
+    label: 'Home',
+    iconClass: 'fa-solid fa-house',
+    href: '/',
+  }
+  */
 }
 
 interface Props {
