@@ -6,7 +6,7 @@
       <i class="fa-solid fa-xmark"></i>
     </button>
 
-    <div class="terminal-header">Input data -&gt; Daily log</div>
+    <div class="terminal-header">Daily log</div>
 
     <div class="terminal-body">
       <div id="output-area"></div>
@@ -171,6 +171,8 @@
 </style>
 
 <script>
+  import { dailyData } from '../data/terminalData';
+
   const setupTerminal = () => {
     const modal = document.getElementById('terminal-modal');
     const closeBtn = document.getElementById('terminal-close');
@@ -178,13 +180,6 @@
       'date-input',
     ) as HTMLInputElement | null;
     const outputArea = document.getElementById('output-area');
-
-    // データ定義
-    const dailyData: { [key: string]: string } = {
-      '2026-03-06': 'It was rainy.',
-      '2026-03-07': 'It was sunny and warm.',
-      '2026-03-08': 'Cloudy with a chance of meatballs.',
-    };
 
     // --- ポップアップ制御 ---
 
