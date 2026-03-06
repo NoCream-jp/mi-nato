@@ -6,12 +6,12 @@
       <i class="fa-solid fa-xmark"></i>
     </button>
 
-    <div class="terminal-header">Daily log</div>
+    <div class="terminal-header">date -&gt; Diary</div>
 
     <div class="terminal-body">
       <div id="output-area"></div>
       <div class="input-line">
-        <span class="prompt">&gt;</span>
+        <span class="prompt">mi-nato&gt;</span>
         <input
           type="text"
           id="date-input"
@@ -121,6 +121,7 @@
     color: var(--theme4);
     margin-right: 10px;
     font-weight: bold;
+    white-space: nowrap;
   }
 
   #date-input {
@@ -130,7 +131,7 @@
     font-family: inherit;
     font-size: inherit;
     outline: none;
-    width: 100%;
+    flex: 1;
   }
 
   /* スクロールバー */
@@ -180,6 +181,14 @@
       'date-input',
     ) as HTMLInputElement | null;
     const outputArea = document.getElementById('output-area');
+    const promptElem = document.querySelector('.input-line .prompt');
+
+    // 現在のパスを取得してプロンプトに反映
+    const currentPath = window.location.pathname;
+    const displayPath = currentPath === '/' ? '~' : currentPath;
+    if (promptElem) {
+      promptElem.textContent = `mi-nato ${displayPath}>`;
+    }
 
     // --- ポップアップ制御 ---
 
@@ -234,10 +243,35 @@
     const processInput = (input: string) => {
       if (!outputArea) return;
 
-      let newOutput = `<div><span class="prompt">&gt;</span> ${input}</div>`;
+      // 実行ログのプロンプトにも現在のパスを反映
+      let newOutput = `<div><span class="prompt">mi-nato ${displayPath}&gt;</span> ${input}</div>`;
       const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 
-      if (!dateRegex.test(input)) {
+      if (input == 'ls' || input == 'dir') {
+        // ディレクトリ（ページ）を表示
+        newOutput += `<div style="color: #888; margin-top: 4px;">[ Pages ]</div>`;
+        newOutput += `<div class="success-text">about/</div>`;
+        newOutput += `<div class="success-text">allarticles/</div>`;
+        newOutput += `<div class="success-text">action/</div>`;
+
+        // ファイル（日記データ）を表示
+        newOutput += `<div style="color: #888; margin-top: 8px;">[ Diary Entries ]</div>`;
+        for (const key in dailyData) {
+          newOutput += `<div class="success-text">${key}</div>`;
+        }
+      } else if (input === 'tree') {
+        newOutput += `<div class="success-text">/</div>`;
+        newOutput += `<div class="success-text">├── about</div>`;
+        newOutput += `<div class="success-text">├── allarticles</div>`;
+        newOutput += `<div class="success-text">└── action</div><br>`;
+      } else if (input === 'cd' || input.startsWith('cd ')) {
+        const path = input.substring(2).trim();
+        const target = path || '/';
+        newOutput += `<div class="success-text">Navigating to ${target}...</div><br>`;
+        setTimeout(() => {
+          window.location.href = target;
+        }, 500);
+      } else if (!dateRegex.test(input)) {
         newOutput += `<div class="error-text" style="color: orange;">Error: Please use YYYY-MM-DD.</div><br>`;
       } else if (dailyData.hasOwnProperty(input)) {
         newOutput += `<div class="success-text">${dailyData[input]}</div><br>`;
