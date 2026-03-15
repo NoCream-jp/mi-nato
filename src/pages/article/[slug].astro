@@ -276,6 +276,17 @@ const fabOptions = [
   .article-body :global(p) {
     margin-bottom: 1.5em;
   }
+  
+  /* 記事本文内のリンクの装飾 */
+  .article-body :global(a) {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    color: var(--theme3);
+  }
+  .article-body :global(a:hover) {
+    text-decoration-thickness: 2px;
+  }
+
   /* 画像がはみ出さないようにする */
   .article-body :global(img) {
     max-width: 100%;
@@ -290,15 +301,14 @@ const fabOptions = [
     background-color: #f9f9f9;
   }
   .article-body :global(.alert.info) {
-    border-color: var(--theme4); /* 変数を利用したテーマカラー */
+    border-color: var(--theme4);
     background-color: #eef7ff;
   }
   .article-body :global(.alert.warning) {
-    border-color: #ffc107; /* 警告を示す黄色 */
+    border-color: #ffc107;
     background-color: #fffbe6;
   }
 
-  /* コードブロックなどがはみ出す場合は横スクロールさせる */
   .article-body :global(table) {
     max-width: 100%;
     overflow-x: auto;
@@ -309,21 +319,6 @@ const fabOptions = [
     padding: 1.5em;
     border-radius: 8px;
     overflow-x: auto;
-  }
-
-  /* 文中のインラインコードスニペットのスタイル */
-  .article-body :global(code) {
-    background-color: var(--theme8, #f4f4f4); /* 薄いグレーの背景 */
-    color: #e83e8c; /* 少し目立つピンク・赤系の色 */
-    padding: 0.2em 0.4em;
-    border-radius: 4px;
-    font-family: 'Courier New', Courier, monospace;
-  }
-  /* preタグ（コードブロック）内のcodeタグはインラインスタイルをリセット */
-  .article-body :global(pre code) {
-    background-color: transparent;
-    color: inherit;
-    padding: 0;
   }
 
   .article-navigation-wrapper {
