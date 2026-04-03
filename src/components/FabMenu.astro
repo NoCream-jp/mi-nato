@@ -175,6 +175,11 @@ const { options = defaultOptions } = Astro.props;
       visibility 0.2s;
   }
 
+  /* 閉じた状態 */
+  .fab-wrapper:not(.is-open) {
+    pointer-events: none;
+  }
+
   /* 開いた時の状態（js-fab-wrapperにis-openが付与されたら表示） */
   .fab-wrapper.is-open .fab-options {
     opacity: 1;
@@ -261,5 +266,9 @@ const { options = defaultOptions } = Astro.props;
   /* ★ 開いた時のアニメーション（十字を45度回転させて「×」にする） */
   .fab-wrapper.is-open .fab-icon-plus {
     transform: rotate(135deg); /* 45度か135度で綺麗な×になります */
+  }
+
+  .fab-main-btn {
+    pointer-events: auto;
   }
 </style>
