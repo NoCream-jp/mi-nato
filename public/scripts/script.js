@@ -14,22 +14,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// URL共有ボタン
 const shareButton = document.querySelector('.share-button');
 if (shareButton) {
-  shareButton.addEventListener('click', async () => {
-    try {
-      if (navigator.share) {
-        await navigator.share({
-          title: document.title,
-          url: window.location.href,
-        });
-      } else {
-        await navigator.clipboard.writeText(window.location.href);
-        alert('URLをクリップボードにコピーしました。');
-      }
-    } catch (error) {
-      console.log('共有がキャンセルされたか、エラーが発生しました。', error);
-    }
+  shareButton.addEventListener('click', () => {
+    const currentUrl = encodeURIComponent(window.location.href);
+    
+    const intentUrl = `https://twitter.com/intent/tweet?url=${currentUrl}`;
+
+    window.open(intentUrl, '_blank', 'noopener,noreferrer');
   });
 }
 

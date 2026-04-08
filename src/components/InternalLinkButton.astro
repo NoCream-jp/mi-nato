@@ -39,11 +39,14 @@ const { href, description } = Astro.props;
 
     transition:
       background-color 0.2s ease,
-      color 0.2s ease;
+      transform 0.2s cubic-bezier(0.2, 0, 0, 1),
+      border-radius 0.2s ease;
   }
 
   .button-container:hover {
     background-color: var(--theme7);
+    transform: scale(1.05);
+    border-radius: 15px;
   }
 
   .button-container i {
