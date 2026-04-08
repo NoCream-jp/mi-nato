@@ -132,8 +132,7 @@ a {
     border-radius 0.2s ease;
 }
 
-.header-right a,
-.header-btn {
+.header-right a {
   /* サイズ、配置 */
   height: 50%;
   padding: 10px 25px;
