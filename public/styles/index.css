@@ -126,8 +126,10 @@ a {
   font-weight: 500;
 
   transition:
-    background-color 0.5s ease,
-    color 0.5s ease;
+    background-color 0.2s ease,
+    color 0.5s ease,
+    transform 0.2s cubic-bezier(0.2, 0, 0, 1),
+    border-radius 0.2s ease;
 }
 
 .header-right a,
@@ -148,13 +150,14 @@ a {
 
   transition:
     background-color 0.2s ease,
-    color 0.2s ease;
+    transform 0.2s cubic-bezier(0.2, 0, 0, 1),
+    border-radius 0.2s ease;
 }
 
-.header-right a:hover,
-.header-btn:hover {
-  color: var(--theme4);
-  background-color: var(--theme9);
+.header-right a:hover {
+  background-color: var(--theme6);
+  transform: scale(1.05);
+  border-radius: 15px;
 }
 
 .header-most-right {
