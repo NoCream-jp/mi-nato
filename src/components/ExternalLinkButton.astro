@@ -44,12 +44,14 @@ const { href, description, ...attributes } = Astro.props;
 
     transition:
       background-color 0.2s ease,
-      color 0.2s ease;
+      transform 0.2s ease,
+      border-radius 0.2s ease;
   }
 
   .button-container:hover {
     background: var(--theme5);
     color: var(--white);
+    transform: scale(1.02);
   }
 
   .button-container i {

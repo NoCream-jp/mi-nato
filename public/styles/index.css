@@ -100,9 +100,11 @@ a {
     flex-direction: column;
     gap: 10px;
   }
+
   .header-left {
     display: none;
   }
+
   .header-right a {
     font-size: var(--medium);
   }
@@ -126,19 +128,20 @@ a {
   font-weight: 500;
 
   transition:
-    background-color 0.5s ease,
-    color 0.5s ease;
+    background-color 0.2s ease,
+    color 0.5s ease,
+    transform 0.2s cubic-bezier(0.2, 0, 0, 1),
+    border-radius 0.2s ease;
 }
 
-.header-right a,
-.header-btn {
+.header-right a {
   /* サイズ、配置 */
   height: 50%;
   padding: 10px 25px;
 
   /* デザイン */
   background-color: none;
-  border-radius: 100px;
+  border-radius: 20px;
 
   /* コンテンツ */
   display: flex;
@@ -148,19 +151,21 @@ a {
 
   transition:
     background-color 0.2s ease,
-    color 0.2s ease;
+    transform 0.2s cubic-bezier(0.2, 0, 0, 1),
+    border-radius 0.2s ease;
 }
 
-.header-right a:hover,
-.header-btn:hover {
-  color: var(--theme4);
-  background-color: var(--theme9);
+.header-right a:hover {
+  background-color: var(--theme6);
+  transform: scale(1.05);
+  border-radius: 10px;
 }
 
 .header-most-right {
   color: var(--white);
   background-color: var(--theme2);
 }
+
 .header .header-most-right:hover {
   background-color: var(--theme3);
   color: var(--white);
@@ -242,6 +247,7 @@ a {
 .fa-arrow-right {
   transform: rotate(-45deg);
 }
+
 .news-link-button:hover .fa-arrow-right {
   transform: rotate(0deg);
 }
@@ -263,6 +269,7 @@ a {
 
   font-size: 1.5rem;
 }
+
 .introduction-container p {
   /* border-bottom: 1px solid var(--theme5); */
   font-size: clamp(17px, 3vw, 22px);
@@ -330,6 +337,7 @@ a {
   font-weight: 600;
   font-size: var(--small);
 }
+
 .filter-button:hover {
   background: rgba(255, 255, 255, 0.2);
 }
@@ -385,6 +393,7 @@ a {
 .dropdown-item:hover {
   background-color: var(--theme7);
 }
+
 .back-to-top-button {
   /* サイズ，形 */
   position: fixed;
@@ -444,7 +453,8 @@ a {
   max-width: 900px;
 
   display: grid;
-  grid-template-columns: repeat(auto-fill, 200px); /* ここで内容の幅を調整 */
+  grid-template-columns: repeat(auto-fill, 200px);
+  /* ここで内容の幅を調整 */
   justify-content: center;
   align-items: center;
   gap: 10px;
