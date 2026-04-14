@@ -1,6 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import FabMenu from '../../components/FabMenu.astro';
+import PopupTerminal from '../../components/PopupTerminal.astro';
 
 export async function getStaticPaths() {
   const actions = await getCollection('action');
@@ -68,6 +69,8 @@ const fabOptions = [
         <a class="header-most-right" href="/">Home</a>
       </div>
     </header>
+
+    <PopupTerminal />
 
     <main class="article-page-container">
       <div class="article-page-left-container">

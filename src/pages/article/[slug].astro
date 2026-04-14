@@ -4,6 +4,7 @@ import CategoryTag from '../../components/CategoryTag.astro';
 import ContentNavigation from '../../components/ContentNavigation.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import FabMenu from '../../components/FabMenu.astro';
+import PopupTerminal from '../../components/PopupTerminal.astro';
 
 export async function getStaticPaths() {
   const blogEntries = await getCollection('article');
@@ -92,6 +93,8 @@ const fabOptions = [
         <a class="header-most-right" href="/">Home</a>
       </div>
     </header>
+
+    <PopupTerminal />
 
     <main class="article-page-container">
       <div class="article-page-left-container">

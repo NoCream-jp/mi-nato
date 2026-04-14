@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import ArticleCard from '../components/ArticleCard.astro';
 import FabMenu from '../components/FabMenu.astro';
+import PopupTerminal from '../components/PopupTerminal.astro';
 
 const allArticles = await getCollection('article');
 const sortedArticles = allArticles.sort(
@@ -82,6 +83,8 @@ const fabOptions = [
         <a class="header-most-right" href="/">Home</a>
       </div>
     </header>
+
+    <PopupTerminal />
 
     <div class="articles-section section" id="articles">
       <div class="section-header">
