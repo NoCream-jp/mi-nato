@@ -453,7 +453,7 @@ a {
   max-width: 900px;
 
   display: grid;
-  grid-template-columns: repeat(auto-fill, 200px);
+  grid-template-columns: repeat(auto-fill, 180px);
   /* ここで内容の幅を調整 */
   justify-content: center;
   align-items: center;
