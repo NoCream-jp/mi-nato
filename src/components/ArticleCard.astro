@@ -50,11 +50,13 @@ const { href, title, category, date, class: className } = Astro.props;
 
     transition:
       background-color 0.2s ease,
-      color 0.2s ease;
+      color 0.2s ease,
+      transform 0.2s ease;
   }
 
   .article-card:hover {
     background-color: var(--theme5);
+    transform: translateY(-2px);
   }
 
   .card-title {
