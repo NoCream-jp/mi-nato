@@ -141,7 +141,7 @@ a {
 
   /* デザイン */
   background-color: none;
-  border-radius: 100px;
+  border-radius: 20px;
 
   /* コンテンツ */
   display: flex;
@@ -158,7 +158,7 @@ a {
 .header-right a:hover {
   background-color: var(--theme6);
   transform: scale(1.05);
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .header-most-right {
