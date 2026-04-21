@@ -19,7 +19,7 @@ const shareButton = document.querySelector('.share-button');
 if (shareButton) {
   shareButton.addEventListener('click', () => {
     const currentUrl = encodeURIComponent(window.location.href);
-    
+
     const intentUrl = `https://twitter.com/intent/tweet?url=${currentUrl}`;
 
     window.open(intentUrl, '_blank', 'noopener,noreferrer');
