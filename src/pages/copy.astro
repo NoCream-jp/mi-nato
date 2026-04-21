@@ -7,12 +7,12 @@ import LinkCard from '../components/LinkCard.astro';
 import FabMenu from '../components/FabMenu.astro';
 import PopupTerminal from '../components/PopupTerminal.astro';
 
-const allArticles = await getCollection('article');
+const allArticles = await getCollection('articles');
 const sortedArticles = allArticles
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 4);
 
-const allActions = await getCollection('action');
+const allActions = await getCollection('actions');
 
 // 表示されている記事からユニークなカテゴリーを抽出
 const categories = [
@@ -116,7 +116,7 @@ const fabOptions = [
               style="display: contents;"
             >
               <ArticleCard
-                href={`/article/${article.slug}`}
+                href={`/articles/${article.id}`}
                 thumbnail={article.data.thumbnail}
                 title={article.data.title}
                 category={article.data.category}
@@ -155,7 +155,7 @@ const fabOptions = [
         {
           allActions.map((action) => (
             <LinkCard
-              href={`/action/${action.slug}`}
+              href={`/actions/${action.id}`}
               thumbnail={action.data.thumbnail}
               title={action.data.title}
             />
