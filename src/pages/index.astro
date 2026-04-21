@@ -100,6 +100,16 @@ const fabOptions = [
 
     <PopupTerminal />
 
+    <div class="news-section section" id="news">
+      <div class="section-header">
+        <div class="section-title">News</div>
+      </div>
+      <div class="news-card-container"></div>
+      <div class="section-footer">
+        <InternalLinkButton href="#" description="View More" />
+      </div>
+    </div>
+
     <div class="articles-section section" id="article">
       <div class="section-header">
         <div class="section-title">Article</div>
@@ -163,7 +173,10 @@ const fabOptions = [
         }
       </div>
       <div class="section-footer">
-        <InternalLinkButton href={`/action/${allActions[0].slug}`} description="View More" />
+        <InternalLinkButton
+          href={`/action/${allActions[0].slug}`}
+          description="View More"
+        />
       </div>
     </div>
 
