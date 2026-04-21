@@ -7,7 +7,7 @@ import FabMenu from '../../components/FabMenu.astro';
 import PopupTerminal from '../../components/PopupTerminal.astro';
 
 export async function getStaticPaths() {
-  const blogEntries = await getCollection('article');
+  const blogEntries = await getCollection('articles');
   const sortedEntries = blogEntries.sort(
     (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
   );
@@ -17,7 +17,7 @@ export async function getStaticPaths() {
       index < sortedEntries.length - 1 ? sortedEntries[index + 1] : undefined;
     const nextEntry = index > 0 ? sortedEntries[index - 1] : undefined;
     return {
-      params: { slug: entry.slug },
+      params: { slug: entry.id },
       props: { entry, prevEntry, nextEntry },
     };
   });
@@ -32,7 +32,7 @@ interface Props {
 const { entry, prevEntry, nextEntry } = Astro.props;
 const { Content } = await entry.render();
 
-const allArticles = await getCollection('article');
+const allArticles = await getCollection('articles');
 const sortedArticles = allArticles.sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
@@ -125,9 +125,9 @@ const fabOptions = [
 
           <div class="article-navigation-wrapper">
             <ContentNavigation
-              prevUrl={prevEntry ? `/article/${prevEntry.slug}` : undefined}
+              prevUrl={prevEntry ? `/articles/${prevEntry.id}` : undefined}
               prevText={prevEntry ? prevEntry.data.title : undefined}
-              nextUrl={nextEntry ? `/article/${nextEntry.slug}` : undefined}
+              nextUrl={nextEntry ? `/articles/${nextEntry.id}` : undefined}
               nextText={nextEntry ? nextEntry.data.title : undefined}
             />
           </div>
@@ -163,7 +163,7 @@ const fabOptions = [
                 style="display: contents;"
               >
                 <ArticleCard
-                  href={`/article/${article.slug}`}
+                  href={`/articles/${article.id}`}
                   thumbnail={article.data.thumbnail}
                   title={article.data.title}
                   category={article.data.category}
