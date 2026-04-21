@@ -34,7 +34,7 @@ const fabOptions = [
   {
     label: 'Share on X',
     iconClass: 'fa-brands fa-x-twitter',
-    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent('mi-nato.com')}&url=${encodeURIComponent(String(Astro.url))}`,
+    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent('')}&url=${encodeURIComponent(String(Astro.url))}`,
   },
   {
     label: '?',
@@ -100,6 +100,16 @@ const fabOptions = [
 
     <PopupTerminal />
 
+    <div class="news-section section" id="news">
+      <div class="section-header">
+        <div class="section-title">News</div>
+      </div>
+      <div class="news-card-container"></div>
+      <div class="section-footer">
+        <InternalLinkButton href="#" description="View All" />
+      </div>
+    </div>
+
     <div class="articles-section section" id="article">
       <div class="section-header">
         <div class="section-title">Article</div>
@@ -155,7 +165,7 @@ const fabOptions = [
         {
           allActions.map((action) => (
             <LinkCard
-              href={`/actions/${actions.slug}`}
+              href={`/actions/${action.slug}`}
               thumbnail={action.data.thumbnail}
               title={action.data.title}
             />
@@ -163,7 +173,10 @@ const fabOptions = [
         }
       </div>
       <div class="section-footer">
-        <InternalLinkButton href="/" description="View More" />
+        <InternalLinkButton
+          href={`actions/${allActions[0].slug}`}
+          description="View More"
+        />
       </div>
     </div>
 
@@ -216,7 +229,7 @@ const fabOptions = [
         </ExternalLinkButton>
         <ExternalLinkButton
           href="https://web.wakayama-u.ac.jp/~kuze/lab/jp/"
-          description="大学の研究室ページ"
+          description="大学の研究室"
         />
       </div>
       <span>Copyright ©2026 mi-nato.com</span>
