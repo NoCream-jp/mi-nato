@@ -184,12 +184,10 @@ a {
 .section {
   /* サイズ、形 */
   border-radius: 20px;
-  width: calc(100% - 40px);
+  width: calc(100% - 20px);
   max-width: 800px;
-  padding: 60px clamp(10px, 2vw, 80px);
-
-  /* デザイン */
-  /* border: 2px solid var(--white); */
+  padding: 0px clamp(0px, 2vw, 80px);
+  margin: 30px 0;
 
   /* コンテンツ */
   display: flex;
@@ -230,6 +228,10 @@ a {
   gap: 20px;
 
   font-size: clamp(15px, 4vw, 25px);
+}
+
+.news-card-container {
+  width: 100%;
 }
 
 /* 複数配置する想定で */
@@ -353,7 +355,6 @@ a {
   border: 2px solid var(--theme5);
   border-radius: 20px;
   background-color: var(--white);
-  /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
 
   /* コンテンツ */
   display: none;
