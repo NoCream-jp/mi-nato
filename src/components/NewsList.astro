@@ -1,0 +1,148 @@
+---
+// src/components/NewsList.astro
+import { getCollection } from 'astro:content';
+
+// ニュースを取得し、最新の5件を抽出
+const allNews = await getCollection('news');
+const recentNews = allNews
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 5);
+---
+
+<div class="news-list-container">
+  {
+    recentNews.map((news) => (
+      <div class="news-item-wrapper">
+        <a href={news.data.href || '#'} class="news-item-content">
+          <div class="news-item-main">
+            <span class="news-date">
+              {news.data.date.toLocaleDateString('ja-JP', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+              })}
+            </span>
+            <div class="news-text-group">
+              <h3 class="news-title">{news.data.title}</h3>
+              {news.data.badge && (
+                <span class="news-chip">{news.data.badge}</span>
+              )}
+            </div>
+          </div>
+        </a>
+
+        <button class="news-more-button" aria-label="More options">
+          <i class="fa-solid fa-ellipsis-vertical" />
+        </button>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .news-list-container {
+    /* コンテナ全体の設定 */
+    background-color: #f7f9ff; /* 非常に薄い青 (Surface) */
+    border: 1px solid #dce2f9; /* 外枠の線 */
+    border-radius: 24px; /* M3準拠の大きな角丸 */
+    overflow: hidden; /* ★これで一番上と下の記事の角丸をコンテナに合わせる */
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .news-item-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    transition: background-color 0.2s ease;
+  }
+
+  /* ★罫線の制御: 最後以外の下側に線を引く */
+  .news-item-wrapper:not(:last-child) {
+    border-bottom: 1px solid #dce2f9;
+  }
+
+  .news-item-wrapper:hover {
+    background-color: #ecf0ff; /* ホバー時の青み */
+  }
+
+  .news-item-content {
+    display: flex;
+    flex-grow: 1;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: inherit;
+    /* ボタンに重ならないように右側に余白 */
+    padding-right: 56px;
+  }
+
+  .news-item-main {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .news-date {
+    font-size: 0.8rem;
+    color: #44474e;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .news-text-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .news-title {
+    font-size: 1rem;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .news-chip {
+    background-color: #dce2f9; /* Chip背景 (Secondary Container) */
+    color: #161b2c;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+  }
+
+  .news-more-button {
+    position: absolute;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    color: #44474e;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+  }
+
+  .news-more-button:hover {
+    background-color: rgba(73, 104, 189, 0.1);
+    color: #3a549c;
+  }
+
+  /* タブレット・PC向けに横並び調整 */
+  @media (min-width: 600px) {
+    .news-item-main {
+      flex-direction: row;
+      align-items: center;
+      gap: 24px;
+    }
+    .news-date {
+      min-width: 100px;
+    }
+  }
+</style>
