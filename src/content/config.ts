@@ -20,7 +20,21 @@ const actionCollection = defineCollection({
   }),
 });
 
+const newsCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    date: z.date(),
+    description: z.string().optional(),
+    icon: z.string().optional(),
+    isImportant: z.boolean().default(false),
+    badge: z.string().optional(),
+    href: z.string().optional(),
+  }),
+});
+
 export const collections = {
   articles: articleCollection,
   actions: actionCollection,
+  news: newsCollection,
 };

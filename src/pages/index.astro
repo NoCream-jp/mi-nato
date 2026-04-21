@@ -6,6 +6,7 @@ import InternalLinkButton from '../components/InternalLinkButton.astro';
 import LinkCard from '../components/LinkCard.astro';
 import FabMenu from '../components/FabMenu.astro';
 import PopupTerminal from '../components/PopupTerminal.astro';
+import NewsList from '../components/NewsList.astro';
 
 const allArticles = await getCollection('articles');
 const sortedArticles = allArticles
@@ -104,7 +105,9 @@ const fabOptions = [
       <div class="section-header">
         <div class="section-title">News</div>
       </div>
-      <div class="news-card-container"></div>
+      <div class="news-card-container">
+        <NewsList />
+      </div>
       <div class="section-footer">
         <InternalLinkButton href="#" description="View All" />
       </div>
