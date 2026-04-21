@@ -6,6 +6,7 @@ import CategoryTag from './CategoryTag.astro';
 // ニュースを取得し、最新の5件を抽出
 const allNews = await getCollection('news');
 const recentNews = allNews
+  .filter((news) => news.data.draft === false)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 5);
 ---
@@ -37,6 +38,10 @@ const recentNews = allNews
 <style>
   h3 {
     margin: 0;
+  }
+  span {
+    margin: 0;
+    padding: 0;
   }
   .news-meta {
     display: flex;

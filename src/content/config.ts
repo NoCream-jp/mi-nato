@@ -30,6 +30,7 @@ const newsCollection = defineCollection({
     isImportant: z.boolean().default(false),
     badge: z.string().optional(),
     href: z.string().optional(),
+    draft: z.boolean().default(true),
   }),
 });
 
