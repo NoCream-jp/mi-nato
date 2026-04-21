@@ -17,7 +17,7 @@ export async function getStaticPaths() {
       index < sortedEntries.length - 1 ? sortedEntries[index + 1] : undefined;
     const nextEntry = index > 0 ? sortedEntries[index - 1] : undefined;
     return {
-      params: { slug: entry.id },
+      params: { slug: entry.slug },
       props: { entry, prevEntry, nextEntry },
     };
   });
@@ -125,9 +125,9 @@ const fabOptions = [
 
           <div class="article-navigation-wrapper">
             <ContentNavigation
-              prevUrl={prevEntry ? `/articles/${prevEntry.id}` : undefined}
+              prevUrl={prevEntry ? `/articles/${prevEntry.slug}` : undefined}
               prevText={prevEntry ? prevEntry.data.title : undefined}
-              nextUrl={nextEntry ? `/articles/${nextEntry.id}` : undefined}
+              nextUrl={nextEntry ? `/articles/${nextEntry.slug}` : undefined}
               nextText={nextEntry ? nextEntry.data.title : undefined}
             />
           </div>
@@ -163,7 +163,7 @@ const fabOptions = [
                 style="display: contents;"
               >
                 <ArticleCard
-                  href={`/articles/${article.id}`}
+                  href={`/articles/${article.slug}`}
                   thumbnail={article.data.thumbnail}
                   title={article.data.title}
                   category={article.data.category}
@@ -279,7 +279,7 @@ const fabOptions = [
   .article-body :global(p) {
     margin-bottom: 1.5em;
   }
-  
+
   /* 記事本文内のリンクの装飾 */
   .article-body :global(a) {
     text-decoration: underline;

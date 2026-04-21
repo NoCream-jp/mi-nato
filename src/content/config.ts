@@ -21,6 +21,6 @@ const actionCollection = defineCollection({
 });
 
 export const collections = {
-  article: articleCollection,
-  action: actionCollection,
+  articles: articleCollection,
+  actions: actionCollection,
 };

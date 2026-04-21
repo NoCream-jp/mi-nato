@@ -6,7 +6,7 @@ import PopupTerminal from '../../components/PopupTerminal.astro';
 export async function getStaticPaths() {
   const actions = await getCollection('actions');
   return actions.map((entry) => ({
-    params: { slug: entry.id },
+    params: { slug: entry.slug },
     props: { entry },
   }));
 }
