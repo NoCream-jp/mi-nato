@@ -4,7 +4,7 @@ import ArticleCard from '../components/ArticleCard.astro';
 import FabMenu from '../components/FabMenu.astro';
 import PopupTerminal from '../components/PopupTerminal.astro';
 
-const allArticles = await getCollection('articles');
+const allArticles = await getCollection('article');
 const sortedArticles = allArticles.sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
@@ -120,7 +120,7 @@ const fabOptions = [
               style="display: contents;"
             >
               <ArticleCard
-                href={`/articles/${article.id}`}
+                href={`/article/${article.slug}`}
                 thumbnail={article.data.thumbnail}
                 title={article.data.title}
                 category={article.data.category}

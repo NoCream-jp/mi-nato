@@ -116,7 +116,7 @@ const fabOptions = [
               style="display: contents;"
             >
               <ArticleCard
-                href={`/articles/${article.id}`}
+                href={`/articles/${article.slug}`}
                 thumbnail={article.data.thumbnail}
                 title={article.data.title}
                 category={article.data.category}
@@ -155,7 +155,7 @@ const fabOptions = [
         {
           allActions.map((action) => (
             <LinkCard
-              href={`/actions/${action.id}`}
+              href={`/actions/${actions.slug}`}
               thumbnail={action.data.thumbnail}
               title={action.data.title}
             />

@@ -34,7 +34,7 @@ const fabOptions = [
   {
     label: 'Share on X',
     iconClass: 'fa-brands fa-x-twitter',
-    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent('mi-nato.com')}&url=${encodeURIComponent(String(Astro.url))}`,
+    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent('')}&url=${encodeURIComponent(String(Astro.url))}`,
   },
   {
     label: '?',
@@ -104,9 +104,7 @@ const fabOptions = [
       <div class="section-header">
         <div class="section-title">News</div>
       </div>
-      <div class="news-card-container">
-
-      </div>
+      <div class="news-card-container"></div>
       <div class="section-footer">
         <InternalLinkButton href="#" description="View All" />
       </div>
@@ -128,7 +126,7 @@ const fabOptions = [
               style="display: contents;"
             >
               <ArticleCard
-                href={`/articles/${article.id}`}
+                href={`/articles/${article.slug}`}
                 thumbnail={article.data.thumbnail}
                 title={article.data.title}
                 category={article.data.category}
@@ -167,7 +165,7 @@ const fabOptions = [
         {
           allActions.map((action) => (
             <LinkCard
-              href={`/actions/${action.id}`}
+              href={`/actions/${action.slug}`}
               thumbnail={action.data.thumbnail}
               title={action.data.title}
             />
@@ -176,7 +174,7 @@ const fabOptions = [
       </div>
       <div class="section-footer">
         <InternalLinkButton
-          href={`actions/${allActions[0].id}`}
+          href={`actions/${allActions[0].slug}`}
           description="View More"
         />
       </div>
