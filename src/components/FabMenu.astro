@@ -159,16 +159,14 @@ const { options = defaultOptions } = Astro.props;
   .fab-options {
     display: flex;
     flex-direction: column;
-    align-items: flex-end; /* オプション同士も右揃え */
-    gap: 12px; /* オプション間の縦の隙間 */
+    align-items: flex-end;
+    gap: 12px;
 
-    /* 初期状態は非表示（透明＆少し下に下がっている） */
     opacity: 0;
     visibility: hidden;
     transform: translateY(16px) scale(0.95);
     transform-origin: bottom right;
 
-    /* M3の心地よいイージング */
     transition:
       opacity 0.2s cubic-bezier(0.2, 0, 0, 1),
       transform 0.2s cubic-bezier(0.2, 0, 0, 1),
