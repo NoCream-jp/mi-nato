@@ -41,29 +41,6 @@ const sortedArticles = allArticles.sort(
 const categories = [
   ...new Set(sortedArticles.map((article) => article.data.category)),
 ];
-
-const fabOptions = [
-  {
-    label: 'Top',
-    iconClass: 'fa-solid fa-angle-up',
-    href: '#',
-  },
-  {
-    label: 'Home',
-    iconClass: 'fa-solid fa-house',
-    href: '/',
-  },
-  {
-    label: 'Share on X',
-    iconClass: 'fa-brands fa-x-twitter',
-    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(entry.data.title)}&url=${encodeURIComponent(String(Astro.url))}`,
-  },
-  {
-    label: '?',
-    iconClass: 'fa-solid fa-code',
-    href: '#terminal',
-  },
-];
 ---
 
 <!doctype html>
@@ -176,7 +153,7 @@ const fabOptions = [
       </aside>
     </main>
 
-    <FabMenu options={fabOptions} />
+    <FabMenu />
 
     <script is:inline src="/scripts/script.js"></script>
     <footer class="footer">Copyright ©2026 mi-nato.com</footer>

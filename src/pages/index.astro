@@ -22,30 +22,6 @@ const allActions = (await getCollection('actions')).filter(
 const categories = [
   ...new Set(sortedArticles.map((article) => article.data.category)),
 ];
-
-// Fabのオプション用意
-const fabOptions = [
-  {
-    label: 'Top',
-    iconClass: 'fa-solid fa-angle-up',
-    href: '#',
-  },
-  {
-    label: 'Home',
-    iconClass: 'fa-solid fa-house',
-    href: '/',
-  },
-  {
-    label: 'Share on X',
-    iconClass: 'fa-brands fa-x-twitter',
-    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent('')}&url=${encodeURIComponent(String(Astro.url))}`,
-  },
-  {
-    label: '?',
-    iconClass: 'fa-solid fa-code',
-    href: '#terminal',
-  },
-];
 ---
 
 <!doctype html>
@@ -246,7 +222,7 @@ const fabOptions = [
       <span>Copyright ©2026 mi-nato.com</span>
     </footer>
 
-    <FabMenu options={fabOptions} />
+    <FabMenu />
 
     <script is:inline src="/scripts/script.js"></script>
   </body>

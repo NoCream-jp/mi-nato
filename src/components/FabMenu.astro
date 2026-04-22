@@ -4,7 +4,7 @@ interface FabOption {
   label: string;
   iconClass: string; // 例: "fa-solid fa-share-nodes"
   href: string;
-  /*  
+  /*
   {
     label: 'Home',
     iconClass: 'fa-solid fa-house',
@@ -20,19 +20,24 @@ interface Props {
 // デフォルトのオプション（ShareとContactの例）
 const defaultOptions: FabOption[] = [
   {
+    label: 'Top',
+    iconClass: 'fa-solid fa-angle-up',
+    href: '#',
+  },
+  {
+    label: 'Home',
+    iconClass: 'fa-solid fa-house',
+    href: '/',
+  },
+  {
     label: 'Share on X',
     iconClass: 'fa-brands fa-x-twitter',
-    href: '#',
+    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent('')}&url=${encodeURIComponent(String(Astro.url))}`,
   },
   {
-    label: 'Copy Link',
-    iconClass: 'fa-solid fa-link',
-    href: '#',
-  },
-  {
-    label: 'Contact',
-    iconClass: 'fa-regular fa-envelope',
-    href: '/contact',
+    label: '?',
+    iconClass: 'fa-solid fa-code',
+    href: '#terminal',
   },
 ];
 

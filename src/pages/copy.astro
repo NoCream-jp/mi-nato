@@ -6,41 +6,21 @@ import InternalLinkButton from '../components/InternalLinkButton.astro';
 import LinkCard from '../components/LinkCard.astro';
 import FabMenu from '../components/FabMenu.astro';
 import PopupTerminal from '../components/PopupTerminal.astro';
+import NewsList from '../components/NewsList.astro';
 
 const allArticles = await getCollection('articles');
 const sortedArticles = allArticles
+  .filter((sortedArticles) => sortedArticles.data.draft === false)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 4);
 
-const allActions = await getCollection('actions');
+const allActions = (await getCollection('actions')).filter(
+  (action) => action.data.draft === false,
+);
 
 // 表示されている記事からユニークなカテゴリーを抽出
 const categories = [
   ...new Set(sortedArticles.map((article) => article.data.category)),
-];
-
-// Fabのオプション用意
-const fabOptions = [
-  {
-    label: 'Top',
-    iconClass: 'fa-solid fa-angle-up',
-    href: '#',
-  },
-  {
-    label: 'Home',
-    iconClass: 'fa-solid fa-house',
-    href: '/',
-  },
-  {
-    label: 'Share on X',
-    iconClass: 'fa-brands fa-x-twitter',
-    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent('')}&url=${encodeURIComponent(String(Astro.url))}`,
-  },
-  {
-    label: '?',
-    iconClass: 'fa-solid fa-code',
-    href: '#terminal',
-  },
 ];
 ---
 
@@ -104,7 +84,9 @@ const fabOptions = [
       <div class="section-header">
         <div class="section-title">News</div>
       </div>
-      <div class="news-card-container"></div>
+      <div class="news-card-container">
+        <NewsList />
+      </div>
       <div class="section-footer">
         <InternalLinkButton href="#" description="View All" />
       </div>
@@ -163,13 +145,18 @@ const fabOptions = [
       </div>
       <div class="link-card-container">
         {
-          allActions.map((action) => (
-            <LinkCard
-              href={`/actions/${action.slug}`}
-              thumbnail={action.data.thumbnail}
-              title={action.data.title}
-            />
-          ))
+          allActions.map(
+            (action: {
+              slug: any;
+              data: { thumbnail: string; title: string | undefined };
+            }) => (
+              <LinkCard
+                href={`/actions/${action.slug}`}
+                thumbnail={action.data.thumbnail}
+                title={action.data.title}
+              />
+            ),
+          )
         }
       </div>
       <div class="section-footer">
@@ -235,7 +222,7 @@ const fabOptions = [
       <span>Copyright ©2026 mi-nato.com</span>
     </footer>
 
-    <FabMenu options={fabOptions} />
+    <FabMenu />
 
     <script is:inline src="/scripts/script.js"></script>
   </body>
