@@ -10,10 +10,13 @@ import NewsList from '../components/NewsList.astro';
 
 const allArticles = await getCollection('articles');
 const sortedArticles = allArticles
+  .filter((sortedArticles) => sortedArticles.data.draft === false)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 4);
 
-const allActions = await getCollection('actions');
+const allActions = (await getCollection('actions')).filter(
+  (action) => action.data.draft === false,
+);
 
 // 表示されている記事からユニークなカテゴリーを抽出
 const categories = [
@@ -166,13 +169,18 @@ const fabOptions = [
       </div>
       <div class="link-card-container">
         {
-          allActions.map((action) => (
-            <LinkCard
-              href={`/actions/${action.slug}`}
-              thumbnail={action.data.thumbnail}
-              title={action.data.title}
-            />
-          ))
+          allActions.map(
+            (action: {
+              slug: any;
+              data: { thumbnail: string; title: string | undefined };
+            }) => (
+              <LinkCard
+                href={`/actions/${action.slug}`}
+                thumbnail={action.data.thumbnail}
+                title={action.data.title}
+              />
+            ),
+          )
         }
       </div>
       <div class="section-footer">

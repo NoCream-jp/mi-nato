@@ -7,6 +7,7 @@ const articleCollection = defineCollection({
     category: z.string(),
     thumbnail: z.string(),
     date: z.date(),
+    draft: z.boolean().default(false),
   }),
 });
 
@@ -17,6 +18,7 @@ const actionCollection = defineCollection({
     description: z.string().optional(),
     date: z.date(),
     thumbnail: z.string(),
+    draft: z.boolean().default(false),
   }),
 });
 

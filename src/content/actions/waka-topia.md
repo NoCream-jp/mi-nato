@@ -5,6 +5,7 @@ category: 'Startup'
 date: 2026-01-28
 slug: 'waka-topia'
 thumbnail: '/images/waka-topia.png'
+draft: false
 ---
 
 ## 学生企業団体Waka-topiaについて
