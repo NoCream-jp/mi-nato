@@ -24,9 +24,9 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  entry: CollectionEntry<'article'>;
-  prevEntry?: CollectionEntry<'article'>;
-  nextEntry?: CollectionEntry<'article'>;
+  entry: CollectionEntry<'articles'>;
+  prevEntry?: CollectionEntry<'articles'>;
+  nextEntry?: CollectionEntry<'articles'>;
 }
 
 const { entry, prevEntry, nextEntry } = Astro.props;
