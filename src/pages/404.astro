@@ -1,4 +1,5 @@
 ---
+import FabMenu from '../components/FabMenu.astro';
 import PopupTerminal from '../components/PopupTerminal.astro';
 ---
 
@@ -41,20 +42,21 @@ import PopupTerminal from '../components/PopupTerminal.astro';
     />
   </head>
   <body>
-    <h1>404</h1>
-    <p>Page not found</p>
     <header class="header">
       <div class="header-left">
         <a href="/">mi-nato.com</a>
       </div>
       <div class="header-right">
-        <a href="/">Home</a>
-        <a href="/#article">Articles</a>
-        <a href="/#about">About</a>
-        <a href="/#actions">Actions</a>
+        <a href="#article">Article</a>
+        <a href="#about">About</a>
+        <a class="header-most-right" href="#action">Action</a>
       </div>
     </header>
+    <h1>404</h1>
+    <p>Page not found</p>
 
     <PopupTerminal />
+    <FabMenu />
+    <footer class="footer">Copyright ©2026 mi-nato.com</footer>
   </body>
 </html>

@@ -4,7 +4,7 @@ import FabMenu from '../../components/FabMenu.astro';
 import PopupTerminal from '../../components/PopupTerminal.astro';
 
 export async function getStaticPaths() {
-  const actions = await getCollection('action');
+  const actions = await getCollection('actions');
   return actions.map((entry) => ({
     params: { slug: entry.slug },
     props: { entry },
@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  entry: CollectionEntry<'action'>;
+  entry: CollectionEntry<'actions'>;
 }
 
 const { entry } = Astro.props;

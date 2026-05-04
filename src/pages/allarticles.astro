@@ -4,7 +4,7 @@ import ArticleCard from '../components/ArticleCard.astro';
 import FabMenu from '../components/FabMenu.astro';
 import PopupTerminal from '../components/PopupTerminal.astro';
 
-const allArticles = await getCollection('article');
+const allArticles = await getCollection('articles');
 const sortedArticles = allArticles.sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
@@ -12,30 +12,6 @@ const sortedArticles = allArticles.sort(
 // 表示されている記事からユニークなカテゴリーを抽出
 const categories = [
   ...new Set(sortedArticles.map((article) => article.data.category)),
-];
-
-// Fabのオプション
-const fabOptions = [
-  {
-    label: 'Top',
-    iconClass: 'fa-solid fa-angle-up',
-    href: '#',
-  },
-  {
-    label: 'Home',
-    iconClass: 'fa-solid fa-house',
-    href: '/',
-  },
-  {
-    label: 'Share on X',
-    iconClass: 'fa-brands fa-x-twitter',
-    href: `https://twitter.com/intent/tweet?text=${encodeURIComponent('mi-nato.com')}&url=${encodeURIComponent(String(Astro.url))}`,
-  },
-  {
-    label: '?',
-    iconClass: 'fa-solid fa-code',
-    href: '#terminal',
-  },
 ];
 ---
 
@@ -120,7 +96,7 @@ const fabOptions = [
               style="display: contents;"
             >
               <ArticleCard
-                href={`/article/${article.slug}`}
+                href={`/articles/${article.id}`}
                 thumbnail={article.data.thumbnail}
                 title={article.data.title}
                 category={article.data.category}
@@ -133,7 +109,7 @@ const fabOptions = [
       <div class="section-footer"></div>
     </div>
 
-    <FabMenu options={fabOptions} />
+    <FabMenu />
 
     <footer class="footer">Copyright ©2026 mi-nato.com</footer>
 

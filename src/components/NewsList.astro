@@ -1,0 +1,132 @@
+---
+// src/components/NewsList.astro
+import { getCollection } from 'astro:content';
+import CategoryTag from './CategoryTag.astro';
+
+// ニュースを取得し、最新の5件を抽出
+const allNews = await getCollection('news');
+const recentNews = allNews
+  .filter((news) => news.data.draft === false)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 5);
+---
+
+<div class="news-list-container">
+  {
+    recentNews.map((news) => (
+      <a href={news.data.href || '#'} class="news-item-content">
+        <div class="news-item-main">
+          <div class="news-meta">
+            <span class="news-date">
+              {news.data.date.toLocaleDateString('ja-JP', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+              })}
+            </span>
+          </div>
+          <h3 class="news-text">{news.data.title}</h3>
+        </div>
+        <div>
+          {news.data.badge && <CategoryTag category={news.data.badge} />}
+        </div>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  h3 {
+    margin: 0;
+  }
+  span {
+    margin: 0;
+    padding: 0;
+  }
+  .news-meta {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .news-list-container {
+    background-color: var(--white);
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+    align-items: center;
+    background-color: transparent;
+    transition: background-color 0.2s ease;
+  }
+  .news-item-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    flex-grow: 1;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: inherit;
+    background-color: var(--theme7);
+  }
+  .news-item-content:not(:last-child) {
+    border-bottom: 5px solid var(--theme9);
+  }
+  .news-item-content:hover {
+    background-color: var(--theme6);
+  }
+  .news-item-main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .news-date {
+    font-size: 0.8rem;
+    color: #44474e;
+    font-family: 'Roboto', sans-serif;
+  }
+  .news-text {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .news-title {
+    font-size: 1rem;
+    margin: 0;
+    font-weight: 500;
+  }
+  .news-more-button {
+    position: absolute;
+    right: 12px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    color: #44474e;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+  }
+  .news-more-button:hover {
+    background-color: rgba(73, 104, 189, 0.1);
+    color: #3a549c;
+  }
+  @media (min-width: 600px) {
+    .news-item-main {
+      flex-direction: row;
+      align-items: center;
+      gap: 24px;
+    }
+    .news-date {
+      min-width: 100px;
+    }
+  }
+</style>
