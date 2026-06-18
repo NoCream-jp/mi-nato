@@ -1,0 +1,129 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import TagFilter from '../components/TagFilter.astro';
+
+const allPosts = await getCollection('blog');
+
+// 日付でソート（新しい順）
+const sortedPosts = allPosts.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+// パンくず
+const breadcrumbItems = [
+  { label: "TOP", href: "/" },
+  { label: "blog" }
+];
+
+// タグフィルタ用のタグ一覧
+const allTags = Array.from(
+  new Set(allPosts.map(post => post.data.category))
+) as string[];
+---
+
+<Layout>
+  <main 
+    transition:name="card-blog"
+    class="mx-auto w-full max-w-4xl bg-white px-6 py-12 md:px-12 md:py-20 min-h-screen rounded-md"
+  >
+  <Breadcrumbs items={breadcrumbItems} />
+  <TagFilter tags={allTags} />
+
+  <div class="mb-12 border-b border-zinc-300 pb-5">
+    <h1 class="text-2xl font-medium tracking-wide text-zinc-900 md:text-[1.7rem]">
+      blog
+    </h1>
+  </div>
+
+    <!-- 記事一覧 -->
+    <div class="flex flex-col gap-4">
+      {sortedPosts.length > 0 ? (
+        sortedPosts.map((post) => (
+          <ArticleCard 
+            href={`/blog/${post.id}`}
+            title={post.data.title}
+            date={post.data.date}
+            category={post.data.category}
+          />
+        ))
+      ) : (
+        <p class="text-center text-sm text-zinc-400 py-8">
+          No articles found.
+        </p>
+      )}
+    </div>
+   
+    <script is:inline>
+      const buttons = document.querySelectorAll(".tag-btn");
+      const cards = document.querySelectorAll("[data-category]");
+    
+      let active = "all";
+    
+      // URLから初期状態取得
+      const params = new URLSearchParams(window.location.search);
+      active = params.get("tag") || "all";
+    
+      function updateUI() {
+        // ボタン見た目
+        buttons.forEach(b => {
+          b.classList.remove("bg-zinc-500","text-white");
+          b.dataset.active = "false";
+        });
+    
+        const activeBtn = document.querySelector(`[data-tag="${active}"]`);
+        if (activeBtn) {
+          activeBtn.classList.add("bg-zinc-500","text-white");
+          activeBtn.dataset.active = "true";
+        }
+    
+        // 記事フィルタ
+        cards.forEach(card => {
+          const category = card.dataset.category;
+    
+          if (active === "all" || category === active) {
+            card.style.display = "";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      }
+    
+      function updateURL() {
+        const url = new URL(window.location);
+    
+        if (active === "all") {
+          url.searchParams.delete("tag");
+        } else {
+          url.searchParams.set("tag", active);
+        }
+    
+        history.replaceState({}, "", url);
+      }
+    
+      // 初期描画
+      updateUI();
+    
+      // クリック処理
+      buttons.forEach(btn => {
+        btn.addEventListener("click", () => {
+          const tag = btn.dataset.tag;
+    
+          active = (active === tag) ? "all" : tag;
+    
+          updateUI();
+          updateURL();
+        });
+      });
+    
+      // 戻るボタン対応
+      window.addEventListener("popstate", () => {
+        const params = new URLSearchParams(window.location.search);
+        active = params.get("tag") || "all";
+        updateUI();
+      });
+    </script>
+  </main>
+</Layout>

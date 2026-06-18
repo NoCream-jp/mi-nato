@@ -1,26 +1,28 @@
-# mi-nato.com
+# Astro Starter Kit: Basics
 
-これは、[Astro](https://astro.build/)を使用して構築された個人用ポートフォリオ兼ブログサイトです。実績、制作物、ブログ記事などを掲載しています。
+```sh
+npm create astro@latest -- --template basics
+```
 
-## ✨ 技術スタック
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-- **Framework:** [Astro](https://astro.build/)
-- **Styling:** CSS
-- **Formatting:** [Prettier](https://prettier.io/)
-- **Fonts:** [Google Fonts](https://fonts.google.com/), [Font Awesome](https://fontawesome.com/)
+## 🚀 Project Structure
 
-## 🚀 プロジェクト構成
+Inside of your Astro project, you'll see the following folders and files:
 
 ```text
 /
-├── public/              # 静的アセット (画像, faviconなど)
-├── src/
-│   ├── components/      # 再利用可能なAstroコンポーネント
-│   ├── content/         # コンテンツコレクション (Markdownファイル)
-│   │   ├── action/      # 「Action」ページのコンテンツ
-│   │   └── article/     # 「Article」ページのコンテンツ
-│   ├── layouts/         # ページ全体のレイアウト
-│   └── pages/           # サイトのページとルーティング
+├── public/
+│   └── favicon.svg
+├── src
+│   ├── assets
+│   │   └── astro.svg
+│   ├── components
+│   │   └── Welcome.astro
+│   ├── layouts
+│   │   └── Layout.astro
+│   └── pages
+│       └── index.astro
 └── package.json
 ```
 
@@ -42,3 +44,4 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+"# portfolio"

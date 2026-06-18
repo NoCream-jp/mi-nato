@@ -1,0 +1,13 @@
+# デフォルトでテキストファイルとして扱うものはすべて LF に統一
+* text=auto eol=lf
+
+# 画像などのバイナリファイルは改行コードの変換対象から除外（破損防止）
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+
+# SVGはテキストファイルなので LF に統一
+*.svg text eol=lf
