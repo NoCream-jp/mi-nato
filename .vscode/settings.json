@@ -1,13 +1,11 @@
 {
+  "files.eol": "\n",
   "editor.formatOnSave": true,
-  "prettier.documentSelectors": ["**/*.astro"],
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[astro]": {
-    "editor.defaultFormatter": "astro-build.astro-vscode"
-  },
-  "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[typescript]": {
+  "[svelte]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }

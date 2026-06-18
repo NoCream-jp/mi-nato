@@ -1,0 +1,101 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Breadcrumbs from "../../components/Breadcrumbs.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => {
+    return !data.draft;
+  });
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<"blog">;
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+// OGP用
+const description = post.data.description || `${post.data.title}についての記事です。`;
+const image = post.data.image || "/images/ogp-default.png";
+---
+
+<Layout title={`${post.data.title} | mi-nato.com`}>
+  <main class="mx-auto w-full max-w-4xl px-6 py-12 md:px-12 md:py-20">
+    <article>
+      
+      <Breadcrumbs 
+        items={[
+          { label: "TOP", href: "/" },
+          { label: "blog", href: "/blog" },
+          { label: post.data.title }
+        ]} 
+      />
+
+      <header class="mt-12 mb-12">
+        <div class="flex items-center justify-between border-b border-zinc-300 pb-5">
+          
+          <h1 class="text-xl font-md tracking-wide text-zinc-800 md:text-[1.7rem]">
+            {post.data.title}
+          </h1>
+          
+          {post.data.category && (
+            <span class="rounded-full bg-[#9c9c9c] px-4 py-1.5 text-sm tracking-wider text-white">
+              {post.data.category}
+            </span>
+          )}
+          
+        </div>
+      </header>
+
+      <div class="blog-content text-[15px] leading-[2.2] tracking-wide text-zinc-800 md:text-base">
+        <Content />
+      </div>
+      
+    </article>
+  </main>
+</Layout>
+
+<style>
+  /* Markdownの装飾も、フラットな世界観に合わせて主張を抑えめに */
+  :global(.blog-content p) {
+    margin-bottom: 0.5rem;
+  }
+  
+  :global(.blog-content a) {
+    color: #52525b;
+    text-decoration: underline;
+    text-decoration-color: #18181b;
+    text-underline-offset: 4px;
+    transition: all 0.2s ease;
+  }
+  :global(.blog-content a:hover) {
+    color: #d4d4d8;
+    text-decoration-color: #d4d4d8;
+  }
+
+  :global(.blog-content h2) {
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-top: 4rem;
+    margin-bottom: 1.5rem;
+  }
+
+  :global(.blog-content h3) {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+  }
+
+  :global(.blog-content ul) {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 2rem;
+  }
+</style>

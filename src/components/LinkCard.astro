@@ -1,83 +1,38 @@
 ---
 interface Props {
-  thumbnail: string;
+  title: string;
+  username?: string;
   href: string;
-  title?: string;
 }
 
-const { thumbnail, href, title } = Astro.props;
+const { title, username, href } = Astro.props;
 ---
 
-<a href={href} class="link-card">
-  <img
-    src={thumbnail}
-    alt={title || 'Action thumbnail'}
-    class="card-thumbnail"
-  />
-  <div class="icon-container">
-    <i class="fa-solid fa-arrow-right"></i>
+<a 
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="group block w-full rounded-md border border-zinc-200 bg-white p-4 hover:border-zinc-300"
+>
+  <div class="flex items-center justify-between">
+    
+    <!-- 左側 -->
+    <div class="flex flex-col">
+      <span class="text-base font-medium text-zinc-800 group-hover:text-zinc-400">
+        {title}
+      </span>
+
+      {username && (
+        <span class="mt-1 text-xs text-zinc-400">
+          {username}
+        </span>
+      )}
+    </div>
+
+    <!-- 右上アイコン -->
+    <div class="flex align-center justify-center  text-zinc-700 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-zinc-400">
+        <svg class="h-5 w-auto" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M6.4 18L5 16.6L14.6 7H6V5h12v12h-2V8.4z"/></svg>
+    </div>
+
   </div>
 </a>
-
-<style>
-  .link-card {
-    position: relative;
-    display: block;
-    width: 100%;
-    height: 250px; /* カードの高さを指定 */
-    border-radius: 16px;
-    overflow: hidden;
-    text-decoration: none;
-    background-color: #f0f0f0;
-  }
-
-  .card-thumbnail {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top left;
-    transition: filter 0.3s ease;
-  }
-
-  .icon-container {
-    position: absolute;
-    top: 50%;
-    right: 30px;
-    transform: translateY(-50%);
-    font-size: 3rem;
-    color: var(--theme1);
-    opacity: 0.7;
-    transition:
-      opacity 0.3s ease,
-      transform 0.3s ease,
-      color 0.3s ease;
-    z-index: 2;
-  }
-
-  .link-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--theme5);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 1;
-  }
-
-  .link-card:hover::after {
-    opacity: 0.6;
-  }
-
-  .link-card:hover .card-thumbnail {
-    filter: blur(4px);
-  }
-
-  .link-card:hover .icon-container {
-    opacity: 1;
-    color: var(--white);
-    transform: translateY(-50%) scale(1.1);
-  }
-</style>

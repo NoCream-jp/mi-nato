@@ -1,0 +1,171 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro Basics</title>
+	</head>
+	<body class="bg-gray-50" transition:animate="fade">
+		<ClientRouter />
+
+		<header class="md:px-0 m-5 flex items-center justify-between px-6">
+			<div class="flex items-center gap-5">
+				<a href="/" class="hidden text-xl font-normal tracking-wide text-zinc-500 md:block">mi-nato.com</a>
+			</div>
+			<nav class="flex w-full text-lg font-normal text-zinc-800 gap-10 justify-center md:w-auto">
+			  <button type="button" data-target="about" data-nav class="cursor-pointer hover:text-gray-500">about</button>
+				<button type="button" data-target="blog" data-nav class="cursor-pointer hover:text-gray-500">blog</button>
+				<button type="button" data-target="action" data-nav class="cursor-pointer hover:text-gray-500">action</button>
+ 				<button type="button" data-target="learning" data-nav class="cursor-pointer hover:text-gray-500">learning</button>
+			</nav>
+		  </header>
+		<slot />
+	</body>
+	<script is:inline>
+		let container = null;
+	
+		 function init() {
+			container = document.getElementById("card-container");
+
+			if (container) {
+				originalOrder = Array.from(container.children);
+			}
+
+			 document.querySelectorAll("nav [data-target]").forEach(el => {
+				el.addEventListener("click", () => {
+					const target = el.dataset.target;
+
+					if (location.pathname === "/") {
+						reorder(target);
+					} else {
+						window.location.href = `/?target=${target}`;
+					}
+				});
+			});
+
+			const params = new URLSearchParams(window.location.search);
+			const target = params.get("target");
+
+			if (target) {
+				setTimeout(() => {
+					reorder(target);
+				}, 50);
+
+				// URLを綺麗に戻す
+				history.replaceState({}, "", "/");
+			}
+		}
+
+		let current = null;
+		let originalOrder = [];
+		let isAnimating = false;
+	
+		function animateFLIP(items, firstRects) {
+			const lastRects = new Map();
+			items.forEach(el => {
+				lastRects.set(el, el.getBoundingClientRect());
+			});
+	
+			const animations = [];
+	
+			items.forEach(el => {
+				const first = firstRects.get(el);
+				const last = lastRects.get(el);
+	
+				const dx = first.left - last.left;
+				const dy = first.top - last.top;
+	
+				const anim = el.animate(
+					[
+						{ transform: `translate(${dx}px, ${dy}px)` },
+						{ transform: "translate(0, 0)" }
+					],
+					{
+						duration: 400,
+						easing: "cubic-bezier(0.2, 0.8, 0.2, 1)"
+					}
+				);
+	
+				animations.push(anim.finished);
+			});
+	
+			return Promise.all(animations);
+		}
+	
+		function reorder(targetKey) {
+			if (!container || isAnimating) return;
+	
+			const items = Array.from(container.children);
+	
+			// 同じものを再クリック → リセット
+			if (current === targetKey) {
+				resetOrder();
+				current = null;
+				return;
+			}
+	
+			isAnimating = true;
+	
+			// First
+			const firstRects = new Map();
+			items.forEach(el => {
+				firstRects.set(el, el.getBoundingClientRect());
+			});
+	
+			// 並び替え
+			const target = items.find(el => el.dataset.key === targetKey);
+			if (!target) {
+				isAnimating = false;
+				return;
+			}
+	
+			container.prepend(target);
+			current = targetKey;
+	
+			// FLIP
+			animateFLIP(items, firstRects).then(() => {
+				isAnimating = false;
+			});
+		}
+	
+		function resetOrder() {
+			if (!container || isAnimating) return;
+	
+			const items = Array.from(container.children);
+	
+			isAnimating = true;
+	
+			// First
+			const firstRects = new Map();
+			items.forEach(el => {
+				firstRects.set(el, el.getBoundingClientRect());
+			});
+	
+			// 元の順序に戻す
+			originalOrder.forEach(el => container.appendChild(el));
+	
+			// FLIP
+			animateFLIP(items, firstRects).then(() => {
+				isAnimating = false;
+			});
+		}
+	
+		// イベント登録（button想定）
+		document.addEventListener("astro:page-load", init);
+	</script>
+</html>
+
+<style>
+	html,
+	body {
+		margin: 0;
+	}
+</style>
