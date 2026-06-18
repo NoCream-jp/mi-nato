@@ -69,13 +69,13 @@ const allTags = Array.from(
       function updateUI() {
         // ボタン見た目
         buttons.forEach(b => {
-          b.classList.remove("bg-zinc-500","text-white");
+          b.classList.remove("bg-zinc-400","text-white");
           b.dataset.active = "false";
         });
     
         const activeBtn = document.querySelector(`[data-tag="${active}"]`);
         if (activeBtn) {
-          activeBtn.classList.add("bg-zinc-500","text-white");
+          activeBtn.classList.add("bg-zinc-400","text-white");
           activeBtn.dataset.active = "true";
         }
     
