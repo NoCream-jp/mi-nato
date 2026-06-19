@@ -57,73 +57,76 @@ const allTags = Array.from(
     </div>
    
     <script is:inline>
-      const buttons = document.querySelectorAll(".tag-btn");
-      const cards = document.querySelectorAll("[data-category]");
-    
-      let active = "all";
-    
-      // URLから初期状態取得
-      const params = new URLSearchParams(window.location.search);
-      active = params.get("tag") || "all";
-    
-      function updateUI() {
-        // ボタン見た目
-        buttons.forEach(b => {
-          b.classList.remove("bg-zinc-400","text-white");
-          b.dataset.active = "false";
-        });
-    
-        const activeBtn = document.querySelector(`[data-tag="${active}"]`);
-        if (activeBtn) {
-          activeBtn.classList.add("bg-zinc-400","text-white");
-          activeBtn.dataset.active = "true";
-        }
-    
-        // 記事フィルタ
-        cards.forEach(card => {
-          const category = card.dataset.category;
-    
-          if (active === "all" || category === active) {
-            card.style.display = "";
-          } else {
-            card.style.display = "none";
-          }
-        });
-      }
-    
-      function updateURL() {
-        const url = new URL(window.location);
-    
-        if (active === "all") {
-          url.searchParams.delete("tag");
-        } else {
-          url.searchParams.set("tag", active);
-        }
-    
-        history.replaceState({}, "", url);
-      }
-    
-      // 初期描画
-      updateUI();
-    
-      // クリック処理
-      buttons.forEach(btn => {
-        btn.addEventListener("click", () => {
-          const tag = btn.dataset.tag;
-    
-          active = (active === tag) ? "all" : tag;
-    
-          updateUI();
-          updateURL();
-        });
-      });
-    
-      // 戻るボタン対応
-      window.addEventListener("popstate", () => {
+      document.addEventListener('astro:page-load', () => {
+        const buttons = document.querySelectorAll(".tag-btn");
+        const cards = document.querySelectorAll("[data-category]");
+      
+        let active = "all";
+      
+        // URLから初期状態取得
         const params = new URLSearchParams(window.location.search);
         active = params.get("tag") || "all";
+      
+        function updateUI() {
+          // ボタン見た目リセット
+          buttons.forEach(btn => {
+            btn.classList.remove("bg-zinc-400", "text-white");
+            btn.dataset.active = "false";
+          });
+      
+          // アクティブなボタンの見た目を更新
+          const activeBtn = document.querySelector(`[data-tag="${active}"]`);
+          if (activeBtn) {
+            activeBtn.classList.add("bg-zinc-400", "text-white");
+            activeBtn.dataset.active = "true"; // 🌟 ここを修正しました！
+          }
+      
+          // 記事フィルタ
+          cards.forEach(card => {
+            const category = card.dataset.category;
+      
+            if (active === "all" || category === active) {
+              card.style.display = "";
+            } else {
+              card.style.display = "none";
+            }
+          });
+        }
+      
+        function updateURL() {
+          const url = new URL(window.location);
+      
+          if (active === "all") {
+            url.searchParams.delete("tag");
+          } else {
+            url.searchParams.set("tag", active);
+          }
+      
+          history.replaceState({}, "", url);
+        }
+      
+        // 初期描画
         updateUI();
-      });
+      
+        // クリック処理
+        buttons.forEach(btn => {
+          btn.addEventListener("click", () => {
+            const tag = btn.dataset.tag;
+      
+            active = (active === tag) ? "all" : tag;
+      
+            updateUI();
+            updateURL();
+          });
+        });
+      
+        // 戻るボタン対応
+        window.addEventListener("popstate", () => {
+          const params = new URLSearchParams(window.location.search);
+          active = params.get("tag") || "all";
+          updateUI();
+        });
+      }, { once: false });
     </script>
   </main>
 </Layout>
