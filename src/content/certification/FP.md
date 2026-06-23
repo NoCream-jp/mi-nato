@@ -1,7 +1,7 @@
 ---
 title: "基本情報技術者試験合格"
 issuer: "IPA（情報処理推進機構）"
-date: "2023"
+date: "2024"
 tags: ["IPA"]
 description: "ITエンジニアとして必要な基礎知識（アルゴリズム・ネットワーク・データベース・セキュリティなど）と論理的思考力を証明する国家資格。"
 link: "https://www.ipa.go.jp/shiken/kubun/list.html"

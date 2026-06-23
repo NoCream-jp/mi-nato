@@ -1,7 +1,7 @@
 ---
 title: "TOEIC Listening & Reading 635"
 issuer: "ETS"
-date: "2024"
+date: "2026"
 tags: ["Language"]
 description: "英語のリスニングおよびリーディング能力を測定する試験。日常会話や基礎的なビジネス英語の理解力を証明。"
 link: "https://www.iibc-global.org/toeic.html"
