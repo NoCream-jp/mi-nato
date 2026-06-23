@@ -7,9 +7,11 @@ const { tags } = Astro.props;
 ---
 
 <div class="flex flex-wrap gap-2 mb-8">
+  <!-- All -->
   <button 
     data-tag="all"
-    class="tag-btn px-3 py-1 text-xs rounded-full border border-zinc-300 data-[active=false]:hover:bg-zinc-100 transition"
+    data-active="true"
+    class="tag-btn px-3 py-1 text-xs rounded-full border border-zinc-300 transition hover:bg-zinc-400 hover:text-white cursor-pointer"
   >
     All
   </button>
@@ -17,9 +19,82 @@ const { tags } = Astro.props;
   {tags.map(tag => (
     <button
       data-tag={tag}
-      class="tag-btn px-3 py-1 text-xs rounded-full border border-zinc-300 data-[active=false]:hover:bg-zinc-100 transition"
+      data-active="false"
+      class="tag-btn px-3 py-1 text-xs rounded-full border border-zinc-300 transition hover:bg-zinc-400 hover:text-white cursor-pointer"
     >
       {tag}
     </button>
   ))}
 </div>
+
+<script is:inline>
+  const setupTagFilter = () => {
+    const buttons = document.querySelectorAll(".tag-btn");
+    const cards = document.querySelectorAll("[data-category], [data-tags]");
+
+    let active = "all";
+
+    // URLから初期状態取得
+    const params = new URLSearchParams(window.location.search);
+    active = params.get("tag") || "all";
+
+    function updateUI() {
+      buttons.forEach(btn => {
+        btn.classList.remove("bg-zinc-400", "text-white");
+        btn.dataset.active = "false";
+      });
+
+      const activeBtn = document.querySelector(`[data-tag="${active}"]`);
+      if (activeBtn) {
+        activeBtn.classList.add("bg-zinc-400", "text-white");
+        activeBtn.dataset.active = "true";
+      }
+
+      cards.forEach(card => {
+        const category = card.dataset.category;
+        const tags = card.dataset.tags ?? "";
+
+        const match =
+          active === "all" ||
+          category === active ||
+          tags.includes(active);
+
+        card.style.display = match ? "" : "none";
+      });
+    }
+
+    function updateURL() {
+      const url = new URL(window.location);
+
+      if (active === "all") {
+        url.searchParams.delete("tag");
+      } else {
+        url.searchParams.set("tag", active);
+      }
+
+      history.replaceState({ ...window.history.state }, "", url);
+    }
+
+    updateUI();
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const tag = btn.dataset.tag;
+
+        active = (active === tag) ? "all" : tag;
+
+        updateUI();
+        updateURL();
+      });
+    });
+
+    window.addEventListener("popstate", () => {
+      const params = new URLSearchParams(window.location.search);
+      active = params.get("tag") || "all";
+      updateUI();
+    });
+  };
+
+  document.addEventListener("astro:page-load", setupTagFilter);
+  setupTagFilter();
+</script>

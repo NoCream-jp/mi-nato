@@ -3,8 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import BusinessCard from '../components/BusinessCard.astro';
 import ImageStack from '../components/ImageStack.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
+import TagFilter from '../components/TagFilter.astro';
 
-// パンくず
 const breadcrumbItems = [
   { label: "TOP", href: "/" },
   { label: "about" }
@@ -15,15 +15,57 @@ const sampleImages = [
   '/assets/ra-men.webp',
   '/assets/spotify.webp',
 ];
+
+// 資格データ
+const certifications = [
+  {
+    title: "AWS SAA",
+    issuer: "Amazon",
+    date: "2026",
+    tags: ["Cloud"],
+    description: "AWSの基本設計・アーキテクチャ設計に関する資格。",
+    link: "#"
+  },
+  {
+    title: "基本情報技術者",
+    issuer: "IPA",
+    date: "2024",
+    tags: ["IPA"],
+    description: "情報処理の基礎知識全般。",
+    link: "#"
+  },
+  {
+    title: "応用情報技術者試験",
+    issuer: "IPA",
+    date: "2025",
+    tags: ["IPA"],
+    description: "情報処理の基礎知識全般。",
+    link: "#"
+  },
+  {
+    title: "TOEIC 635",
+    issuer: "ETS",
+    date: "2024",
+    tags: ["Language"],
+    description: "英語能力試験。",
+    link: "#"
+  }
+];
+
+// タグ一覧（重複排除）
+const allTags = Array.from(
+  new Set(certifications.flatMap(c => c.tags))
+);
 ---
 
 <Layout title="about | mi-nato">
   <div class="min-h-screen text-zinc-900 selection:bg-zinc-200">
     <div class="mx-auto max-w-4xl px-6 py-24 md:px-12 md:py-32 bg-white rounded-md">
+
       <Breadcrumbs items={breadcrumbItems} />
 
       <div class="mb-16 mt-4 border-b border-zinc-200 pb-6">
-        <h1 class="text-2xl font-normal tracking-wide text-zinc-900 md:text-[1.7rem]">
+        <h1 class="text-2xl font-normal tracking-wide md:text-[1.7rem]">
           about
         </h1>
       </div>
@@ -31,8 +73,8 @@ const sampleImages = [
       <div class="grid grid-cols-1 items-start gap-14 md:grid-cols-12 md:gap-12">
 
         <!-- 左 -->
-        <div class="md:col-span-5 md:sticky md:top-32 relative z-10">
-          <div class="scroll-reveal  ease-out translate-y-8 opacity-0">
+        <div class="md:col-span-5 md:sticky md:top-32">
+          <div class="scroll-reveal translate-y-8 opacity-0">
             <BusinessCard />
           </div>
         </div>
@@ -40,85 +82,133 @@ const sampleImages = [
         <!-- 右 -->
         <div class="md:col-span-7 flex flex-col gap-24 pt-8 md:pt-0">
 
-          <div class="scroll-reveal  ease-out translate-y-8 opacity-0 md:delay-150">
+          <div class="scroll-reveal translate-y-8 opacity-0 md:delay-150">
             <ImageStack images={sampleImages} />
           </div>
 
-          <section class="scroll-reveal  ease-out translate-y-8 opacity-0">
-            <h2 class="mb-6 text-xl font-medium tracking-wide">Background & Research</h2>
-            <div class="space-y-4 text-[15px] leading-relaxed text-zinc-600 font-light">
-              <p>
-                和歌山大学で情報学を専攻している6セメスターの学生です。現在は強化学習を用いたマルチエージェントシステム、特にUAV（無人航空機）の経路計画最適化について研究を進めています。
-              </p>
-              <p>
-                複雑な環境下でエージェントがいかに協調し、最適な解を導き出すかというアルゴリズムの深淵に魅力を感じています。
-              </p>
+          <!-- bio -->
+          <section class="scroll-reveal translate-y-8 opacity-0">
+            <h2 class="mb-6 text-xl font-medium tracking-wide">bio</h2>
+            <div class="space-y-4 text-[15px] leading-relaxed text-zinc-600">
+              こんにちは。みなとといいます。和歌山大学の情報学領域で勉強している学生です。研究分野は機械学習です。面白い、美しいと思ったことは何でも勉強します。また趣味でwebアプリ開発やサイトのデザイン、運営を行ったり、競技プログラミングのコンテストに参加しています。ぜひサイトを隅々までご覧ください。
+              最近は、このサイトのデザインと実装にのめりこんでいます。
             </div>
           </section>
 
-          <section class="scroll-reveal  ease-out translate-y-8 opacity-0">
-            <h2 class="mb-6 text-xl font-medium tracking-wide">Engineering</h2>
-            <div class="space-y-4 text-[15px] leading-relaxed text-zinc-600 font-light">
-              <p>
-                Web開発では、AstroやSvelteを用いたコンポーネント指向のモダンなフロントエンド構築を行っています。スタイリングはTailwind CSS v4を軸に、モノクロームでミニマルなUI設計を好みます。
-              </p>
-              <p>
-                また、学生団体「Waka-topia」や競技プログラミングサークル（WCPC）での活動を通じ、チーム開発やアルゴリズムの研鑽（AtCoder / Python / C++）にも継続的に取り組んでいます。バックエンドにはSupabaseやFirebaseを活用し、堅牢なシステム構築を目指しています。
-              </p>
+          <!-- archievement -->
+          <section class="scroll-reveal translate-y-8 opacity-0">
+            <h2 class="mb-6 text-xl font-medium tracking-wide">archievement</h2>
+
+            <!-- 既存TagFilterを利用 -->
+            <TagFilter tags={allTags} />
+
+            <!-- カード -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {certifications.map(cert => (
+                <div
+                  class="cert-card cursor-pointer rounded-xl border border-zinc-200 bg-white p-4 transition hover:shadow-md hover:-translate-y-0.5"
+                  data-tags={cert.tags.join(",")}
+                  data-title={cert.title}
+                  data-issuer={cert.issuer}
+                  data-date={cert.date}
+                  data-description={cert.description}
+                  data-link={cert.link}
+                >
+                  <h3 class="text-[15px] font-medium">{cert.title}</h3>
+                  <p class="text-xs text-zinc-500 mt-1">
+                    {cert.issuer} / {cert.date}
+                  </p>
+                </div>
+              ))}
             </div>
           </section>
 
-          <section class="scroll-reveal  ease-out translate-y-8 opacity-0">
-            <h2 class="mb-6 text-xl font-medium tracking-wide">Lifestyle</h2>
-            <div class="space-y-4 text-[15px] leading-relaxed text-zinc-600 font-light">
-              <p>
-                日常では、マキネッタで淹れるスペシャルティコーヒーの香りを楽しみながらコードを書く時間が好きです。
-              </p>
-              <p>
-                語源や言語学のニュアンスの違いを探求すること、そしてワイドトラウザーやトレンチコートを取り入れた、シンプルでモダンなモノトーンファッションを身に纏うことが、私にとっての美学の表現です。
-              </p>
-            </div>
+          <section>
+            <h2 class="mb-6 text-xl font-medium tracking-wide">favorite</h2>
           </section>
 
         </div>
       </div>
     </div>
   </div>
+
+  <!-- モーダル -->
+  <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40">
+    <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-lg">
+      <h3 id="modal-title" class="text-lg font-medium"></h3>
+      <p id="modal-meta" class="text-sm text-zinc-500 mt-1"></p>
+      <p id="modal-desc" class="mt-4 text-sm text-zinc-600"></p>
+
+      <a id="modal-link" href="#" target="_blank"
+        class="mt-4 inline-block text-sm underline text-zinc-700">
+        証明を見る
+      </a>
+
+      <button id="modal-close"
+        class="mt-6 text-sm text-zinc-400 hover:text-zinc-700">
+        close
+      </button>
+    </div>
+  </div>
 </Layout>
 
 <script>
-  // Intersection Observerを用いたスクロール連動のフェードイン処理
-  const setupObserver = () => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.15 // 要素が15%画面に入ったら発火
-    };
+const setupObserver = () => {
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.remove('opacity-0', 'translate-y-8');
+        entry.target.classList.add('opacity-100', 'translate-y-0');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
 
-    const observer = new IntersectionObserver((entries, obs) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // opacity-0 と translate-y-8 を外して、元の位置・不透明度にふわっと戻す
-          entry.target.classList.remove('opacity-0', 'translate-y-8');
-          entry.target.classList.add('opacity-100', 'translate-y-0');
-          
-          // 一度発火したら監視を解除（上にスクロールして戻っても再表示させない）
-          obs.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
+  document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+};
 
-    const elements = document.querySelectorAll('.scroll-reveal');
-    elements.forEach(el => observer.observe(el));
-  };
+const setupModal = () => {
+  const cards = document.querySelectorAll<HTMLElement>('.cert-card');
+  const modal = document.getElementById('modal');
 
-  // AstroのView Transitions（SPAルーティング）対応
-  document.addEventListener('astro:page-load', setupObserver);
-  
-  // 初回ロード用
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupObserver);
-  } else {
-    setupObserver();
-  }
+  const title = document.getElementById('modal-title');
+  const meta = document.getElementById('modal-meta');
+  const desc = document.getElementById('modal-desc');
+  const link = document.getElementById('modal-link');
+  const close = document.getElementById('modal-close');
+
+  if (!modal || !title || !meta || !desc || !link || !close) return;
+
+  cards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      const el = e.currentTarget as HTMLElement;
+
+      title.textContent = el.dataset.title ?? "";
+      meta.textContent = `${el.dataset.issuer ?? ""} / ${el.dataset.date ?? ""}`;
+      desc.textContent = el.dataset.description ?? "";
+      (link as HTMLAnchorElement).href = el.dataset.link ?? "#";
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    });
+  });
+
+  close.addEventListener('click', () => {
+    modal.classList.add('hidden');
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.add('hidden');
+    }
+  });
+};
+
+document.addEventListener('astro:page-load', () => {
+  setupObserver();
+  setupModal();
+});
+
+setupObserver();
+setupModal();
 </script>
