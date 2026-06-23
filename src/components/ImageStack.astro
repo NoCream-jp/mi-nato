@@ -1,0 +1,94 @@
+---
+// src/components/ImageStack.astro
+interface Props {
+  images: string[];
+}
+
+const { images } = Astro.props;
+---
+
+<div class="image-stack-container relative mx-auto w-full max-w-sm aspect-3/2 select-none cursor-pointer">
+  {
+    images.map((src, index) => {
+      // 見た目の深さ（3以上はすべて3として非表示待機）
+      const initialDepth = index < 3 ? index : 3;
+      
+      return (
+        <div
+          data-depth={initialDepth}
+          data-logical-index={index}
+          class="image-stack-item absolute inset-0 w-full h-full will-change-transform transition-all duration-500 ease-out 
+                 data-[depth='0']:z-30 data-[depth='0']:translate-x-0 data-[depth='0']:translate-y-0 data-[depth='0']:rotate-0 data-[depth='0']:opacity-100
+                 data-[depth='1']:z-20 data-[depth='1']:translate-x-3 data-[depth='1']:translate-y-2 data-[depth='1']:rotate-2 data-[depth='1']:opacity-100
+                 data-[depth='2']:z-10 data-[depth='2']:translate-x-6 data-[depth='2']:translate-y-4 data-[depth='2']:rotate-4 data-[depth='2']:opacity-100
+                 data-[depth='3']:z-0 data-[depth='3']:translate-x-8 data-[depth='3']:translate-y-6 data-[depth='3']:rotate-6 data-[depth='3']:opacity-0 data-[depth='3']:pointer-events-none"
+        >
+          <img
+            src={src}
+            alt={`Stack image ${index + 1}`}
+            class="w-full h-full object-cover rounded-xl shadow-md pointer-events-none"
+          />
+        </div>
+      );
+    })
+  }
+</div>
+
+<script is:inline>
+  document.addEventListener('astro:page-load', () => {
+    const containers = document.querySelectorAll('.image-stack-container');
+
+    containers.forEach(container => {
+      if (container.dataset.stackInit) return;
+      container.dataset.stackInit = "true";
+
+      let isAnimating = false;
+
+      // 初期の論理インデックスをセット（Astro側でもセットしていますが念のため）
+      const items = Array.from(container.querySelectorAll('.image-stack-item'));
+      items.forEach((item, i) => {
+        item.dataset.logicalIndex = i;
+      });
+
+      container.addEventListener('click', () => {
+        if (isAnimating || items.length <= 1) return;
+        isAnimating = true;
+
+        // 現在一番前（論理インデックスが0）の要素を探す
+        const currentFront = items.find(item => item.dataset.logicalIndex === "0");
+        if (!currentFront) return;
+
+        currentFront.style.transform = 'translateX(-120%) rotate(-12deg)';
+        currentFront.style.opacity = '0';
+
+        setTimeout(() => {
+          items.forEach(item => {
+            let idx = parseInt(item.dataset.logicalIndex, 10);
+            
+            if (idx === 0) {
+              // 一番前のカードは、最後尾（配列の最後）へ送る
+              idx = items.length - 1;
+              // インラインスタイルを消して、CSSの制御に戻す（裏側に回り込むアニメーションが発動）
+              item.style.transform = '';
+              item.style.opacity = '';
+            } else {
+              // 他のカードは一歩ずつ前に出す
+              idx -= 1;
+            }
+            
+            // 更新した論理インデックスを保存
+            item.dataset.logicalIndex = idx;
+            // 論理インデックスを元に、見た目の深さ（0, 1, 2, または 3）を計算
+            item.dataset.depth = idx < 3 ? idx : 3;
+          });
+
+          // 連続クリック防止のロック解除
+          setTimeout(() => {
+            isAnimating = false;
+          }, 50);
+          
+        }, 400); 
+      });
+    });
+  }, { once: false });
+</script>

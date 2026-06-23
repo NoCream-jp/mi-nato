@@ -3,12 +3,21 @@ import Layout from '../layouts/Layout.astro';
 import BackButton from '../components/BackButton.astro'
 import Breadcrumbs from '../components/Breadcrumbs.astro'
 import BusinessCard from '../components/BusinessCard.astro';
+import ImageStack from '../components/ImageStack.astro';
+
 
 // パンくず
 const breadcrumbItems = [
   { label: "TOP", href: "/" },
   { label: "about" }
 ];
+
+// ImageStack用の画像パス
+const sampleImages = [
+  '/assets/cat.webp',
+  '/assets/ra-men.webp',
+  '/assets/spotify.webp',
+]
 ---
 
 <Layout>
@@ -49,10 +58,15 @@ const breadcrumbItems = [
       <h2>hobby</h2>
       食べること、遊ぶこと、音楽を聴くことが好きです。昨年度のspotify再生時間は49,091分間でした。
 
+      <ImageStack images={sampleImages} />
+
       <h2>achievement</h2>
       取得した資格、免許です。
 
       <BackButton href="/" />
     </div>
+
+
+    
   </main>
 </Layout>
