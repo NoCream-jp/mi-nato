@@ -14,10 +14,12 @@ const breadcrumbItems = [
 <Layout>
   <main 
     transition:name="card-about" 
-    class="mx-auto w-full max-w-xl bg-white px-6 py-12 md:px-12 md:py-20  rounded-md"
+    class="mx-auto w-full max-w-4xl bg-white px-6 py-12 md:px-12 md:py-20 min-h-screen rounded-md"
   >
     <Breadcrumbs items={breadcrumbItems} />
-    <BusinessCard />
+    <div class="mb-10">
+      <BusinessCard />
+    </div>
     <div class="mb-12 border-b border-zinc-300 pb-5">
       <h1 class="text-2xl font-normal tracking-wide text-zinc-900 md:text-[1.7rem]">
         about
@@ -27,12 +29,15 @@ const breadcrumbItems = [
     <div class="text-[15px] leading-[2.2] tracking-wide text-zinc-800 md:text-base">
       <h2>bio</h2>
       <p class="mb-8">
-        こんにちは。みなとといいます。和歌山大学の情報学領域で勉強している学生です。研究分野は機械学習です。面白い、美しいと思ったことは何でも勉強します。また趣味でwebアプリ開発やサイトのデザイン、運営を行ったり、競技プログラミングのコンテストに参加しています。
+        こんにちは。みなとといいます。和歌山大学の情報学領域で勉強している4回生です。研究分野は機械学習を用いた経路計画です。面白い、美しいと思ったことは何でも勉強します。また趣味でwebアプリ開発やサイトのデザイン、運営を行ったり、競技プログラミングのコンテストに参加しています。
       </p>
-      <p>AtCoderで毎週開催されている競技プログラミングコンテストに出場しています。使用言語はPythonです。</p>
+      <p>現在は外国語の学習と競技プログラミングに没頭しています。</p>
       
       <h2>favorite</h2>
+      最近視聴している動画、聴いている曲です。
       <h2>skills</h2>
+      Pythonでアルゴリズムを用いたスクリプトを書くことができます。Pythonで強化学習プロジェクトを作成できます。JavaScriptフレームワークやライブラリを用いて簡単なwebサイト、webアプリを構築できます。
+      
       Python
       HTML
       CSS
@@ -42,9 +47,11 @@ const breadcrumbItems = [
       Svelte
 
       <h2>hobby</h2>
-      game, music, developing, languages, eat
+      食べること、遊ぶこと、音楽を聴くことが好きです。昨年度のspotify再生時間は49,091分間でした。
+
       <h2>achievement</h2>
-      
+      取得した資格、免許です。
+
       <BackButton href="/" />
     </div>
   </main>
