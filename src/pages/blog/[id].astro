@@ -27,7 +27,7 @@ const image = post.data.image || "/images/ogp-default.png";
 ---
 
 <Layout title={`${post.data.title} | mi-nato.com`}>
-  <main class="mx-auto w-full max-w-4xl px-6 py-12 md:px-12 md:py-20">
+  <main class="mx-auto w-full max-w-4xl bg-white px-6 py-12 md:px-12 md:py-20 min-h-screen rounded-md">
     <article class="mb-10">
       
       <Breadcrumbs 
@@ -82,13 +82,13 @@ const image = post.data.image || "/images/ogp-default.png";
   :global(.blog-content h2) {
     font-size: 1.2rem;
     font-weight: 400;
-    margin-top: 4rem;
+    margin-top: 2rem;
     margin-bottom: 1.2rem;
   }
   :global(.blog-content h3) {
     font-size: 1.1rem;
     font-weight: 400;
-    margin-top: 3rem;
+    margin-top: 1.5rem;
     margin-bottom: 1.1rem;
   }
   :global(.blog-content ul) {
