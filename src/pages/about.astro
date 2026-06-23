@@ -1,15 +1,21 @@
 ---
+import { getCollection } from 'astro:content';
+
 import Layout from '../layouts/Layout.astro';
 import BusinessCard from '../components/BusinessCard.astro';
 import ImageStack from '../components/ImageStack.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import TagFilter from '../components/TagFilter.astro';
 
+
+
+// パンくず用
 const breadcrumbItems = [
   { label: "TOP", href: "/" },
   { label: "about" }
 ];
 
+// ImageStack用
 const sampleImages = [
   '/assets/cat.webp',
   '/assets/ra-men.webp',
@@ -17,45 +23,13 @@ const sampleImages = [
 ];
 
 // 資格データ
-const certifications = [
-  {
-    title: "AWS SAA",
-    issuer: "Amazon",
-    date: "2026",
-    tags: ["Cloud"],
-    description: "AWSの基本設計・アーキテクチャ設計に関する資格。",
-    link: "#"
-  },
-  {
-    title: "基本情報技術者",
-    issuer: "IPA",
-    date: "2024",
-    tags: ["IPA"],
-    description: "情報処理の基礎知識全般。",
-    link: "#"
-  },
-  {
-    title: "応用情報技術者試験",
-    issuer: "IPA",
-    date: "2025",
-    tags: ["IPA"],
-    description: "情報処理の基礎知識全般。",
-    link: "#"
-  },
-  {
-    title: "TOEIC 635",
-    issuer: "ETS",
-    date: "2024",
-    tags: ["Language"],
-    description: "英語能力試験。",
-    link: "#"
-  }
-];
+const certifications = await getCollection('certification');
 
 // タグ一覧（重複排除）
 const allTags = Array.from(
-  new Set(certifications.flatMap(c => c.tags))
+  new Set(certifications.flatMap(c => c.data.tags))
 );
+console.log(await getCollection("certification"));
 ---
 
 <Layout title="about | mi-nato">
@@ -107,16 +81,18 @@ const allTags = Array.from(
               {certifications.map(cert => (
                 <div
                   class="cert-card cursor-pointer rounded-xl border border-zinc-200 bg-white p-4 transition hover:shadow-md hover:-translate-y-0.5"
-                  data-tags={cert.tags.join(",")}
-                  data-title={cert.title}
-                  data-issuer={cert.issuer}
-                  data-date={cert.date}
-                  data-description={cert.description}
-                  data-link={cert.link}
+                  data-tags={cert.data.tags.join(",")}
+                  data-title={cert.data.title}
+                  data-issuer={cert.data.issuer}
+                  data-date={cert.data.date}
+                  data-description={cert.data.description}
+                  data-link={cert.data.link ?? "#"}
                 >
-                  <h3 class="text-[15px] font-medium">{cert.title}</h3>
+                  <h3 class="text-[15px] font-medium">
+                    {cert.data.title}
+                  </h3>
                   <p class="text-xs text-zinc-500 mt-1">
-                    {cert.issuer} / {cert.date}
+                    {cert.data.issuer} / {cert.data.date}
                   </p>
                 </div>
               ))}

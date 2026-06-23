@@ -30,7 +30,7 @@ const { tags } = Astro.props;
 <script is:inline>
   const setupTagFilter = () => {
     const buttons = document.querySelectorAll(".tag-btn");
-    const cards = document.querySelectorAll("[data-category], [data-tags]");
+    const cards = document.querySelectorAll(".cert-card");
 
     let active = "all";
 
@@ -51,12 +51,10 @@ const { tags } = Astro.props;
       }
 
       cards.forEach(card => {
-        const category = card.dataset.category;
-        const tags = card.dataset.tags ?? "";
+        const tags = (card.dataset.tags || "").split(",");
 
         const match =
           active === "all" ||
-          category === active ||
           tags.includes(active);
 
         card.style.display = match ? "" : "none";
@@ -96,5 +94,5 @@ const { tags } = Astro.props;
   };
 
   document.addEventListener("astro:page-load", setupTagFilter);
-  setupTagFilter();
+  console.log(document.querySelectorAll(".cert-card").length);
 </script>

@@ -23,7 +23,20 @@ const actionLogCollection = defineCollection({
   }),
 });
 
+const certificationCollection = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/certification" }),
+  schema: z.object({
+    title: z.string(),
+    issuer: z.string(),
+    date: z.string(),
+    tags: z.array(z.string()),
+    description: z.string(),
+    link: z.string().optional(),
+  }),
+});
+
 export const collections = {
   blog: blogCollection,
   "action-log": actionLogCollection,
+  certification: certificationCollection,
 };
