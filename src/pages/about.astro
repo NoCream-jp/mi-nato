@@ -1,10 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import BackButton from '../components/BackButton.astro'
-import Breadcrumbs from '../components/Breadcrumbs.astro'
+import BackButton from '../components/BackButton.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
 import BusinessCard from '../components/BusinessCard.astro';
 import ImageStack from '../components/ImageStack.astro';
-
 
 // パンくず
 const breadcrumbItems = [
@@ -17,7 +16,12 @@ const sampleImages = [
   '/assets/cat.webp',
   '/assets/ra-men.webp',
   '/assets/spotify.webp',
-]
+];
+
+// スキル一覧
+const skills = [
+  "Python", "HTML", "CSS", "DSA", "Astro", "Vue", "Svelte"
+];
 ---
 
 <Layout>
@@ -26,47 +30,95 @@ const sampleImages = [
     class="mx-auto w-full max-w-4xl bg-white px-6 py-12 md:px-12 md:py-20 min-h-screen rounded-md"
   >
     <Breadcrumbs items={breadcrumbItems} />
-    <div class="mb-10">
-      <BusinessCard />
-    </div>
-    <div class="mb-12 border-b border-zinc-300 pb-5">
+    
+    <div class="mb-16 mt-4 border-b border-zinc-200 pb-6">
       <h1 class="text-2xl font-normal tracking-wide text-zinc-900 md:text-[1.7rem]">
         about
       </h1>
     </div>
 
-    <div class="text-[15px] leading-[2.2] tracking-wide text-zinc-800 md:text-base">
-      <h2>bio</h2>
-      <p class="mb-8">
-        こんにちは。みなとといいます。和歌山大学の情報学領域で勉強している4回生です。研究分野は機械学習を用いた経路計画です。面白い、美しいと思ったことは何でも勉強します。また趣味でwebアプリ開発やサイトのデザイン、運営を行ったり、競技プログラミングのコンテストに参加しています。
-      </p>
-      <p>現在は外国語の学習と競技プログラミングに没頭しています。</p>
+    <section class="mb-24 grid grid-cols-1 items-start gap-4 md:grid-cols-[120px_1fr] md:gap-16 relative">
+      <h2 class="sticky top-0 z-20 bg-white/90 backdrop-blur-md py-4 text-xs font-medium tracking-[0.2em] text-zinc-400 uppercase md:top-12 md:bg-transparent md:py-0">
+        bio
+      </h2>
       
-      <h2>favorite</h2>
-      最近視聴している動画、聴いている曲です。
-      <h2>skills</h2>
-      Pythonでアルゴリズムを用いたスクリプトを書くことができます。Pythonで強化学習プロジェクトを作成できます。JavaScriptフレームワークやライブラリを用いて簡単なwebサイト、webアプリを構築できます。
+      <div class="text-[15px] leading-[2.2] tracking-wide text-zinc-800 md:text-base">
+        <div class="mb-12">
+          <BusinessCard />
+        </div>
+        <p class="mb-6">
+          こんにちは。みなとといいます。和歌山大学の情報学領域で勉強している4回生です。研究分野は機械学習を用いた経路計画です。面白い、美しいと思ったことは何でも勉強します。また趣味でwebアプリ開発やサイトのデザイン、運営を行ったり、競技プログラミングのコンテストに参加しています。
+        </p>
+        <p>
+          現在は外国語の学習と競技プログラミングに没頭しています。
+        </p>
+      </div>
+    </section>
+
+    <section class="mb-24 grid grid-cols-1 items-start gap-4 md:grid-cols-[120px_1fr] md:gap-16 relative">
+      <h2 class="sticky top-0 z-20 bg-white/90 backdrop-blur-md py-4 text-xs font-medium tracking-[0.2em] text-zinc-400 uppercase md:top-12 md:bg-transparent md:py-0">
+        skills
+      </h2>
       
-      Python
-      HTML
-      CSS
-      DSA(Data Structures & Algorithms)
-      Astro
-      Vue
-      Svelte
+      <div class="text-[15px] leading-[2.2] tracking-wide text-zinc-800 md:text-base">
+        <p class="mb-8 text-zinc-600">
+          Pythonでアルゴリズムを用いたスクリプトを書くことができます。Pythonで強化学習プロジェクトを作成できます。JavaScriptフレームワークやライブラリを用いて簡単なwebサイト、webアプリを構築できます。
+        </p>
+        
+        <div class="flex flex-wrap gap-3">
+          {skills.map((skill) => (
+            <span class="cursor-default rounded-full border border-zinc-200 px-5 py-2 text-sm text-zinc-600 transition-colors hover:border-zinc-800 hover:text-zinc-900">
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
 
-      <h2>hobby</h2>
-      食べること、遊ぶこと、音楽を聴くことが好きです。昨年度のspotify再生時間は49,091分間でした。
+    <section class="mb-24 grid grid-cols-1 items-start gap-4 md:grid-cols-[120px_1fr] md:gap-16 relative">
+      <h2 class="sticky top-0 z-20 bg-white/90 backdrop-blur-md py-4 text-xs font-medium tracking-[0.2em] text-zinc-400 uppercase md:top-12 md:bg-transparent md:py-0">
+        hobby
+      </h2>
+      
+      <div class="w-full">
+        <div class="no-scrollbar mb-10 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 md:grid md:grid-cols-2 md:overflow-visible md:pb-0">
+          
+          <div class="flex aspect-[4/3] w-[85%] shrink-0 snap-start flex-col items-center justify-center rounded-2xl border border-zinc-200 p-6 text-center md:w-full md:aspect-square">
+            <span class="mb-3 text-[0.65rem] tracking-[0.2em] text-zinc-400 uppercase">Spotify Listening</span>
+            <div class="flex items-baseline justify-center">
+              <span class="text-4xl font-light tracking-tighter text-zinc-900">49,091</span>
+              <span class="ml-1 text-xs text-zinc-500">min/year</span>
+            </div>
+          </div>
+          
+          <div class="flex aspect-[4/3] w-[85%] shrink-0 snap-start flex-col items-center justify-center rounded-2xl border border-zinc-200 p-6 text-center md:w-full md:aspect-square">
+            <span class="mb-3 text-[0.65rem] tracking-[0.2em] text-zinc-400 uppercase">Interests</span>
+            <span class="text-base font-medium text-zinc-800 tracking-wide">
+              Eat / Play / Music
+            </span>
+            <span class="mt-2 text-xs text-zinc-500">最近視聴している動画、聴いている曲</span>
+          </div>
 
-      <ImageStack images={sampleImages} />
+        </div>
 
-      <h2>achievement</h2>
-      取得した資格、免許です。
+        <div class="-mx-6 md:mx-0">
+          <ImageStack images={sampleImages} />
+        </div>
+      </div>
+    </section>
 
+    <section class="mb-16 grid grid-cols-1 items-start gap-4 md:grid-cols-[120px_1fr] md:gap-16 relative">
+      <h2 class="sticky top-0 z-20 bg-white/90 backdrop-blur-md py-4 text-xs font-medium tracking-[0.2em] text-zinc-400 uppercase md:top-12 md:bg-transparent md:py-0">
+        achievement
+      </h2>
+      
+      <div class="text-[15px] leading-[2.2] tracking-wide text-zinc-800 md:text-base">
+        <p class="mb-4">取得した資格、免許です。</p>
+        </div>
+    </section>
+
+    <div class="mt-20 pt-8 border-t border-zinc-200">
       <BackButton href="/" />
     </div>
-
-
-    
   </main>
 </Layout>
