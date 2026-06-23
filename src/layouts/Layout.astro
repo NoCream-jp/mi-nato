@@ -180,7 +180,7 @@ import { ClientRouter } from 'astro:transitions';
 		line-height: 1.5;
 	}
 	/* デフォルトで要素にフォーカスした際の黒枠を消す */
-	*:focus {
+	*:focus:not(:focus-visible) {
 	outline: none;
 	}
 </style>
