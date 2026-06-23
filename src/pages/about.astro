@@ -6,7 +6,7 @@ import BusinessCard from '../components/BusinessCard.astro';
 import ImageStack from '../components/ImageStack.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import TagFilter from '../components/TagFilter.astro';
-
+import ModalCard from '../components/ModalCard.astro';
 
 
 // パンくず用
@@ -56,16 +56,33 @@ console.log(await getCollection("certification"));
         <!-- 右 -->
         <div class="md:col-span-7 flex flex-col gap-24 pt-8 md:pt-0">
 
-          <div class="scroll-reveal translate-y-8 opacity-0 md:delay-150">
+          <div class="scroll-reveal translate-y-8 opacity-0 duration-2000">
             <ImageStack images={sampleImages} />
           </div>
 
           <!-- bio -->
           <section class="scroll-reveal translate-y-8 opacity-0">
-            <h2 class="mb-6 text-xl font-medium tracking-wide">bio</h2>
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-xl font-medium tracking-wide">bio</h2>
+              <!-- トグル -->
+              <button
+                id="lang-toggle"
+                class="text-xs px-3 py-1 border border-zinc-300 rounded-full hover:bg-zinc-100 transition"
+              >
+                EN
+              </button>
+            </div>
             <div class="space-y-4 text-[15px] leading-relaxed text-zinc-600">
-              こんにちは。みなとといいます。和歌山大学の情報学領域で勉強している学生です。研究分野は機械学習です。面白い、美しいと思ったことは何でも勉強します。また趣味でwebアプリ開発やサイトのデザイン、運営を行ったり、競技プログラミングのコンテストに参加しています。ぜひサイトを隅々までご覧ください。
-              最近は、このサイトのデザインと実装にのめりこんでいます。
+              <!-- 日本語 -->
+              <p id="bio-ja">
+                こんにちは。みなとといいます。和歌山大学の情報学領域で勉強している学生です。研究分野は機械学習です。面白い、美しいと思ったことは何でも勉強します。また趣味でwebアプリ開発やサイトのデザイン、運営を行ったり、競技プログラミングのコンテストに参加しています。ぜひサイトを隅々までご覧ください。
+                最近は、このサイトのデザインと実装にのめりこんでいます。
+              </p>
+              <!-- 英語 -->
+              <p id="bio-en" class="hidden">
+                Hello, my name is Minato. I am a student studying in the field of Informatics at Wakayama University. My research focuses on machine learning. I enjoy learning anything that I find interesting or beautiful. As a hobby, I develop web applications, design and manage websites, and participate in competitive programming contests. Please feel free to explore every corner of this site.
+                Recently, I’ve been deeply engaged in designing and implementing this website.
+              </p>
             </div>
           </section>
 
@@ -79,22 +96,14 @@ console.log(await getCollection("certification"));
             <!-- カード -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {certifications.map(cert => (
-                <div
-                  class="cert-card cursor-pointer rounded-xl border border-zinc-200 bg-white p-4 transition hover:shadow-md hover:-translate-y-0.5"
-                  data-tags={cert.data.tags.join(",")}
-                  data-title={cert.data.title}
-                  data-issuer={cert.data.issuer}
-                  data-date={cert.data.date}
-                  data-description={cert.data.description}
-                  data-link={cert.data.link ?? "#"}
-                >
-                  <h3 class="text-[15px] font-medium">
-                    {cert.data.title}
-                  </h3>
-                  <p class="text-xs text-zinc-500 mt-1">
-                    {cert.data.issuer} / {cert.data.date}
-                  </p>
-                </div>
+                <ModalCard
+                  title={cert.data.title}
+                  issuer={cert.data.issuer}
+                  date={cert.data.date}
+                  description={cert.data.description}
+                  link={cert.data.link ?? "#"}
+                  tags={cert.data.tags}
+                />
               ))}
             </div>
           </section>
@@ -108,83 +117,144 @@ console.log(await getCollection("certification"));
     </div>
   </div>
 
-  <!-- モーダル -->
-  <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40">
-    <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-lg">
-      <h3 id="modal-title" class="text-lg font-medium"></h3>
-      <p id="modal-meta" class="text-sm text-zinc-500 mt-1"></p>
-      <p id="modal-desc" class="mt-4 text-sm text-zinc-600"></p>
-
-      <a id="modal-link" href="#" target="_blank"
-        class="mt-4 inline-block text-sm underline text-zinc-700">
-        証明を見る
-      </a>
-
-      <button id="modal-close"
-        class="mt-6 text-sm text-zinc-400 hover:text-zinc-700">
-        close
-      </button>
-    </div>
-  </div>
 </Layout>
 
 <script>
-const setupObserver = () => {
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.remove('opacity-0', 'translate-y-8');
-        entry.target.classList.add('opacity-100', 'translate-y-0');
-        obs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
+  // bioのEN/JP切り替え
+  const setupLangToggle = () => {
+  const btn = document.getElementById('lang-toggle');
+  const ja = document.getElementById('bio-ja');
+  const en = document.getElementById('bio-en');
 
-  document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
-};
+  if (!btn || !ja || !en) return;
 
-const setupModal = () => {
-  const cards = document.querySelectorAll<HTMLElement>('.cert-card');
-  const modal = document.getElementById('modal');
+  let isEnglish = false;
 
-  const title = document.getElementById('modal-title');
-  const meta = document.getElementById('modal-meta');
-  const desc = document.getElementById('modal-desc');
-  const link = document.getElementById('modal-link');
-  const close = document.getElementById('modal-close');
+  btn.addEventListener('click', () => {
+    isEnglish = !isEnglish;
 
-  if (!modal || !title || !meta || !desc || !link || !close) return;
-
-  cards.forEach(card => {
-    card.addEventListener('click', (e) => {
-      const el = e.currentTarget as HTMLElement;
-
-      title.textContent = el.dataset.title ?? "";
-      meta.textContent = `${el.dataset.issuer ?? ""} / ${el.dataset.date ?? ""}`;
-      desc.textContent = el.dataset.description ?? "";
-      (link as HTMLAnchorElement).href = el.dataset.link ?? "#";
-
-      modal.classList.remove('hidden');
-      modal.classList.add('flex');
-    });
-  });
-
-  close.addEventListener('click', () => {
-    modal.classList.add('hidden');
-  });
-
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.classList.add('hidden');
+    if (isEnglish) {
+      ja.classList.add('hidden');
+      en.classList.remove('hidden');
+      btn.textContent = 'JP';
+    } else {
+      ja.classList.remove('hidden');
+      en.classList.add('hidden');
+      btn.textContent = 'EN';
     }
   });
 };
 
-document.addEventListener('astro:page-load', () => {
-  setupObserver();
-  setupModal();
-});
+  const setupObserver = () => {
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target as HTMLElement;
+          el.classList.remove('opacity-0', 'translate-y-8');
+          el.classList.add('opacity-100', 'translate-y-0');
+          obs.unobserve(el);
+        }
+      });
+    }, { threshold: 0.15 });
 
-setupObserver();
-setupModal();
+    document.querySelectorAll<HTMLElement>('.scroll-reveal')
+      .forEach(el => observer.observe(el));
+  };
+
+
+
+  const setupModal = () => {
+    const cards = document.querySelectorAll<HTMLElement>('.cert-card');
+
+    const modal = document.getElementById('modal') as HTMLDivElement | null;
+    const content = document.getElementById('modal-content') as HTMLDivElement | null;
+
+    const title = document.getElementById('modal-title') as HTMLHeadingElement | null;
+    const meta = document.getElementById('modal-meta') as HTMLParagraphElement | null;
+    const desc = document.getElementById('modal-desc') as HTMLParagraphElement | null;
+    const link = document.getElementById('modal-link') as HTMLAnchorElement | null;
+    const close = document.getElementById('modal-close') as HTMLButtonElement | null;
+
+    // null完全防御
+    if (!modal || !content || !title || !meta || !desc || !link || !close) return;
+
+    /**
+     * 開く
+     */
+    const openModal = () => {
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      requestAnimationFrame(() => {
+        content.classList.remove('scale-95', 'opacity-0');
+        content.classList.add('scale-100', 'opacity-100');
+      });
+    };
+
+    /**
+     * 閉じる
+     */
+    const closeModal = () => {
+      content.classList.add('scale-95', 'opacity-0');
+
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 200);
+    };
+
+    /**
+     * カードクリック
+     */
+    cards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        const el = e.currentTarget as HTMLElement;
+
+        title.textContent = el.dataset.title ?? "";
+        meta.textContent = `${el.dataset.issuer ?? ""} / ${el.dataset.date ?? ""}`;
+        desc.textContent = el.dataset.description ?? "";
+        link.href = el.dataset.link ?? "#";
+
+        openModal();
+      });
+    });
+
+    /**
+     * 閉じる操作
+     */
+    close.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  };
+
+
+  /**
+   * 初期化（Astro遷移対応）
+   */
+   const init = () => {
+    setupObserver();
+    setupModal();
+    setupLangToggle();
+  };
+
+  // Astroのページ遷移対応
+  document.addEventListener('astro:page-load', init);
+
+  // 初回ロード
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 </script>
+
+<style>
+  h2 {
+    margin: 0;
+  }
+</style>
