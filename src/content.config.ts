@@ -14,25 +14,16 @@ const blogCollection = defineCollection({
   }),
 });
 
-const actionCollection = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/action" }),
-  schema: z.object({
-    title: z.string(),
-    date: z.date(),
-  }),
-});
-
 const actionLogCollection = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/action-log" }),
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/action-log" }),
   schema: z.object({
     title: z.string(),
-    date: z.date(),
+    date: z.coerce.date(),
     description: z.string().optional(),
   }),
 });
 
 export const collections = {
-  action: actionCollection,
   blog: blogCollection,
   "action-log": actionLogCollection,
 };
