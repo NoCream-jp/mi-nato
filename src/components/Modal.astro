@@ -1,0 +1,54 @@
+---
+// propsなし（グローバルに1つだけ使う想定）
+---
+
+<div id="modal"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 backdrop-blur-sm transition-opacity duration-300">
+
+  <div
+    id="modal-content"
+    class="relative w-full max-w-lg mx-4 rounded-2xl bg-white p-8 shadow-xl transition-all duration-300 scale-95 opacity-0"
+  >
+
+    <!-- 閉じる -->
+    <button id="modal-close"
+      class="absolute right-5 top-5 text-zinc-400 hover:text-zinc-700 transition">
+      ✕
+    </button>
+
+    <!-- ヘッダー -->
+    <div class="mb-6">
+      <h3 id="modal-title"
+        class="text-xl font-medium tracking-wide text-zinc-900">
+      </h3>
+
+      <p id="modal-meta"
+        class="mt-2 text-xs tracking-wider text-zinc-400 uppercase">
+      </p>
+    </div>
+
+    <!-- 区切り -->
+    <div class="border-t border-zinc-200 my-6"></div>
+
+    <!-- 本文 -->
+    <p id="modal-desc"
+      class="text-sm leading-relaxed text-zinc-600 whitespace-pre-line">
+    </p>
+
+    <!-- フッター -->
+    <div class="mt-8 flex items-center justify-between">
+
+      <a id="modal-link"
+        href="#"
+        target="_blank"
+        class="text-sm text-zinc-700 underline underline-offset-4 hover:text-black transition">
+        View details →
+      </a>
+
+      <span class="text-xs text-zinc-400 tracking-widest">
+        CERTIFICATION
+      </span>
+
+    </div>
+  </div>
+</div>

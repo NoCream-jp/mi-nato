@@ -109,19 +109,24 @@
         if (!isDragging) return;
         isDragging = false;
         
-        // 持ち上げた演出を元に戻す
         card.style.zIndex = "10";
         card.classList.remove('shadow-2xl', 'scale-105');
-        card.style.transitionDuration = "300ms"; // アニメーションを復活
+        card.style.transitionDuration = "300ms";
 
-        const clientX = e.type.includes("touch") ? (e.changedTouches ? e.changedTouches[0].clientX : startX) : e.clientX;
-        const clientY = e.type.includes("touch") ? (e.changedTouches ? e.changedTouches[0].clientY : startY) : e.clientY;
+        let clientX, clientY;
 
-        // 移動距離をピタゴラスの定理（Math.hypot）で計算
+        if (e.type === "touchend") {
+          const touch = e.changedTouches[0];
+          clientX = touch.clientX;
+          clientY = touch.clientY;
+        } else {
+          clientX = e.clientX;
+          clientY = e.clientY;
+        }
+
         const distance = Math.hypot(clientX - startX, clientY - startY);
-        
-        // 移動距離が5px未満なら「クリック」とみなしてカードを裏返す
-        if (distance < 5) {
+
+        if (distance < 10) { // ← 少し緩くするのがポイント
           inner.classList.toggle('[transform:rotateY(180deg)]');
         }
       };
