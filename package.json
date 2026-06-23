@@ -13,13 +13,16 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.9",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/simple-icons": "^1.2.86",
     "@tailwindcss/vite": "^4.3.1",
     "@types/node": "^25.9.3",
     "astro": "^6.4.7",
     "astro-icon": "^1.1.5",
-    "tailwindcss": "^4.3.1"
+    "tailwindcss": "^4.3.1",
+    "typescript": "^6.0.3",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "prettier": "^3.8.4",

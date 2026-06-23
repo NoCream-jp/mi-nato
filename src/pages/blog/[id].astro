@@ -26,7 +26,7 @@ const description = post.data.description || `${post.data.title}についての�
 const image = post.data.image || "/images/ogp-default.png";
 ---
 
-<Layout title={`${post.data.title} | mi-nato.com`}>
+<Layout title={`${post.data.title} | mi-nato.com`} description={description} image={image}>
   <main class="mx-auto w-full max-w-4xl bg-white px-6 py-12 md:px-12 md:py-20 min-h-screen rounded-md">
     <article class="mb-10">
       

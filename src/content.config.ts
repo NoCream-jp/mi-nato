@@ -1,5 +1,6 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
+import { z } from "zod";
 
 const blogCollection = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
@@ -21,7 +22,17 @@ const actionCollection = defineCollection({
   }),
 });
 
+const actionLogCollection = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/action-log" }),
+  schema: z.object({
+    title: z.string(),
+    date: z.date(),
+    description: z.string().optional(),
+  }),
+});
+
 export const collections = {
   action: actionCollection,
   blog: blogCollection,
+  "action-log": actionLogCollection,
 };

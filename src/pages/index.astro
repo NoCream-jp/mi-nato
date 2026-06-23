@@ -2,28 +2,22 @@
 import Layout from '../layouts/Layout.astro';
 import ViewMoreButton from '../components/ViewMoreButton.astro';
 import ArticleCard from '../components/ArticleCard.astro';
-import ActionAccordion from '../components/ActionAccordion.astro';
-import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 // import { Icon } from "astro-icon/components";
 import LinkCard from '../components/LinkCard.astro';
 import BusinessCard from '../components/BusinessCard.astro';
+import ActionLog from '../components/ActionLog.astro';
 
 
 const allPosts = await getCollection('blog');
 const latestPosts = allPosts
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 5);
-
-const allActions = await getCollection("action");
-const sortedActions = allActions.sort(
-  (a: CollectionEntry<"action">, b: CollectionEntry<"action">) =>
-    b.data.date.valueOf() - a.data.date.valueOf()
-);
 ---
 
 <Layout>
   <div class="p-3">
-    <div id="card-container" class="mb-5 columns-1 gap-3 md:columns-2">
+    <div id="card-container" class="mb-3 columns-1 gap-3 md:columns-2">
       
       <section id="about" data-key="about" transition:name="card-about" class="will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white p-12">
         <h2 class="text-2xl font-normal text-zinc-800">about</h2>
@@ -82,6 +76,14 @@ const sortedActions = allActions.sort(
           <ViewMoreButton href="/action" />
         </div>
       </section> -->
+
+      <section id="action" data-key="action" transition:name="card-action" class="bg-white will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md p-12">
+        <h2 class="text-2xl font-normal text-zinc-800">action</h2>
+        <ActionLog />
+        <div class="mt-auto">
+          <ViewMoreButton href="/action" />
+        </div>
+      </section>
 
       <section id="learning" data-key="learning" transition:name="card-learning" class="will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white p-12">
         <h2 class=" text-2xl font-normal text-zinc-800">learning</h2>
