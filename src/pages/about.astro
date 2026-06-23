@@ -51,14 +51,14 @@ console.log(await getCollection("certification"));
       <div class="grid grid-cols-1 items-start gap-14 md:grid-cols-12 md:gap-12">
 
         <!-- 左 -->
-        <div class="md:col-span-5 md:sticky md:top-32">
+        <div class="z-1 md:mb-20 md:col-span-5 md:sticky md:top-32">
           <div class="scroll-reveal translate-y-8 opacity-0">
             <BusinessCard />
           </div>
         </div>
 
         <!-- 右 -->
-        <div class="md:col-span-7 flex flex-col gap-24 pt-8 md:pt-0">
+        <div class="z-0 md:col-span-7 flex flex-col gap-24 pt-8 md:pt-0">
 
           <div class="scroll-reveal translate-y-8 opacity-0 duration-2000">
             <ImageStack images={sampleImages} />
