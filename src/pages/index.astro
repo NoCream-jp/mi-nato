@@ -21,23 +21,24 @@ const sortedActions = allActions.sort(
 ---
 
 <Layout>
-  <div class="">
-    <div id="card-container" class="items-start m-3 grid grid-cols-1 gap-3 md:grid-cols-2">
+  <div class="p-3">
+    <div id="card-container" class="mb-5 columns-1 gap-3 md:columns-2">
       
-      <section id="about" data-key="about" transition:name="card-about" class="will-change-transform min-h-[400px] flex mt-auto flex-col items-center rounded-md bg-white p-12">
+      <section id="about" data-key="about" transition:name="card-about" class="will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white p-12">
         <h2 class="text-2xl font-normal text-zinc-800">about</h2>
-        <div class="py-10 w-full max-w-md flex flex-col justify-center">
+        <div class="py-10 w-full max-w-md flex flex-col justify-center grow">
           <p class="w-full text-sm leading-relaxed text-zinc-800">
             こんにちは。みなとといいます。和歌山大学の情報学領域で勉強している学生です。研究分野は機械学習です。面白い、美しいと思ったことは何でも勉強します。また趣味でwebアプリ開発やサイトのデザイン、運営を行ったり、競技プログラミングのコンテストに参加しています。ぜひサイトを隅々までご覧ください。
           </p>
         </div>
-        
-        <ViewMoreButton href="/about" />
+        <div class="mt-auto">
+          <ViewMoreButton href="/about" />
+        </div>
       </section>
 
-      <section id="blog" data-key="blog" transition:name="card-blog" class="will-change-transform min-h-[400px] flex mt-auto flex-col items-center rounded-md bg-white p-12">
+      <section id="blog" data-key="blog" transition:name="card-blog" class="will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white p-12">
         <h2 class="text-2xl font-normal text-zinc-800">blog</h2>
-        <div class="py-10 w-full max-w-md flex flex-col justify-center gap-3 ">
+        <div class="py-10 w-full max-w-md flex flex-col justify-center gap-3 grow">
           {0 < latestPosts.length ? (
             latestPosts.map((post) => (
               <ArticleCard 
@@ -51,12 +52,14 @@ const sortedActions = allActions.sort(
             <p class="text-center text-sm text-zinc-400 py-8">No articles found.</p>
           )}
         </div>
-        <ViewMoreButton href="/blog" />
+        <div class="mt-auto">
+          <ViewMoreButton href="/blog" />
+        </div>
       </section>
 
-      <section id="action" data-key="action" transition:name="card-action" class="will-change-transform min-h-[400px] flex mt-auto flex-col items-center rounded-md bg-white p-12">
+      <section id="action" data-key="action" transition:name="card-action" class="will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white p-12">
         <h2 class="text-2xl font-normal text-zinc-800">action</h2>
-        <div class="py-10 w-full max-w-md flex flex-col gap-1">
+        <div class="py-10 w-full max-w-md flex flex-col gap-1 grow">
           {
             await Promise.all(
               sortedActions.map(async (action) => {
@@ -73,37 +76,38 @@ const sortedActions = allActions.sort(
             )
           }
         </div>
-        <ViewMoreButton href="/action" />
+        <div class="mt-auto">
+          <ViewMoreButton href="/action" />
+        </div>
       </section>
 
-      <section id="learning" data-key="learning" transition:name="card-learning" class="will-change-transform min-h-[400px] flex mt-auto flex-col items-center rounded-md bg-white p-12">
+      <section id="learning" data-key="learning" transition:name="card-learning" class="will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white p-12">
         <h2 class=" text-2xl font-normal text-zinc-800">learning</h2>
-        <div class="py-10 w-full max-w-md flex flex-col gap-1">
+        <div class="py-10 w-full max-w-md flex flex-col gap-1 grow">
           <ul class="mb-7 w-full max-w-md list-inside list-disc space-y-3 text-sm text-zinc-700">
-          <li>強化学習・マルチエージェントシステム</li>
-          <li>Svelte / Astro / Tailwind CSS v4</li>
-          <li>競技プログラミング (AtCoder / Python / C++)</li>
-        </ul>
+            <li>強化学習・マルチエージェントシステム</li>
+            <li>Svelte / Astro / Tailwind CSS v4</li>
+            <li>競技プログラミング (AtCoder / Python / C++)</li>
+          </ul>
         </div>
-        
-        <ViewMoreButton href="/learning" />
-      </section>
-
-      <section id="link" data-key="link" transition:name="card-link" class="h-fit flex flex-col items-center rounded-md bg-white p-12">
-        <!-- <h2 class="mb-7 text-2xl font-normal text-zinc-800">link</h2> -->
-        <a href="/link">
-          <img src="/logo.svg" alt="logo" class="h-20">
-        </a>
-        <div class="py-10 w-full max-w-md flex flex-col gap-1">
-          <LinkCard title="GitHub" username='@NoCream-jp' href="https://github.com/NoCream-jp" />
-          <LinkCard title="X" username='@sXMN1au45a68174' href="https://x.com/sXMN1au45a68174" />
-          <LinkCard title="Instagram" username='@koshi2055' href="https://www.instagram.com/koshi2055/?hl=ja" />
-          <LinkCard title="LinkedIn" username='@m-hayashi' href="https://www.linkedin.com/in/m-hayashi/" />
-          <LinkCard title="AtCoder" username="@Caffeineholic" href="https://atcoder.jp/users/Caffeineholic" />
-          <LinkCard title="研究室" username='@久世研究室' href="https://web.wakayama-u.ac.jp/~kuze/lab/jp/" />
+        <div class="mt-auto">
+          <ViewMoreButton href="/learning" />
         </div>
-        <div>© 2025-2026 mi-nato.com</div>
       </section>
     </div>
+    <section id="link" data-key="link" transition:name="card-link" class="break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white p-12">
+      <a href="/link">
+        <img src="/logo.svg" alt="logo" class="h-20">
+      </a>
+      <div class="py-10 w-full max-w-md flex flex-col gap-1 grow">
+        <LinkCard title="GitHub" username='@NoCream-jp' href="https://github.com/NoCream-jp" />
+        <LinkCard title="X" username='@sXMN1au45a68174' href="https://x.com/sXMN1au45a68174" />
+        <LinkCard title="Instagram" username='@koshi2055' href="https://www.instagram.com/koshi2055/?hl=ja" />
+        <LinkCard title="LinkedIn" username='@m-hayashi' href="https://www.linkedin.com/in/m-hayashi/" />
+        <LinkCard title="AtCoder" username="@Caffeineholic" href="https://atcoder.jp/users/Caffeineholic" />
+        <LinkCard title="研究室" username='@久世研究室' href="https://web.wakayama-u.ac.jp/~kuze/lab/jp/" />
+      </div>
+      <div class="text-zinc-400 text-sm">© 2025-2026 mi-nato.com</div>
+    </section>
   </div>
 </Layout>
