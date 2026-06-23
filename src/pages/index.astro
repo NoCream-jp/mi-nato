@@ -19,7 +19,7 @@ const latestPosts = allPosts
   <div class="p-3">
     <div id="card-container" class="mb-3 columns-1 gap-3 md:columns-2">
       
-      <section id="about" data-key="about" transition:name="card-about" class=" will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white py-12">
+      <section id="about" data-key="about" transition:name="card-about" class=" will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white py-5 py-12">
         <h2 class="text-2xl font-normal text-zinc-800">about</h2>
         <div class="mt-5 w-9/10 bg-zinc-50 py-10">
           <BusinessCard />
@@ -34,7 +34,7 @@ const latestPosts = allPosts
         </div>
       </section>
 
-      <section id="blog" data-key="blog" transition:name="card-blog" class="will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white p-12">
+      <section id="blog" data-key="blog" transition:name="card-blog" class="will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white px-5 py-12">
         <h2 class="text-2xl font-normal text-zinc-800">blog</h2>
         <div class="py-10 w-full max-w-md flex flex-col justify-center gap-3 grow">
           {0 < latestPosts.length ? (
@@ -79,7 +79,7 @@ const latestPosts = allPosts
         </div>
       </section> -->
 
-      <section id="action" data-key="action" transition:name="card-action" class="bg-white will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md p-12">
+      <section id="action" data-key="action" transition:name="card-action" class="bg-white will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md px-5 py-12">
         <h2 class="text-2xl font-normal text-zinc-800">action</h2>
         <ActionLog limit={3}/>
         <div class="mt-auto">
@@ -87,7 +87,7 @@ const latestPosts = allPosts
         </div>
       </section>
 
-      <section id="learning" data-key="learning" transition:name="card-learning" class="will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white p-12">
+      <section id="learning" data-key="learning" transition:name="card-learning" class="will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white px-5 py-12">
         <h2 class=" text-2xl font-normal text-zinc-800">learning</h2>
         <div class="py-10 w-full max-w-md flex flex-col gap-1 grow">
           <ul class="mb-7 w-full max-w-md list-inside list-disc space-y-3 text-sm text-zinc-700">
@@ -101,7 +101,7 @@ const latestPosts = allPosts
         </div>
       </section>
     </div>
-    <section id="link" data-key="link" transition:name="card-link" class="will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white p-12">
+    <section id="link" data-key="link" transition:name="card-link" class="will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white px-5 py-12">
       <a href="/link">
         <img src="/logo.svg" alt="logo" class="h-20">
       </a>
