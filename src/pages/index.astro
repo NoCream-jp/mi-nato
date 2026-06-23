@@ -6,6 +6,7 @@ import ActionAccordion from '../components/ActionAccordion.astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 // import { Icon } from "astro-icon/components";
 import LinkCard from '../components/LinkCard.astro';
+import BusinessCard from '../components/BusinessCard.astro';
 
 
 const allPosts = await getCollection('blog');
@@ -26,6 +27,7 @@ const sortedActions = allActions.sort(
       
       <section id="about" data-key="about" transition:name="card-about" class="will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white p-12">
         <h2 class="text-2xl font-normal text-zinc-800">about</h2>
+          <BusinessCard />
         <div class="py-10 w-full max-w-md flex flex-col justify-center grow">
           <p class="w-full text-sm leading-relaxed text-zinc-800">
             こんにちは。みなとといいます。和歌山大学の情報学領域で勉強している学生です。研究分野は機械学習です。面白い、美しいと思ったことは何でも勉強します。また趣味でwebアプリ開発やサイトのデザイン、運営を行ったり、競技プログラミングのコンテストに参加しています。ぜひサイトを隅々までご覧ください。
