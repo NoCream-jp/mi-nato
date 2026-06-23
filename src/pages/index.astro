@@ -89,14 +89,16 @@ const sortedActions = allActions.sort(
         <ViewMoreButton href="/learning" />
       </section>
 
-      <section id="link" class="h-fit flex flex-col items-center rounded-md bg-white p-12">
+      <section id="link" data-key="link" transition:name="card-link" class="h-fit flex flex-col items-center rounded-md bg-white p-12">
         <!-- <h2 class="mb-7 text-2xl font-normal text-zinc-800">link</h2> -->
-        <img src="/logo.svg" alt="logo" class="h-20">
+        <a href="/link">
+          <img src="/logo.svg" alt="logo" class="h-20">
+        </a>
         <div class="py-10 w-full max-w-md flex flex-col gap-1">
           <LinkCard title="GitHub" username='@NoCream-jp' href="https://github.com/NoCream-jp" />
           <LinkCard title="X" username='@sXMN1au45a68174' href="https://x.com/sXMN1au45a68174" />
           <LinkCard title="Instagram" username='@koshi2055' href="https://www.instagram.com/koshi2055/?hl=ja" />
-          <LinkCard title="LinkedIn"  href="https://www.linkedin.com/in/m-hayashi/" />
+          <LinkCard title="LinkedIn" username='@m-hayashi' href="https://www.linkedin.com/in/m-hayashi/" />
           <LinkCard title="AtCoder" username="@Caffeineholic" href="https://atcoder.jp/users/Caffeineholic" />
           <LinkCard title="研究室" username='@久世研究室' href="https://web.wakayama-u.ac.jp/~kuze/lab/jp/" />
         </div>
