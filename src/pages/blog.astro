@@ -4,7 +4,7 @@ import ArticleCard from '../components/ArticleCard.astro';
 import { getCollection } from 'astro:content';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import TagFilter from '../components/TagFilter.astro';
-import BackButton from '../components/BackButton.astro'
+import BackButton from '../components/BackButton.astro';
 
 const allPosts = await getCollection('blog');
 
@@ -105,7 +105,7 @@ const allTags = Array.from(
             url.searchParams.set("tag", active);
           }
       
-          history.replaceState({}, "", url);
+          history.replaceState({ ...window.history.state }, "", url);
         }
       
         // 初期描画
@@ -117,7 +117,7 @@ const allTags = Array.from(
             const tag = btn.dataset.tag;
       
             active = (active === tag) ? "all" : tag;
-      
+    
             updateUI();
             updateURL();
           });

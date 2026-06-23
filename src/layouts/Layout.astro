@@ -31,18 +31,22 @@ import { ClientRouter } from 'astro:transitions';
 	</body>
 	<script is:inline>
 		let container = null;
-	
-		 function init() {
+		let originalOrder = [];
+		let current = null;
+		let isAnimating = false;
+	  
+		function init() {
 			container = document.getElementById("card-container");
-
+			
+			// 毎回 originalOrder を今のDOMから正しく取り直す
 			if (container) {
 				originalOrder = Array.from(container.children);
 			}
-
-			 document.querySelectorAll("nav [data-target]").forEach(el => {
+	  
+			document.querySelectorAll("nav [data-target]").forEach(el => {
 				el.addEventListener("click", () => {
 					const target = el.dataset.target;
-
+	  
 					if (location.pathname === "/") {
 						reorder(target);
 					} else {
@@ -50,39 +54,51 @@ import { ClientRouter } from 'astro:transitions';
 					}
 				});
 			});
-
+	  
+			
 			const params = new URLSearchParams(window.location.search);
-			const target = params.get("target");
-
-			if (target) {
+			const targetParam = params.get("target");
+	  
+			if (targetParam) {
 				setTimeout(() => {
-					reorder(target);
+					reorder(targetParam);
 				}, 50);
-
-				// URLを綺麗に戻す
-				history.replaceState({}, "", "/");
+	  
+				// URLを綺麗に戻しつつ、Astroの履歴を壊さない
+				history.replaceState({ ...window.history.state }, "", "/");
+			} 
+			
+			else if (window.history.state && window.history.state.cardOrder) {
+				// 履歴に保存されていた current があれば、アニメーション無しで即座に並び替える
+				const savedTarget = window.history.state.cardOrder;
+				if (container && savedTarget) {
+				   const targetEl = Array.from(container.children).find(el => el.dataset.key === savedTarget);
+				   if(targetEl) {
+					   container.prepend(targetEl);
+					   current = savedTarget;
+				   }
+				}
+			} else {
+				// なにもない（素のトップページアクセス）時はリセット状態
+				current = null;
 			}
 		}
-
-		let current = null;
-		let originalOrder = [];
-		let isAnimating = false;
-	
+	  
 		function animateFLIP(items, firstRects) {
 			const lastRects = new Map();
 			items.forEach(el => {
 				lastRects.set(el, el.getBoundingClientRect());
 			});
-	
+	  
 			const animations = [];
-	
+	  
 			items.forEach(el => {
 				const first = firstRects.get(el);
 				const last = lastRects.get(el);
-	
+	  
 				const dx = first.left - last.left;
 				const dy = first.top - last.top;
-	
+	  
 				const anim = el.animate(
 					[
 						{ transform: `translate(${dx}px, ${dy}px)` },
@@ -93,72 +109,79 @@ import { ClientRouter } from 'astro:transitions';
 						easing: "cubic-bezier(0.2, 0.8, 0.2, 1)"
 					}
 				);
-	
+	  
 				animations.push(anim.finished);
 			});
-	
+	  
 			return Promise.all(animations);
 		}
-	
+	  
+		function updateHistoryState(targetKey) {
+			// 現在の状態を履歴に書き込む（Astroのstateを保持したまま）
+			const currentState = window.history.state || {};
+			history.replaceState({ ...currentState, cardOrder: targetKey }, "");
+		}
+	  
 		function reorder(targetKey) {
 			if (!container || isAnimating) return;
-	
+	  
 			const items = Array.from(container.children);
-	
+	  
 			// 同じものを再クリック → リセット
 			if (current === targetKey) {
 				resetOrder();
 				current = null;
+				updateHistoryState(null); // 履歴もリセット
 				return;
 			}
-	
+	  
 			isAnimating = true;
-	
+	  
 			// First
 			const firstRects = new Map();
 			items.forEach(el => {
 				firstRects.set(el, el.getBoundingClientRect());
 			});
-	
+	  
 			// 並び替え
 			const target = items.find(el => el.dataset.key === targetKey);
 			if (!target) {
 				isAnimating = false;
 				return;
 			}
-	
+	  
 			container.prepend(target);
 			current = targetKey;
-	
-			// FLIP
+			updateHistoryState(targetKey); // 🌟 並び替えたことを履歴に記録
+	  
 			animateFLIP(items, firstRects).then(() => {
 				isAnimating = false;
 			});
 		}
-	
+	  
 		function resetOrder() {
 			if (!container || isAnimating) return;
-	
+	  
 			const items = Array.from(container.children);
-	
 			isAnimating = true;
-	
+	  
 			// First
 			const firstRects = new Map();
 			items.forEach(el => {
 				firstRects.set(el, el.getBoundingClientRect());
 			});
-	
-			// 元の順序に戻す
-			originalOrder.forEach(el => container.appendChild(el));
-	
-			// FLIP
+			const newItems = Array.from(container.children);
+			newItems.sort((a, b) => {
+				const aIndex = originalOrder.findIndex(orig => orig.dataset.key === a.dataset.key);
+				const bIndex = originalOrder.findIndex(orig => orig.dataset.key === b.dataset.key);
+				return aIndex - bIndex;
+			});
+			newItems.forEach(el => container.appendChild(el));
 			animateFLIP(items, firstRects).then(() => {
 				isAnimating = false;
 			});
 		}
-	
-		// イベント登録（button想定）
+	  
 		document.addEventListener("astro:page-load", init);
 	</script>
 </html>
