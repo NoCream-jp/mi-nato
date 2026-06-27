@@ -9,6 +9,7 @@ import TagFilter from '../components/TagFilter.astro';
 import ModalCard from '../components/ModalCard.astro';
 import BackButton from '../components/BackButton.astro';
 import Modal from '../components/Modal.astro';
+import VideoGallery from '../components/VideoGallery.astro';
 
 
 // パンくず用
@@ -32,6 +33,12 @@ const allTags = Array.from(
   new Set(certifications.flatMap(c => c.data.tags))
 );
 console.log(await getCollection("certification"));
+
+// 動画のid
+const videos = [
+  { id: "skHMqRGEzF8", title: "QuizKnock", description: "メンバーの河村さんが作るクイズ、どれも最高です。天才すぎる" },
+  { id: "0kVDDqW9vec", title: "霜降りチューブ", description: "最近見始めてハマってます。"}
+];
 ---
 
 <Layout title="about | mi-nato">
@@ -80,12 +87,12 @@ console.log(await getCollection("certification"));
               <!-- 日本語 -->
               <p id="bio-ja">
                 こんにちは。みなとといいます。和歌山大学の情報学領域で勉強している学生です。研究分野は機械学習です。面白い、美しいと思ったことは何でも勉強します。また趣味でwebアプリ開発やサイトのデザイン、運営を行ったり、競技プログラミングのコンテストに参加しています。ぜひサイトを隅々までご覧ください。
-                最近は、このサイトのデザインと実装にのめりこんでいます。
+                最近は、このサイトのデザインと実装にのめりこんでいます。音楽を聴くこと、食べること、何かを攻略することが好きです。
               </p>
               <!-- 英語 -->
               <p id="bio-en" class="hidden">
                 Hello, my name is Minato. I am a student studying in the field of Informatics at Wakayama University. My research focuses on machine learning. I enjoy learning anything that I find interesting or beautiful. As a hobby, I develop web applications, design and manage websites, and participate in competitive programming contests. Please feel free to explore every corner of this site.
-                Recently, I’ve been deeply engaged in designing and implementing this website.
+                Recently, I’ve been deeply engaged in designing and implementing this website.I enjoy listening to music, eating, and figuring things out (or tackling challenges).
               </p>
             </div>
           </section>
@@ -114,6 +121,7 @@ console.log(await getCollection("certification"));
 
           <section>
             <h2 class="mb-6 text-xl font-medium tracking-wide">favorite</h2>
+            <VideoGallery videos={videos}/>
           </section>
 
         </div>

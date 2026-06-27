@@ -1,0 +1,28 @@
+---
+interface Props {
+  videoId: string;
+  title: string;
+}
+
+const { videoId, title } = Astro.props as Props;
+---
+
+<div class="video-card cursor-pointer" data-id={videoId}>
+    <div class="relative aspect-video">
+      <img
+        src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+        alt={title}
+        loading="lazy"
+        class="w-full h-full object-cover rounded-xl"
+      />
+  
+      <div class=" absolute inset-0 flex items-center justify-center">
+        <button
+          class="cursor-pointer w-[60px] h-[60px] rounded-full bg-black/60 text-white text-2xl flex items-center justify-center"
+        >
+          ▶
+        </button>
+      </div>
+  
+    </div>
+  </div>
