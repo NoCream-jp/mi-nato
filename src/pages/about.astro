@@ -20,9 +20,9 @@ const breadcrumbItems = [
 
 // ImageStack用
 const sampleImages = [
-  '/assets/cat.webp',
-  '/assets/ra-men.webp',
-  '/assets/spotify.webp',
+  '/images/cat.webp',
+  '/images/ra-men.webp',
+  '/images/spotify.webp',
 ];
 
 // 資格データ
@@ -35,9 +35,12 @@ const allTags = Array.from(
 console.log(await getCollection("certification"));
 
 // 動画のid
-const videos = [
-  { id: "skHMqRGEzF8", title: "QuizKnock", description: "メンバーの河村さんが作るクイズ、どれも最高です。天才すぎる" },
-  { id: "0kVDDqW9vec", title: "霜降りチューブ", description: "最近見始めてハマってます。"}
+const musicVideos = [
+  { id: "jQmYZWjLwzw", title: "『Alice in 冷凍庫(feat. IA)』" },
+  { id: "guaYnmuzrFg", title: "『Drip』", description: "敬愛してやまないナナホシ管弦楽団さん。" },
+  { id: "2U-ck5SnLsA", title: "『アイシティ』", description: "最近聴いているchevonさんの曲で、特にお気に入り。" },
+  { id: "yQlAzsuJVq4", title: "『アイスベースガール』", description: "さわやかロック。"},
+  { id: "EckDme98HHE", title: "『TRUMAN』", description: "クール。ベースもかっこいい。" },
 ];
 ---
 
@@ -55,7 +58,7 @@ const videos = [
         </h1>
       </div>
 
-      <div class="grid grid-cols-1 items-start gap-14 md:grid-cols-12 md:gap-12">
+      <div class="mb-10 grid grid-cols-1 items-start gap-14 md:grid-cols-12 md:gap-12">
 
         <!-- 左 -->
         <div class="z-1 md:mb-20 md:col-span-5 md:sticky md:top-32">
@@ -87,7 +90,7 @@ const videos = [
               <!-- 日本語 -->
               <p id="bio-ja">
                 こんにちは。みなとといいます。和歌山大学の情報学領域で勉強している学生です。研究分野は機械学習です。面白い、美しいと思ったことは何でも勉強します。また趣味でwebアプリ開発やサイトのデザイン、運営を行ったり、競技プログラミングのコンテストに参加しています。ぜひサイトを隅々までご覧ください。
-                最近は、このサイトのデザインと実装にのめりこんでいます。音楽を聴くこと、食べること、何かを攻略することが好きです。
+                最近は、このサイトのデザインと実装にのめりこんでいます。音楽を聴くこと、食べること、何かを攻略することが好きです。ねことコーヒーは嗜好品ではなく必需品です。
               </p>
               <!-- 英語 -->
               <p id="bio-en" class="hidden">
@@ -120,8 +123,8 @@ const videos = [
           </section>
 
           <section>
-            <h2 class="mb-6 text-xl font-medium tracking-wide">favorite</h2>
-            <VideoGallery videos={videos}/>
+            <h2 class="mb-6 text-xl font-medium tracking-wide">favorite music</h2>
+            <VideoGallery videos={musicVideos}/>
           </section>
 
         </div>

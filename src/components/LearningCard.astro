@@ -1,0 +1,46 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  item: CollectionEntry<'learning'>;
+}
+
+const { item } = Astro.props as Props;
+---
+
+<div 
+  class="cert-card group relative flex h-full flex-col overflow-hidden rounded-md border border-zinc-200 bg-white p-6 transition-all duration-500 ease-out"
+  data-tags={item.data.tags?.join(',') || ""}
+>
+  
+  {item.data.logo && (
+    <div class="absolute right-5 top-5">
+      <img 
+        src={item.data.logo} 
+        alt={`${item.data.title} logo`} 
+        class="h-9 w-9 object-contain"
+        loading="lazy"
+      />
+    </div>
+  )}
+
+  <div class="flex h-full flex-col relative z-10">
+    <h3 class="mb-3 pr-12 text-lg font-medium tracking-wide text-zinc-900 transition-colors group-hover:text-black">
+      {item.data.title}
+    </h3>
+
+    <p class="mb-6 text-[14px] leading-relaxed text-zinc-500 line-clamp-2 grow">
+      {item.data.description}
+    </p>
+
+    {item.data.tags && (
+      <div class="mt-auto flex flex-wrap gap-2">
+        {item.data.tags.map((tag: string) => (
+          <span class=" shrink-0 rounded-full bg-zinc-400 px-2 py-0.5 text-[10px] font-normal tracking-wider text-zinc-100">
+            {tag}
+          </span>
+        ))}
+      </div>
+    )}
+  </div>
+</div>
