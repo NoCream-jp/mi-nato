@@ -35,8 +35,20 @@ const certificationCollection = defineCollection({
   }),
 });
 
+const learningCollection = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/learning" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    tags: z.array(z.string()).optional(),
+    order: z.number().optional(),
+    logo: z.string().optional(),
+  }),
+});
+
 export const collections = {
   blog: blogCollection,
   "action-log": actionLogCollection,
   certification: certificationCollection,
+  learning: learningCollection,
 };
