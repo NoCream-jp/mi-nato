@@ -7,12 +7,20 @@ import { getCollection } from 'astro:content';
 import LinkCard from '../components/LinkCard.astro';
 import BusinessCard from '../components/BusinessCard.astro';
 import ActionLog from '../components/ActionLog.astro';
+import LearningCard from '../components/LearningCard.astro';
+
 
 
 const allPosts = await getCollection('blog');
 const latestPosts = allPosts
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 5);
+
+// learningセクション
+const allLearning = await getCollection('learning');
+const topLearning = allLearning
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999))
+  .slice(0, 4);
 ---
 
 <Layout>
@@ -53,30 +61,6 @@ const latestPosts = allPosts
         </div>
       </section>
 
-      <!-- <section id="action" data-key="action" transition:name="card-action" class="will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white p-12">
-        <h2 class="text-2xl font-normal text-zinc-800">action</h2>
-        <div class="py-10 w-full max-w-md flex flex-col gap-1 grow">
-          {
-            await Promise.all(
-              sortedActions.map(async (action) => {
-                const { Content } = await render(action);
-                return (
-                  <ActionAccordion
-                    date={action.data.date}
-                    title={action.data.title}
-                  >
-                    <Content />
-                  </ActionAccordion>
-                );
-              })
-            )
-          }
-        </div>
-        <div class="mt-auto">
-          <ViewMoreButton href="/action" />
-        </div>
-      </section> -->
-
       <section id="action" data-key="action" transition:name="card-action" class="bg-white will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md px-5 py-12">
         <h2 class="text-2xl font-normal text-zinc-800">action</h2>
         <ActionLog limit={3}/>
@@ -87,12 +71,14 @@ const latestPosts = allPosts
 
       <section id="learning" data-key="learning" transition:name="card-learning" class="will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md bg-white px-5 py-12">
         <h2 class=" text-2xl font-normal text-zinc-800">learning</h2>
-        <div class="py-10 w-full max-w-md flex flex-col gap-1 grow">
-          <ul class="mb-7 w-full max-w-md list-inside list-disc space-y-3 text-sm text-zinc-700">
-            <li>強化学習・マルチエージェントシステム</li>
-            <li>Svelte / Astro / Tailwind CSS v4</li>
-            <li>競技プログラミング (AtCoder / Python / C++)</li>
-          </ul>
+        <div class="py-10 w-full max-w-md flex flex-col gap-4 grow">
+          {topLearning.length > 0 ? (
+            topLearning.map((item) => (
+              <LearningCard item={item} />
+            ))
+          ) : (
+            <p class="text-center text-sm text-zinc-400 py-8">No items found.</p>
+          )}
         </div>
         <div class="mt-auto">
           <ViewMoreButton href="/learning" />
