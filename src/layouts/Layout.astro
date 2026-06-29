@@ -10,9 +10,13 @@ interface Props {
 
 const { 
 	title = 'mi-nato.com',
-	description = 'これは僕のポートフォリオです。',
+	description = 'My portfolio site',
 	image = '/brand/logo.png'
 } = Astro.props;
+
+// OGP生成
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogpImageURL = new URL(image, Astro.site);
 ---
 
 <!doctype html>
