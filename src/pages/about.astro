@@ -32,7 +32,6 @@ const certifications = await getCollection('certification');
 const allTags = Array.from(
   new Set(certifications.flatMap(c => c.data.tags))
 );
-console.log(await getCollection("certification"));
 
 // 動画のid
 const musicVideos = [
