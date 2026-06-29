@@ -23,7 +23,7 @@ const { Content } = await render(post);
 
 // OGP用
 const description = post.data.description || `${post.data.title}についての記事です。`;
-const image = post.data.image || "/images/ogp-default.png";
+const image = post.data.image || "/brand/ogp-image.png";
 ---
 
 <Layout title={`${post.data.title} | mi-nato.com`} description={description} image={image}>
