@@ -63,7 +63,10 @@ const topLearning = allLearning
 
       <section id="action" data-key="action" transition:name="card-action" class="bg-white will-change-transform break-inside-avoid mb-3 flex w-full flex-col items-center rounded-md px-5 py-12">
         <h2 class="text-2xl font-normal text-zinc-800">action</h2>
-        <ActionLog limit={3}/>
+        <div class="py-10 w-full max-w-md flex flex-col gap-4 grow">
+
+          <ActionLog limit={3}/>
+        </div>
         <div class="mt-auto">
           <ViewMoreButton href="/action" />
         </div>

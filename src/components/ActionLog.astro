@@ -51,7 +51,7 @@ const displayLogs = sortedLogs.map((log, index) => {
           
           {/* 境界（isNewYear）の時だけ、ツリーの左側に年号を描画 */}
           {log.isNewYear && (
-            <div class="absolute right-full mr-3 top-[-2px]">
+            <div class="absolute right-full mr-5 top-[-2px]">
               <span class="text-md font-normal tracking-widest text-zinc-500">
                 {log.year}
               </span>
@@ -62,7 +62,7 @@ const displayLogs = sortedLogs.map((log, index) => {
           <span aria-hidden="true" class="absolute flex items-center justify-center w-2.5 h-2.5 bg-zinc-300 rounded-full left-[-4.5px] top-1.5 ring-4 ring-white transition-all duration-300 "></span>
           
           {/* 右側のコンテンツエリア */}
-          <div class="pl-8">
+          <div class="pl-5">
             <div class="flex flex-col md:flex-row md:items-baseline gap-2 mb-1">
               <h3 class="text-base font-medium text-zinc-900 transition-colors group-hover:text-black">
                 {log.data.title}
