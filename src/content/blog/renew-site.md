@@ -1,8 +1,8 @@
 ---
 title: "【毎月個人開発】ホームページを新しくしました"
-date: 2026-06-30
+date: 2026-07-01
 category: "developing"
-draft: true
+draft: false
 ---
 
 ## ホームページの外観があたらしくなりました
