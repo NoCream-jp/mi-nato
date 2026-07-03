@@ -1,7 +1,5 @@
 ---
 title: "AtCoder茶色達成"
 date: 2024-09-28
-description: "AtCoder rate point 400 (茶色コーダー) になりました。"
+description: "AtCoder rate point 400 (茶色コーダー）を達成"
 ---
-
-競技プログラミングサイト、AtCoderにてレート400を達成しました。初心者卒業のラインと言って差し支えないのでしょうか…？半年かかりましたが、まだまだ楽しみます。
