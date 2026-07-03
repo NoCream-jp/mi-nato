@@ -21,11 +21,9 @@ const displayLogs = sortedLogs.map((log, index) => {
   const year = log.data.date.getFullYear().toString();
   const monthDay = log.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
-  // 前のアイテムと比較（その年の最初かどうか）
   const prevLog = sortedLogs[index - 1];
   const isFirstOfYear = !prevLog || prevLog.data.date.getFullYear().toString() !== year;
 
-  // 【追加】次のアイテムと比較（その年の最後かどうか）
   const nextLog = sortedLogs[index + 1];
   const isLastOfYear = !nextLog || nextLog.data.date.getFullYear().toString() !== year;
 
@@ -34,7 +32,7 @@ const displayLogs = sortedLogs.map((log, index) => {
     year,
     monthDay,
     isFirstOfYear,
-    isLastOfYear, // テンプレートに渡す
+    isLastOfYear,
     originalEntry: log,
   };
 });
@@ -44,7 +42,7 @@ const displayLogs = sortedLogs.map((log, index) => {
   <div class="relative pl-8">
     {await Promise.all(displayLogs.map(async (log) => {
       const { Content } = await render(log.originalEntry);
-
+      
       return (
         <div class="w-full">
           {/* 年が変わるタイミングのバッジと区切りの余白 */}
@@ -57,10 +55,9 @@ const displayLogs = sortedLogs.map((log, index) => {
               </div>
             </div>
           )}
-
+          
           <div class="relative mb-8 group">
             
-            {/* 【修正】線の長さを動的に切り替え */}
             {/* isLastOfYearがtrueなら bottom-0 で止め、falseなら -bottom-8 で次のドットまで繋ぐ */}
             <div class={`absolute -left-4 top-3 w-px bg-zinc-200 -translate-x-1/2 ${log.isLastOfYear ? 'bottom-0' : '-bottom-10'}`}></div>
             
