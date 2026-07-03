@@ -22,9 +22,9 @@ const displayLogs = sortedLogs.map((log, index) => {
   // 月日のフォーマット（例: "Jun 23" または "6月23日"）
   const monthDay = log.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
-  // 前のアイテムと年が違うなら、境界線とみなす
-  const prevLog = sortedLogs[index - 1];
-  const isNewYear = !prevLog || prevLog.data.date.getFullYear().toString() !== year;
+  // 次のアイテムと年が違うなら、その年度の最古日付（降順ソートではグループ末尾）
+  const nextLog = sortedLogs[index + 1];
+  const isNewYear = !nextLog || nextLog.data.date.getFullYear().toString() !== year;
 
   return {
     data: log.data,
