@@ -36,7 +36,7 @@ const displayLogs = sortedLogs.map((log, index) => {
 });
 ---
 
-<div class="w-full max-w-2xl mx-auto py-8">
+<div class="w-full max-w-2xl mx-auto ">
   <div class="relative pl-20 md:pl-18">
 
     {/* タイムラインの縦線。ログがある場合のみ表示 */}
@@ -47,7 +47,7 @@ const displayLogs = sortedLogs.map((log, index) => {
       const { Content } = await render(log.originalEntry);
 
       return (
-        <div class="relative mb-12 group">
+        <div class="relative mb-6 group">
           
           {/* 境界（isNewYear）の時だけ、ツリーの左側に年号を描画 */}
           {log.isNewYear && (
@@ -73,10 +73,10 @@ const displayLogs = sortedLogs.map((log, index) => {
               {log.monthDay}
             </time>
             
-            <div class="text-[15px] text-zinc-600 leading-relaxed">
+            <div class="text-[13px] text-zinc-600 leading-relaxed">
               {/* フロントマターの description を表示（あれば） */}
               {log.data.description && (
-                <p class="mb-4">{log.data.description}</p>
+                <p class="mb-2">{log.data.description}</p>
               )}
               
               {/* ここに Markdown の本文が出力される */}
