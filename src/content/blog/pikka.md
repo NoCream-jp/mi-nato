@@ -1,6 +1,6 @@
 ---
 title: "【毎月個人開発】ニュースポータルアプリ"
-date: 2026-06-01
+date: 2026-05-31
 category: "developing"
 draft: false
 ---
