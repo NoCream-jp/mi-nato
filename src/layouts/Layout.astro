@@ -3,17 +3,17 @@ import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
-	title?: string;
-	description?: string;
-	image?: string;
-	imageAlt?: string;
+  title?: string;
+  description?: string;
+  image?: string;
+  imageAlt?: string;
 }
 
 const { 
-	title = 'mi-nato.com',
-	description = 'My portfolio site',
-	image = '/brand/ogp-image.png',
-	imageAlt = "Minato Hayashi's portfolio site",
+  title = 'mi-nato.com',
+  description = 'My portfolio site',
+  image = '/brand/ogp-image.png',
+  imageAlt = "Minato Hayashi's portfolio site",
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
@@ -23,222 +23,80 @@ const ogpImageHeight = 630;
 ---
 
 <!doctype html>
-<html lang="ja">
-	<head>
-		<meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="generator" content={Astro.generator} />
-        <title>{title}</title>
-        <meta name="description" content={description} />
-        <link rel="canonical" href={canonicalURL} />
+<html lang="ja" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
 
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonicalURL} />
-        <meta property="og:site_name" content="mi-nato.com" />
-        <meta property="og:type" content="website" />
-        <meta property="og:locale" content="ja_JP" />
-        <meta property="og:image" content={ogpImageURL} />
-        <meta property="og:image:secure_url" content={ogpImageURL} />
-        <meta property="og:image:type" content="image/png" />
-        <meta property="og:image:width" content={'{ogpImageWidth}'} />
-        <meta property="og:image:height" content={'{ogpImageHeight}'} />
-        <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content="mi-nato.com" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:image" content={ogpImageURL} />
+    <meta property="og:image:secure_url" content={ogpImageURL} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content={ogpImageWidth.toString()} />
+    <meta property="og:image:height" content={ogpImageHeight.toString()} />
+    <meta property="og:image:alt" content={imageAlt} />
 
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@sXMN1au45a68174" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={ogpImageURL} />
-        <meta name="twitter:image:alt" content={imageAlt} />
-	</head>
-	<body class="bg-gray-100" transition:animate="fade">
-		<ClientRouter />
-
-		<header class="md:px-0 m-5 flex items-center justify-between px-6">
-			<div class="flex items-center gap-5">
-				<a href="/" class="hidden text-xl font-normal tracking-wide text-zinc-500 md:block">Minato's homepage</a>
-			</div>
-			<nav class="flex w-full text-lg font-normal text-zinc-800 gap-10 justify-center md:w-auto">
-			  <button type="button" data-target="about" data-nav class="cursor-pointer hover:text-gray-500">about</button>
-				<button type="button" data-target="blog" data-nav class="cursor-pointer hover:text-gray-500">blog</button>
-				<button type="button" data-target="action" data-nav class="cursor-pointer hover:text-gray-500">action</button>
- 				<button type="button" data-target="learning" data-nav class="cursor-pointer hover:text-gray-500">learning</button>
-			</nav>
-		  </header>
-		<slot />
-	</body>
-	<script is:inline>
-		let container = null;
-		let originalOrder = [];
-		let current = null;
-		let isAnimating = false;
-	  
-		function init() {
-			container = document.getElementById("card-container");
-			
-			// 毎回 originalOrder を今のDOMから正しく取り直す
-			if (container) {
-				originalOrder = Array.from(container.children);
-			}
-	  
-			document.querySelectorAll("nav [data-target]").forEach(el => {
-				el.addEventListener("click", () => {
-					const target = el.dataset.target;
-	  
-					if (location.pathname === "/") {
-						reorder(target);
-					} else {
-						window.location.href = `/?target=${target}`;
-					}
-				});
-			});
-	  
-			
-			const params = new URLSearchParams(window.location.search);
-			const targetParam = params.get("target");
-	  
-			if (targetParam) {
-				setTimeout(() => {
-					reorder(targetParam);
-				}, 50);
-	  
-				history.replaceState({ ...window.history.state }, "", "/");
-			} 
-			
-			else if (window.history.state && window.history.state.cardOrder) {
-				const savedTarget = window.history.state.cardOrder;
-				if (container && savedTarget) {
-				   const targetEl = Array.from(container.children).find(el => el.dataset.key === savedTarget);
-				   if(targetEl) {
-					   container.prepend(targetEl);
-					   current = savedTarget;
-				   }
-				}
-			} else {
-				current = null;
-			}
-		}
-	  
-		function animateFLIP(items, firstRects) {
-			const lastRects = new Map();
-			items.forEach(el => {
-				lastRects.set(el, el.getBoundingClientRect());
-			});
-	  
-			const animations = [];
-	  
-			items.forEach(el => {
-				const first = firstRects.get(el);
-				const last = lastRects.get(el);
-	  
-				const dx = first.left - last.left;
-				const dy = first.top - last.top;
-	  
-				const anim = el.animate(
-					[
-						{ transform: `translate(${dx}px, ${dy}px)` },
-						{ transform: "translate(0, 0)" }
-					],
-					{
-						duration: 400,
-						easing: "cubic-bezier(0.2, 0.8, 0.2, 1)"
-					}
-				);
-	  
-				animations.push(anim.finished);
-			});
-	  
-			return Promise.all(animations);
-		}
-	  
-		function updateHistoryState(targetKey) {
-			const currentState = window.history.state || {};
-			history.replaceState({ ...currentState, cardOrder: targetKey }, "");
-		}
-	  
-		function reorder(targetKey) {
-			if (!container || isAnimating) return;
-	  
-			const items = Array.from(container.children);
-	  
-			if (current === targetKey) {
-				resetOrder();
-				current = null;
-				updateHistoryState(null);
-				return;
-			}
-	  
-			isAnimating = true;
-	  
-			// First
-			const firstRects = new Map();
-			items.forEach(el => {
-				firstRects.set(el, el.getBoundingClientRect());
-			});
-	  
-			// 並び替え
-			const target = items.find(el => el.dataset.key === targetKey);
-			if (!target) {
-				isAnimating = false;
-				return;
-			}
-	  
-			container.prepend(target);
-			current = targetKey;
-			updateHistoryState(targetKey); // 並び替えたことを履歴に記録
-	  
-			animateFLIP(items, firstRects).then(() => {
-				isAnimating = false;
-			});
-		}
-	  
-		function resetOrder() {
-			if (!container || isAnimating) return;
-	  
-			const items = Array.from(container.children);
-			isAnimating = true;
-	  
-			// First
-			const firstRects = new Map();
-			items.forEach(el => {
-				firstRects.set(el, el.getBoundingClientRect());
-			});
-			const newItems = Array.from(container.children);
-			newItems.sort((a, b) => {
-				const aIndex = originalOrder.findIndex(orig => orig.dataset.key === a.dataset.key);
-				const bIndex = originalOrder.findIndex(orig => orig.dataset.key === b.dataset.key);
-				return aIndex - bIndex;
-			});
-			newItems.forEach(el => container.appendChild(el));
-			animateFLIP(items, firstRects).then(() => {
-				isAnimating = false;
-			});
-		}
-	  
-		document.addEventListener("astro:page-load", init);
-	</script>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@sXMN1au45a68174" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogpImageURL} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+    
+    <ClientRouter />
+  </head>
+  <body class="bg-gray-100" transition:animate="fade">
+    
+    <header class="md:px-0 m-5 flex items-center justify-between px-6">
+      <div class="flex items-center gap-5">
+        <a href="/" class="hidden text-xl font-normal tracking-wide text-zinc-500 md:block">Minato's homepage</a>
+      </div>
+      <nav class="flex w-full text-lg font-normal text-zinc-800 gap-10 justify-center md:w-auto">
+        <a href="/about"  class="cursor-pointer transition-colors hover:text-gray-500">about</a>
+        <a href="/blog" class="cursor-pointer transition-colors hover:text-gray-500">blog</a>
+        <a href="/action" class="cursor-pointer transition-colors hover:text-gray-500">action</a>
+        <a href="/learning" class="cursor-pointer transition-colors hover:text-gray-500">learning</a>
+      </nav>
+    </header>
+    
+    <slot />
+    
+  </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-	}
-	:global(h2) {
-		font-size: 1.25rem;
-		line-height: 1.75rem;
-		font-weight: 400;
-		margin-top: 3rem;
-		margin-bottom: 1rem;
-	}
-	:global(p) {
-		margin-bottom: 0.3rem;
-		line-height: 1.5;
-	}
-	*:focus:not(:focus-visible) {
-	outline: none;
-	}
+  html,
+  body {
+    margin: 0;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+
+  :global(h2) {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 400;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+  }
+  :global(p) {
+    margin-bottom: 0.3rem;
+    line-height: 1.5;
+  }
+  *:focus:not(:focus-visible) {
+    outline: none;
+  }
 </style>
