@@ -1,5 +1,5 @@
 ---
-title: "【毎月個人開発】ホームページを新しくしました"
+title: "【毎月個人開発】ホームページ"
 date: 2026-07-01
 category: "developing"
 draft: false

@@ -1,5 +1,5 @@
 ---
-title: "【毎月個人開発】ニュースポータルアプリを作成しました"
+title: "【毎月個人開発】ニュースポータルアプリ"
 date: 2026-06-01
 category: "developing"
 draft: false
