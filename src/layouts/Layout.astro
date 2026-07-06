@@ -105,12 +105,10 @@ const ogpImageHeight = 630;
 					reorder(targetParam);
 				}, 50);
 	  
-				// URLを綺麗に戻しつつ、Astroの履歴を壊さない
 				history.replaceState({ ...window.history.state }, "", "/");
 			} 
 			
 			else if (window.history.state && window.history.state.cardOrder) {
-				// 履歴に保存されていた current があれば、アニメーション無しで即座に並び替える
 				const savedTarget = window.history.state.cardOrder;
 				if (container && savedTarget) {
 				   const targetEl = Array.from(container.children).find(el => el.dataset.key === savedTarget);
@@ -120,7 +118,6 @@ const ogpImageHeight = 630;
 				   }
 				}
 			} else {
-				// なにもない（素のトップページアクセス）時はリセット状態
 				current = null;
 			}
 		}
@@ -158,7 +155,6 @@ const ogpImageHeight = 630;
 		}
 	  
 		function updateHistoryState(targetKey) {
-			// 現在の状態を履歴に書き込む（Astroのstateを保持したまま）
 			const currentState = window.history.state || {};
 			history.replaceState({ ...currentState, cardOrder: targetKey }, "");
 		}
@@ -168,11 +164,10 @@ const ogpImageHeight = 630;
 	  
 			const items = Array.from(container.children);
 	  
-			// 同じものを再クリック → リセット
 			if (current === targetKey) {
 				resetOrder();
 				current = null;
-				updateHistoryState(null); // 履歴もリセット
+				updateHistoryState(null);
 				return;
 			}
 	  
@@ -193,7 +188,7 @@ const ogpImageHeight = 630;
 	  
 			container.prepend(target);
 			current = targetKey;
-			updateHistoryState(targetKey); // 🌟 並び替えたことを履歴に記録
+			updateHistoryState(targetKey); // 並び替えたことを履歴に記録
 	  
 			animateFLIP(items, firstRects).then(() => {
 				isAnimating = false;
@@ -243,7 +238,6 @@ const ogpImageHeight = 630;
 		margin-bottom: 0.3rem;
 		line-height: 1.5;
 	}
-	/* デフォルトで要素にフォーカスした際の黒枠を消す */
 	*:focus:not(:focus-visible) {
 	outline: none;
 	}
