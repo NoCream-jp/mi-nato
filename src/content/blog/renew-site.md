@@ -15,4 +15,4 @@ draft: false
 
 ## 関連リンク
 
-[ひとつ前の記事](/blog/new-site)<br />
+[ひとつ前の記事](/blog/wcpc20260620)<br />
