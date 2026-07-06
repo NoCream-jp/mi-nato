@@ -9,7 +9,6 @@ interface Video {
 const { videos = [] }: { videos?: Video[] } = Astro.props;
 ---
 
-<!-- 🔥 grid-cols-2 に変更 -->
 <div id="video-gallery" class="grid grid-cols-2 gap-4">
   {videos.map((v) => (
     <VideoCard videoId={v.id} title={v.title} />
@@ -35,7 +34,6 @@ gallery.addEventListener('click', (e) => {
 
   if (currentVideoId === videoId) return;
 
-  // 停止（🔥 ここもaspect揃える）
   if (currentIframe && currentVideoId) {
     const parent = currentIframe.parentElement;
     if (parent instanceof HTMLElement) {
@@ -55,7 +53,6 @@ gallery.addEventListener('click', (e) => {
     }
   }
 
-  // 再生（これは元からOK）
   card.innerHTML = `
     <iframe 
       src="https://www.youtube.com/embed/${videoId}?autoplay=1"
