@@ -9,60 +9,63 @@ interface Video {
 const { videos = [] }: { videos?: Video[] } = Astro.props;
 ---
 
-<div id="video-gallery" class="grid grid-cols-2 gap-4">
+<div class="video-gallery-container grid grid-cols-2 gap-4">
   {videos.map((v) => (
     <VideoCard videoId={v.id} title={v.title} />
   ))}
 </div>
 
-<script is:inline>
-const gallery = document.getElementById('video-gallery');
-if (!gallery) return;
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const galleries = document.querySelectorAll('.video-gallery-container');
+    if (galleries.length === 0) return;
 
-let currentIframe = null;
-let currentVideoId = null;
+    let currentIframe: HTMLIFrameElement | null = null;
+    let currentVideoId: string | null = null;
 
-gallery.addEventListener('click', (e) => {
-  const target = e.target;
-  if (!(target instanceof HTMLElement)) return;
+    galleries.forEach(gallery => {
+      gallery.addEventListener('click', (e) => {
+        const target = e.target;
+        if (!(target instanceof HTMLElement)) return;
 
-  const card = target.closest('.video-card');
-  if (!(card instanceof HTMLElement)) return;
+        const card = target.closest('.video-card');
+        if (!(card instanceof HTMLElement)) return;
 
-  const videoId = card.dataset.id;
-  if (!videoId) return;
+        const videoId = card.dataset.id;
+        if (!videoId || currentVideoId === videoId) return;
 
-  if (currentVideoId === videoId) return;
+        if (currentIframe && currentVideoId) {
+          const parent = currentIframe.parentElement;
+          if (parent instanceof HTMLElement) {
+            parent.innerHTML = `
+              <div class="relative aspect-video">
+                <img 
+                  src="https://img.youtube.com/vi/${currentVideoId}/hqdefault.jpg"
+                  class="w-full h-full object-cover rounded-xl"
+                  loading="lazy"
+                />
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <button class="w-[60px] h-[60px] rounded-full bg-black/60 text-white text-2xl flex items-center justify-center">
+                    ▶
+                  </button>
+                </div>
+              </div>
+            `;
+          }
+        }
 
-  if (currentIframe && currentVideoId) {
-    const parent = currentIframe.parentElement;
-    if (parent instanceof HTMLElement) {
-      parent.innerHTML = `
-        <div class="relative aspect-video">
-          <img 
-            src="https://img.youtube.com/vi/${currentVideoId}/hqdefault.jpg"
-            class="w-full h-full object-cover rounded-xl"
-          />
-          <button
-            class="absolute inset-0 m-auto w-[60px] h-[60px] rounded-full bg-black/60 text-white text-2xl flex items-center justify-center"
-          >
-            ▶
-          </button>
-        </div>
-      `;
-    }
-  }
+        card.innerHTML = `
+          <iframe 
+            src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1"
+            allow="autoplay; encrypted-media"
+            allowfullscreen
+            class="w-full aspect-video rounded-xl"
+          ></iframe>
+        `;
 
-  card.innerHTML = `
-    <iframe 
-      src="https://www.youtube.com/embed/${videoId}?autoplay=1"
-      allow="autoplay; encrypted-media"
-      allowfullscreen
-      class="w-full aspect-video rounded-xl"
-    ></iframe>
-  `;
-
-  currentIframe = card.querySelector('iframe');
-  currentVideoId = videoId;
-});
+        currentIframe = card.querySelector('iframe');
+        currentVideoId = videoId;
+      });
+    });
+  });
 </script>
