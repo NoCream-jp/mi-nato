@@ -6,6 +6,11 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 
 export default defineConfig({
+  markdown: {
+    shikiConfig: {
+      theme: "github-dark",
+    },
+  },
   vite: {
     plugins: [tailwindcss()],
   },

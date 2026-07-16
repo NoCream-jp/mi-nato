@@ -31,39 +31,10 @@ $$
 
 Pythonでは、関数の再帰呼び出しを利用して直感的にDFSを実装できます。以下の例では、隣接リスト形式のグラフを探索します。
 
-```python
-def dfs_recursive(graph, v, visited):
-    # 現在の頂点を訪問済みにする
-    visited.add(v)
-    print(f"訪問: {v}")
-
-    # 隣接する頂点を探索
-    for next_v in graph[v]:
-        if next_v not in visited:
-            dfs_recursive(graph, next_v, visited)
-
-# 実行例
-graph = {1: [2, 3], 2: [4], 3: [], 4: []}
-dfs_recursive(graph, 1, set())
-問題と実装例(スタックを使った実装)
-再帰上限（Recursion Error）を避ける必要がある場合や、再帰を使わずに実装したい場合は、リストをスタックとして利用します。
-
-Python
-def dfs_stack(graph, start):
-    visited = set()
-    stack = [start]
-
-    while stack:
-        v = stack.pop()
-        if v not in visited:
-            visited.add(v)
-            print(f"訪問: {v}")
-
-            # Pythonのリストは末尾がスタックのトップになるため、
-            # 探索順序を再帰と合わせたい場合は逆順に追加します
-            for next_v in reversed(graph[v]):
-                if next_v not in visited:
-                    stack.append(next_v)
+```Python
+def myprint(s: str):
+    print("Python")
+    return
 ```
 
 ## 関連リンク
