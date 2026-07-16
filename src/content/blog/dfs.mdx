@@ -1,0 +1,71 @@
+---
+title: "【アルゴリズム復習】DFSとその実装"
+date: 2026-07-16
+category: "programming"
+draft: false
+---
+
+## はじめに
+
+こんにちは。みなとです。今回は、グラフ探索アルゴリズムのひとつである <Highlight>DFS(深さ優先探索)</Highlight> について学ぶ記事です。
+
+この記事の目的は主に二つ。私自身のアウトプットによる学習のためと、プログラミングやグラフ理論を学びたての学生さん、その他初心者プログラマさんへDFSというアルゴリズムを共有するためです。Pythonでサンプルコードを書いてある点に注意してください。
+
+{/* これはMDX専用のコメント記法です。HTMLには一切出力されないため、自分用の執筆メモを残すのに最適です */}
+
+## グラフの数学的定義と計算量
+
+グラフ理論において、グラフ $G$ は頂点集合 $V$ と辺集合 $E$ を用いて $G = (V, E)$ と定義されます。
+DFSはすべての頂点と辺を最大1回ずつ訪問するため、時間計算量は以下のようになります。
+
+$$
+
+O(\vert{}V\vert{} + \vert{}E\vert{})
+
+
+$$
+
+競技プログラミング（AtCoderなど）では、実行時間制限を見積もる上でこの計算量の理解が不可欠です。
+
+## 問題と実装例(再帰関数を使った実装)
+
+Pythonでは、関数の再帰呼び出しを利用して直感的にDFSを実装できます。以下の例では、隣接リスト形式のグラフを探索します。
+
+```python
+def dfs_recursive(graph, v, visited):
+    # 現在の頂点を訪問済みにする
+    visited.add(v)
+    print(f"訪問: {v}")
+
+    # 隣接する頂点を探索
+    for next_v in graph[v]:
+        if next_v not in visited:
+            dfs_recursive(graph, next_v, visited)
+
+# 実行例
+graph = {1: [2, 3], 2: [4], 3: [], 4: []}
+dfs_recursive(graph, 1, set())
+問題と実装例(スタックを使った実装)
+再帰上限（Recursion Error）を避ける必要がある場合や、再帰を使わずに実装したい場合は、リストをスタックとして利用します。
+
+Python
+def dfs_stack(graph, start):
+    visited = set()
+    stack = [start]
+
+    while stack:
+        v = stack.pop()
+        if v not in visited:
+            visited.add(v)
+            print(f"訪問: {v}")
+
+            # Pythonのリストは末尾がスタックのトップになるため、
+            # 探索順序を再帰と合わせたい場合は逆順に追加します
+            for next_v in reversed(graph[v]):
+                if next_v not in visited:
+                    stack.append(next_v)
+```
+
+## 関連リンク
+
+[ひとつ前の記事](/blog/icpc2026)<br />
