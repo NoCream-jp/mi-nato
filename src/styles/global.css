@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* 🌟 1. Shikiが自動出力する背景色を「透明」にリセット */
+/* Shikiが自動出力する背景色を「透明」にリセット */
 :root {
   --astro-code-color-background: transparent;
 }
