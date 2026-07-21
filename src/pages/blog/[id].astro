@@ -8,9 +8,9 @@ import BackButton from "../../components/BackButton.astro";
 import Highlight from '../../components/Highlight.astro';
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => {
-    return !data.draft;
-  });
+  const posts = await getCollection('blog', ({ data }) => {
+  return data.draft !== true;
+});
   return posts.map((post) => ({
     params: { id: post.id },
     props: { post },

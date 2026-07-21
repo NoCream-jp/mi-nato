@@ -6,11 +6,13 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import TagFilter from '../components/TagFilter.astro';
 import BackButton from '../components/BackButton.astro';
 
-const allPosts = await getCollection('blog');
+const allPosts = await getCollection('blog', ({ data }) => {
+  return data.draft !== true;
+});
 
 // 日付でソート（新しい順）
 const sortedPosts = allPosts.sort(
-  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+  (a: { data: { date: Date; }; }, b: { data: { date: Date; }; }) => b.data.date.valueOf() - a.data.date.valueOf()
 );
 
 // パンくず
@@ -21,7 +23,7 @@ const breadcrumbItems = [
 
 // タグフィルタ用のタグ一覧
 const allTags = Array.from(
-  new Set(allPosts.map(post => post.data.category))
+  new Set(allPosts.map((post: { data: { category: any; }; }) => post.data.category))
 ) as string[];
 ---
 
@@ -42,7 +44,7 @@ const allTags = Array.from(
     <!-- 記事一覧 -->
     <div class="flex flex-col gap-4 mb-10">
       {sortedPosts.length > 0 ? (
-        sortedPosts.map((post) => (
+        sortedPosts.map((post: { id: any; data: { title: string; date: Date; category: string | undefined; }; }) => (
           <ArticleCard 
             href={`/blog/${post.id}`}
             title={post.data.title}
