@@ -4,10 +4,13 @@ import Layout from "../../layouts/Layout.astro";
 import Breadcrumbs from "../../components/Breadcrumbs.astro";
 import BackButton from "../../components/BackButton.astro";
 
+// 記事内で利用するコンポーネント
+import Highlight from '../../components/Highlight.astro';
+
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => {
-    return !data.draft;
-  });
+  const posts = await getCollection('blog', ({ data }) => {
+  return data.draft !== true;
+});
   return posts.map((post) => ({
     params: { id: post.id },
     props: { post },
@@ -55,7 +58,7 @@ const image = post.data.image || "/brand/ogp-image.png";
       </header>
 
       <div class="blog-content text-[15px] leading-[2.2] tracking-wide text-zinc-800 md:text-base">
-        <Content />
+        <Content components={{ Highlight }}/>
       </div>
       
     </article>

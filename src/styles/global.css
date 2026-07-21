@@ -1,1 +1,29 @@
 @import "tailwindcss";
+
+/* Shikiが自動出力する背景色を「透明」にリセット */
+:root {
+  --astro-code-color-background: transparent;
+}
+.astro-code {
+  /* 背景と枠線 */
+  background-color: #161616 !important;
+  border: 1px solid #e2e8f0; /* 例：Tailwindの slate-200 */
+  border-radius: 0.5rem;
+
+  /* 余白とフォント */
+  line-height: 1.5;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-family: "Fira Code", "Menlo", monospace;
+  font-size: 0.875rem;
+  overflow-x: auto;
+}
+
+/* （おまけ）ダークモード風にしたい場合の設定例 */
+/*
+  .astro-code {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+  }
+  */
